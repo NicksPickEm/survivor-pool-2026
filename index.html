@@ -5,175 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>2026 NCAA Survivor</title>
 <style>
-:root {
-  --bg:#0f1117; --card:#1a1d27; --card2:#222536; --border:#2e3248;
-  --text:#f0f2ff; --muted:#7b80a0; --dim:#3a3f58;
-  --green:#22c55e; --gbg:#0d2818; --gdim:#134d28;
-  --red:#ef4444; --rbg:#2a0d0d;
-  --amber:#f59e0b; --abg:#2a1d05;
-  --blue:#3b82f6; --bbg:#0d1a2e;
-  --purple:#a855f7; --pbg:#1a0d2e;
-  --r:14px; --rsm:9px;
+:root{
+  --bg:#0f1117;--card:#1a1d27;--card2:#222536;--border:#2e3248;
+  --text:#f0f2ff;--muted:#7b80a0;--dim:#3a3f58;
+  --green:#22c55e;--gbg:#0d2818;--gdim:#134d28;
+  --red:#ef4444;--rbg:#2a0d0d;
+  --amber:#f59e0b;--abg:#2a1d05;
+  --blue:#3b82f6;--bbg:#0d1a2e;
+  --purple:#a855f7;--pbg:#1a0d2e;
+  --r:12px;--rsm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:520px;margin:0 auto;padding-bottom:84px;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:520px;margin:0 auto;padding-bottom:80px;}
 
 /* HEADER */
-.hdr{padding:18px 16px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;}
-.hdr-l h1{font-size:19px;font-weight:800;letter-spacing:-.4px;}
-.hdr-l p{font-size:11px;color:var(--muted);margin-top:2px;}
+.hdr{padding:16px 14px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;}
+.hdr-l h1{font-size:18px;font-weight:800;letter-spacing:-.3px;}
+.hdr-l p{font-size:11px;color:var(--muted);margin-top:1px;}
 .hdr-r{display:flex;gap:6px;}
-.icobtn{width:36px;height:36px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.icobtn{width:34px;height:34px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;}
 
 /* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:50;}
-.nbtn{flex:1;padding:10px 4px 16px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--muted);font-family:inherit;}
+.nbtn{flex:1;padding:9px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--muted);font-family:inherit;}
 .nbtn.active{color:var(--blue);}
-.nbtn svg{width:22px;height:22px;}
+.nbtn svg{width:21px;height:21px;}
 .nbtn span{font-size:10px;font-weight:600;}
 
 /* PAGES */
-.pg{display:none;padding:0 14px;}
+.pg{display:none;padding:0 13px;}
 .pg.active{display:block;}
 
-/* ── TODAY PAGE ── */
-.today-hero{margin:14px 0 10px;}
-.day-nav{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;}
-.day-nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card2);color:var(--muted);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
-.day-nav-btn:disabled{opacity:.3;cursor:default;}
+/* ────────────────────────────────────────────
+   TODAY TAB
+──────────────────────────────────────────── */
+
+/* Day nav strip */
+.day-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;}
+.dnbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;}
+.dnbtn:disabled{opacity:.2;cursor:default;}
 .day-center{text-align:center;}
 .day-name{font-size:17px;font-weight:800;letter-spacing:-.3px;}
 .day-sub{font-size:12px;color:var(--muted);margin-top:2px;}
 
-.my-pick-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;}
-.mpb-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
-.pick-set{display:flex;align-items:center;gap:12px;background:var(--gbg);border:1px solid var(--gdim);border-radius:var(--rsm);padding:13px 14px;}
-.pick-empty{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--card2);border:1px dashed var(--dim);border-radius:var(--rsm);padding:16px;color:var(--muted);font-size:13px;}
-.ps-seed{width:38px;height:38px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;}
-.ps-info{flex:1;}
-.ps-team{font-size:16px;font-weight:700;}
-.ps-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-.ps-clear{width:28px;height:28px;border-radius:50%;border:1px solid var(--dim);background:transparent;color:var(--muted);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+/* 5 BUCKETS */
+.buckets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:14px;}
+.bucket{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:7px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.bkt-ico{font-size:18px;line-height:1;}
+.bkt-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;}
+.bkt-items{display:flex;flex-direction:column;gap:3px;width:100%;padding:0 2px;}
+.bkt-chip{font-size:10px;font-weight:700;padding:3px 4px;border-radius:5px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3;}
+.bkt-chip:active{opacity:.7;}
+.bc-pick{background:var(--green);color:#000;}
+.bc-cand{background:var(--bbg);color:var(--blue);border:1px solid #1e40af;}
+.bc-save{background:var(--pbg);color:var(--purple);border:1px solid #6b21a8;}
+.bc-maybe{background:var(--abg);color:var(--amber);border:1px solid #92400e;}
+.bc-never{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
 
-.day-section-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:12px 0 8px;}
+/* Section header */
+.sec-hdr{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:2px 0 8px;display:flex;align-items:center;gap:8px;}
+.sec-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* TEAM PICK ROWS */
-.tprow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:7px;cursor:pointer;transition:border-color .12s;}
-.tprow:active{opacity:.75;}
-.tprow.is-pick{border-color:var(--green);background:var(--gbg);box-shadow:0 0 0 2px var(--green);}
-.tprow.is-elim{border-color:#3a1515;background:var(--rbg);opacity:.4;cursor:default;}
-.tprow.is-used{border-color:var(--dim);background:var(--card2);opacity:.5;cursor:default;}
-.tprow.plan-use{border-color:var(--green);}
-.tprow.plan-save{border-color:var(--blue);}
-.tprow.plan-maybe{border-color:var(--amber);}
-.tprow.plan-skip{opacity:.45;}
-.tp-seed{width:34px;height:34px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
-.tp-info{flex:1;min-width:0;}
-.tp-team{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tp-meta{font-size:11px;color:var(--muted);margin-top:2px;}
-.tp-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.tp-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;}
-.badge-pick{background:var(--green);color:#000;}
-.badge-elim{background:var(--rbg);color:var(--red);border:1px solid #4a1515;}
-.badge-used{background:var(--dim);color:var(--muted);}
-.plan-icon{font-size:16px;}
+/* MATCHUP CARDS */
+.matchup{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;}
+.matchup.has-pick{border-color:var(--green);}
+.vs-bar{font-size:9px;font-weight:800;color:var(--dim);text-align:center;padding:2px;background:var(--card2);letter-spacing:.12em;}
 
-/* ── HISTORY PAGE ── */
-.hist-day{margin-bottom:20px;}
-.hist-day-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:12px 0 8px;display:flex;align-items:center;gap:8px;}
-.hist-day-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.hist-pick{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:7px;}
-.hist-pick.won{border-color:var(--gdim);background:var(--gbg);}
-.hist-pick.lost{border-color:#4a1515;background:var(--rbg);opacity:.7;}
-.hist-pick.pending{border-color:var(--dim);}
-.hp-seed{width:32px;height:32px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
-.hp-info{flex:1;}
-.hp-team{font-size:15px;font-weight:700;}
-.hp-sub{font-size:11px;color:var(--muted);margin-top:1px;}
-.hp-result{font-size:12px;font-weight:700;}
-.result-win{color:var(--green);}
-.result-loss{color:var(--red);}
-.result-pending{color:var(--amber);}
+/* TEAM ROW inside matchup */
+.tr{display:flex;align-items:center;gap:8px;padding:10px 11px;border-bottom:1px solid var(--border);}
+.tr:last-of-type{border-bottom:none;}
+.tr.elim{opacity:.3;background:var(--rbg);}
+.tr.used{opacity:.4;background:var(--card2);}
+.tr.res-won{background:var(--gbg);}
+.tr.res-won .tr-name{color:var(--green);}
+.tr.res-lost{background:var(--rbg);opacity:.45;}
+.tr.res-lost .tr-name{text-decoration:line-through;color:var(--muted);}
+.tr-seed{width:28px;height:28px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+.tr-info{flex:1;min-width:0;}
+.tr-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tr-meta{font-size:10px;color:var(--muted);margin-top:1px;}
+.tr-icons{display:flex;gap:3px;flex-shrink:0;}
+.ti{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.ti:active{transform:scale(.88);}
+.ti.on{opacity:1;}
+.ti.on-pick{background:var(--green);border-color:var(--green);}
+.ti.on-cand{background:var(--blue);border-color:var(--blue);}
+.ti.on-save{background:var(--purple);border-color:var(--purple);}
+.ti.on-maybe{background:var(--amber);border-color:var(--amber);}
+.ti.on-never{background:var(--red);border-color:var(--red);}
+.tr-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em;}
+.tag-elim{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
+.tag-used{background:var(--dim);color:var(--muted);}
+.res-ico{font-size:14px;flex-shrink:0;}
 
-/* ── RESULTS PAGE ── */
-.res-day-section{margin-bottom:18px;}
+/* ────────────────────────────────────────────
+   HISTORY / RESULTS / PLAN TABS
+──────────────────────────────────────────── */
+.sec-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:12px 0 8px;display:flex;align-items:center;gap:8px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* History rows */
+.hist-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 13px;margin-bottom:7px;}
+.hist-row.won{border-color:var(--gdim);background:var(--gbg);}
+.hist-row.lost{border-color:#4a1515;background:var(--rbg);opacity:.7;}
+.hr-seed{width:30px;height:30px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+.hr-info{flex:1;}
+.hr-team{font-size:14px;font-weight:700;}
+.hr-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.hr-result{font-size:12px;font-weight:700;flex-shrink:0;}
+.r-win{color:var(--green);}.r-loss{color:var(--red);}.r-pend{color:var(--amber);}
+
+/* Results game cards */
 .game-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow:hidden;}
-.game-hdr{font-size:10px;color:var(--muted);padding:6px 14px;background:var(--card2);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.07em;}
-.game-team-row{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;border-bottom:1px solid var(--border);}
-.game-team-row:last-of-type{border-bottom:none;}
-.game-team-row:active{opacity:.75;}
-.game-team-row.won{background:var(--gbg);}
-.game-team-row.lost{background:var(--rbg);opacity:.55;}
-.game-team-row.won .gtr-name{color:var(--green);font-weight:700;}
-.game-team-row.lost .gtr-name{text-decoration:line-through;color:var(--muted);}
-.gtr-seed{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
-.gtr-name{flex:1;font-size:14px;font-weight:600;}
-.gtr-ico{font-size:15px;}
-.undo-row{padding:6px 14px;display:flex;justify-content:flex-end;background:var(--card2);border-top:1px solid var(--border);}
-.undo-btn{font-size:11px;color:var(--muted);background:none;border:1px solid var(--dim);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;}
+.game-hdr{font-size:9px;color:var(--muted);padding:5px 12px;background:var(--card2);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.07em;}
+.gtr{display:flex;align-items:center;gap:9px;padding:12px 12px;border-bottom:1px solid var(--border);cursor:pointer;}
+.gtr:last-of-type{border-bottom:none;}
+.gtr:active{opacity:.75;}
+.gtr.won{background:var(--gbg);}
+.gtr.lost{background:var(--rbg);opacity:.5;}
+.gtr.won .gtr-name{color:var(--green);font-weight:700;}
+.gtr.lost .gtr-name{text-decoration:line-through;color:var(--muted);}
+.gtr-seed{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
+.gtr-name{flex:1;font-size:13px;font-weight:600;}
+.gtr-ico{font-size:14px;}
+.undo-row{padding:6px 12px;display:flex;justify-content:flex-end;background:var(--card2);border-top:1px solid var(--border);}
+.undo-btn{font-size:11px;color:var(--muted);background:none;border:1px solid var(--dim);border-radius:6px;padding:3px 9px;cursor:pointer;font-family:inherit;}
 
-/* ── PLAN PAGE ── */
-.plan-filter{display:flex;gap:6px;overflow-x:auto;padding:10px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+/* Plan rows */
+.plan-filter{display:flex;gap:5px;overflow-x:auto;padding:10px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .plan-filter::-webkit-scrollbar{display:none;}
-.pchip{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;flex-shrink:0;}
+.pchip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;flex-shrink:0;}
 .pchip.active{background:var(--blue);border-color:var(--blue);color:#fff;}
-.plan-team{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:7px;}
-.plan-team.s-use{border-color:var(--green);}
-.plan-team.s-save{border-color:var(--blue);}
-.plan-team.s-maybe{border-color:var(--amber);}
-.plan-team.s-skip{opacity:.4;}
-.plan-team.s-elim{opacity:.35;background:var(--rbg);border-color:#3a1515;}
-.plan-team.s-used{opacity:.45;background:var(--card2);}
-.pt-seed{width:32px;height:32px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
-.pt-info{flex:1;min-width:0;}
-.pt-team{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pt-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-.pt-btns{display:flex;gap:4px;flex-shrink:0;}
-.ptbtn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.ptbtn.on-use{background:var(--green);border-color:var(--green);}
-.ptbtn.on-save{background:var(--blue);border-color:var(--blue);}
-.ptbtn.on-maybe{background:var(--amber);border-color:var(--amber);}
-.ptbtn.on-skip{background:var(--dim);border-color:var(--dim);}
+.plan-row{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;}
+.plan-row.s-cand{border-color:var(--blue);}
+.plan-row.s-save{border-color:var(--purple);}
+.plan-row.s-maybe{border-color:var(--amber);}
+.plan-row.s-never{opacity:.4;}
+.plan-row.s-elim{opacity:.3;background:var(--rbg);border-color:#3a1515;}
+.plan-row.s-used{opacity:.4;background:var(--card2);}
+.pr-seed{width:28px;height:28px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+.pr-info{flex:1;min-width:0;}
+.pr-team{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pr-sub{font-size:10px;color:var(--muted);margin-top:1px;}
+.pr-btns{display:flex;gap:3px;flex-shrink:0;}
+.pbtn{width:27px;height:27px;border-radius:50%;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.pbtn:active{transform:scale(.88);}
+.pbtn.on-cand{background:var(--blue);border-color:var(--blue);}
+.pbtn.on-save{background:var(--purple);border-color:var(--purple);}
+.pbtn.on-maybe{background:var(--amber);border-color:var(--amber);}
+.pbtn.on-never{background:var(--red);border-color:var(--red);}
 
-/* SEED COLORS */
-.sd1{background:#ffd700;color:#000;}
-.sd2{background:#c0c0c0;color:#000;}
-.sd3{background:#cd7f32;color:#fff;}
-.sd4{background:var(--blue);color:#fff;}
-.sd567{background:var(--card2);color:var(--text);}
-.sdlo{background:var(--card2);color:var(--muted);}
-
-/* REGION DOTS */
-.rdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+/* Seed colors */
+.sd1{background:#ffd700;color:#000;}.sd2{background:#c0c0c0;color:#000;}.sd3{background:#cd7f32;color:#fff;}
+.sd4{background:var(--blue);color:#fff;}.sd567{background:var(--card2);color:var(--text);}.sdlo{background:var(--card2);color:var(--muted);}
+.rdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .rE{background:#3b82f6;}.rW{background:#22c55e;}.rS{background:#ef4444;}.rM{background:#a855f7;}
 
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:flex-end;justify-content:center;}
-.modal{background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:18px 16px 40px;width:100%;max-width:520px;border:1px solid var(--border);}
-.modal-handle{width:36px;height:4px;background:var(--dim);border-radius:2px;margin:0 auto 16px;}
-.modal-title{font-size:17px;font-weight:800;margin-bottom:3px;}
-.modal-sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
-.modal-option{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);margin-bottom:8px;cursor:pointer;}
-.modal-option:active{opacity:.8;}
-.modal-option.sel{border-color:var(--green);background:var(--gbg);}
-.mo-ico{font-size:22px;width:30px;text-align:center;}
-.mo-lbl{font-size:14px;font-weight:700;}
-.mo-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-.modal-cancel{width:100%;margin-top:4px;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
-
-/* STATS STRIP */
-.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:12px 0;}
-.ssc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:10px 8px;text-align:center;}
-.ssn{font-size:21px;font-weight:800;letter-spacing:-.5px;}
-.ssl{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
-
 /* TOAST */
-.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .2s;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;}
-
-.empty{text-align:center;padding:36px 20px;color:var(--muted);font-size:14px;}
-.empty .emo{font-size:34px;margin-bottom:10px;}
+.empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;}
+.empty .emo{font-size:32px;margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -181,7 +174,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="hdr">
   <div class="hdr-l">
     <h1>🏀 NCAA Survivor</h1>
-    <p>2026 Tournament · 1 pick per day</p>
+    <p>2026 · 1 pick per day</p>
   </div>
   <div class="hdr-r">
     <button class="icobtn" onclick="expJSON()" title="Export">📤</button>
@@ -192,35 +185,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <!-- TODAY -->
 <div id="pg-today" class="pg active">
-  <div class="stats-strip">
-    <div class="ssc"><div class="ssn" id="st-used" style="color:var(--amber)">0</div><div class="ssl">Used</div></div>
-    <div class="ssc"><div class="ssn" id="st-alive" style="color:var(--green)">64</div><div class="ssl">Alive</div></div>
-    <div class="ssc"><div class="ssn" id="st-avail" style="color:var(--blue)">0</div><div class="ssl">Today</div></div>
-    <div class="ssc"><div class="ssn" id="st-remain" style="color:var(--purple)">0</div><div class="ssl">Remaining</div></div>
-  </div>
 
   <div class="day-nav">
-    <button class="day-nav-btn" id="prev-btn" onclick="changeDay(-1)">‹</button>
+    <button class="dnbtn" id="prev-btn" onclick="changeDay(-1)">‹</button>
     <div class="day-center">
       <div class="day-name" id="day-name">—</div>
       <div class="day-sub" id="day-sub">—</div>
     </div>
-    <button class="day-nav-btn" id="next-btn" onclick="changeDay(1)">›</button>
+    <button class="dnbtn" id="next-btn" onclick="changeDay(1)">›</button>
   </div>
 
-  <div class="my-pick-box">
-    <div class="mpb-label">
-      <span>My pick</span>
-      <span id="pick-status-label" style="font-size:11px;"></span>
-    </div>
-    <div id="pick-display"></div>
-  </div>
+  <!-- 5 buckets -->
+  <div class="buckets" id="buckets"></div>
 
-  <div class="day-section-label" id="games-label">Today's games</div>
-  <div id="today-teams"></div>
+  <!-- Matchups -->
+  <div class="sec-hdr" id="matchups-hdr">Matchups</div>
+  <div id="matchups"></div>
+
 </div>
 
-<!-- HISTORY -->
+<!-- MY PICKS -->
 <div id="pg-history" class="pg">
   <div id="history-list" style="padding-top:4px;"></div>
 </div>
@@ -233,19 +217,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <!-- PLAN -->
 <div id="pg-plan" class="pg">
   <div class="plan-filter" id="plan-filter">
-    <button class="pchip active" onclick="setPlanFilter('all',this)">All</button>
-    <button class="pchip" onclick="setPlanFilter('available',this)">Available</button>
-    <button class="pchip" onclick="setPlanFilter('use',this)">🎯 Use</button>
-    <button class="pchip" onclick="setPlanFilter('save',this)">⭐ Save</button>
-    <button class="pchip" onclick="setPlanFilter('maybe',this)">🤔 Maybe</button>
-    <button class="pchip" onclick="setPlanFilter('skip',this)">🚫 Skip</button>
-    <button class="pchip" onclick="setPlanFilter('used',this)">✓ Used</button>
-    <button class="pchip" onclick="setPlanFilter('elim',this)">💀 Out</button>
+    <button class="pchip active" onclick="setPF('all',this)">All</button>
+    <button class="pchip" onclick="setPF('available',this)">Available</button>
+    <button class="pchip" onclick="setPF('cand',this)">✅ Candidate</button>
+    <button class="pchip" onclick="setPF('save',this)">⭐ Save</button>
+    <button class="pchip" onclick="setPF('maybe',this)">🤔 Maybe</button>
+    <button class="pchip" onclick="setPF('never',this)">🚫 Never</button>
+    <button class="pchip" onclick="setPF('used',this)">✓ Used</button>
+    <button class="pchip" onclick="setPF('elim',this)">💀 Out</button>
   </div>
   <div id="plan-list"></div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bnav">
   <button class="nbtn active" onclick="showPg('today',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -265,86 +248,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </button>
 </nav>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="m-title"></div>
-    <div class="modal-sub" id="m-sub"></div>
-    <div id="m-opts"></div>
-    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ── TOURNAMENT SCHEDULE ──────────────────────────────────────────
-// Each day has an id, label, round label, and list of games [teamA, teamB]
-const DAYS = [
-  {
-    id:'tue-mar17', label:'Tue Mar 17', round:'First Four',
-    games:[['Texas','NC State'],['UMBC','Howard']]
-  },
-  {
-    id:'wed-mar18', label:'Wed Mar 18', round:'First Four',
-    games:[['SMU','Miami (OH)'],['Prairie View A&M','Lehigh']]
-  },
-  {
-    id:'thu-mar19', label:'Thu Mar 19', round:'Round of 64',
-    games:[
-      ['Duke','Siena'],["St. John's",'Northern Iowa'],['Kansas','Cal Baptist'],['Michigan State','North Dakota St.'],
-      ['Ohio State','TCU'],['UConn','Furman'],
-      ['Arizona','LIU'],['Wisconsin','High Point'],['Gonzaga','Kennesaw State'],['Villanova','Utah State'],
-      ['Houston','Idaho'],['Nebraska','Troy'],['North Carolina','VCU'],["Saint Mary's",'Texas A&M'],
-      ['Michigan','UMBC/Howard'],['Virginia','Wright State'],['Texas Tech','Akron'],['Kentucky','Santa Clara'],
-    ]
-  },
-  {
-    id:'fri-mar20', label:'Fri Mar 20', round:'Round of 64',
-    games:[
-      ['Louisville','South Florida'],['UCLA','UCF'],
-      ['Purdue','Queens'],['Arkansas','Hawaii'],['BYU','Texas/NC State'],['Miami (FL)','Missouri'],
-      ['Florida','PV A&M/Lehigh'],['Vanderbilt','McNeese'],['Illinois','Penn'],['Clemson','Iowa'],
-      ['Alabama','Hofstra'],['Tennessee','SMU/Miami OH'],['Georgia','Saint Louis'],['Iowa State','Tennessee State'],
-    ]
-  },
-  {
-    id:'sat-mar21', label:'Sat Mar 21', round:'Round of 32',
-    games:[] // populated from R64 winners — top half
-  },
-  {
-    id:'sun-mar22', label:'Sun Mar 22', round:'Round of 32',
-    games:[] // populated from R64 winners — bottom half
-  },
-  {
-    id:'thu-mar26', label:'Thu Mar 26', round:'Sweet 16',
-    games:[]
-  },
-  {
-    id:'fri-mar27', label:'Fri Mar 27', round:'Sweet 16',
-    games:[]
-  },
-  {
-    id:'sat-mar28', label:'Sat Mar 28', round:'Elite Eight',
-    games:[]
-  },
-  {
-    id:'sun-mar29', label:'Sun Mar 29', round:'Elite Eight',
-    games:[]
-  },
-  {
-    id:'sat-apr4', label:'Sat Apr 4', round:'Final Four',
-    games:[]
-  },
-  {
-    id:'mon-apr6', label:'Mon Apr 6', round:'Championship',
-    games:[]
-  },
+// ── DATA ─────────────────────────────────────────────────────────
+const DAYS=[
+  {id:'tue-mar17',label:'Tue Mar 17',round:'First Four',
+   games:[['Texas','NC State'],['UMBC','Howard']]},
+  {id:'wed-mar18',label:'Wed Mar 18',round:'First Four',
+   games:[['SMU','Miami (OH)'],['Prairie View A&M','Lehigh']]},
+  {id:'thu-mar19',label:'Thu Mar 19',round:'Round of 64',
+   games:[
+    ['Duke','Siena'],["St. John's",'Northern Iowa'],['Kansas','Cal Baptist'],
+    ['Michigan State','North Dakota St.'],['Ohio State','TCU'],['UConn','Furman'],
+    ['Arizona','LIU'],['Wisconsin','High Point'],['Gonzaga','Kennesaw State'],
+    ['Villanova','Utah State'],['Houston','Idaho'],['Nebraska','Troy'],
+    ['North Carolina','VCU'],["Saint Mary's",'Texas A&M'],
+    ['Michigan','UMBC/Howard'],['Virginia','Wright State'],
+    ['Texas Tech','Akron'],['Kentucky','Santa Clara'],
+  ]},
+  {id:'fri-mar20',label:'Fri Mar 20',round:'Round of 64',
+   games:[
+    ['Louisville','South Florida'],['UCLA','UCF'],
+    ['Purdue','Queens'],['Arkansas','Hawaii'],['BYU','Texas/NC State'],['Miami (FL)','Missouri'],
+    ['Florida','PV A&M/Lehigh'],['Vanderbilt','McNeese'],['Illinois','Penn'],['Clemson','Iowa'],
+    ['Alabama','Hofstra'],['Tennessee','SMU/Miami OH'],['Georgia','Saint Louis'],['Iowa State','Tennessee State'],
+  ]},
+  {id:'sat-mar21',label:'Sat Mar 21',round:'Round of 32',games:[]},
+  {id:'sun-mar22',label:'Sun Mar 22',round:'Round of 32',games:[]},
+  {id:'thu-mar26',label:'Thu Mar 26',round:'Sweet 16',games:[]},
+  {id:'fri-mar27',label:'Fri Mar 27',round:'Sweet 16',games:[]},
+  {id:'sat-mar28',label:'Sat Mar 28',round:'Elite Eight',games:[]},
+  {id:'sun-mar29',label:'Sun Mar 29',round:'Elite Eight',games:[]},
+  {id:'sat-apr4', label:'Sat Apr 4', round:'Final Four',games:[]},
+  {id:'mon-apr6', label:'Mon Apr 6', round:'Championship',games:[]},
 ];
 
-// All 64 tournament teams with metadata
-const TEAMS = [
+const TEAMS=[
   {seed:1,team:'Duke',region:'East'},{seed:2,team:'UConn',region:'East'},
   {seed:3,team:'Michigan State',region:'East'},{seed:4,team:'Kansas',region:'East'},
   {seed:5,team:"St. John's",region:'East'},{seed:6,team:'Louisville',region:'East'},
@@ -377,136 +317,113 @@ const TEAMS = [
   {seed:11,team:'SMU/Miami OH',region:'Midwest'},{seed:12,team:'Akron',region:'Midwest'},
   {seed:13,team:'Hofstra',region:'Midwest'},{seed:14,team:'Wright State',region:'Midwest'},
   {seed:15,team:'Tennessee State',region:'Midwest'},{seed:16,team:'UMBC/Howard',region:'Midwest'},
-  // First Four teams
   {seed:11,team:'Texas',region:'West'},{seed:11,team:'NC State',region:'West'},
   {seed:16,team:'UMBC',region:'Midwest'},{seed:16,team:'Howard',region:'Midwest'},
   {seed:11,team:'SMU',region:'Midwest'},{seed:11,team:'Miami (OH)',region:'Midwest'},
   {seed:16,team:'Prairie View A&M',region:'South'},{seed:16,team:'Lehigh',region:'South'},
 ];
 
-// ── STATE ────────────────────────────────────────────────────────
-let picks   = {};   // dayId -> teamName
-let results = {};   // dayId -> { gameIdx: { w, l } }
-let plan    = {};   // teamName -> { status: 'none'|'use'|'save'|'maybe'|'skip' }
-TEAMS.forEach(t => { plan[t.team] = { status:'none' }; });
-DAYS.forEach(d => { results[d.id] = {}; });
+// day designations: dayId -> { teamName -> 'pick'|'cand'|'save'|'maybe'|'never' }
+// picks: dayId -> teamName (the actual confirmed pick)
+// results: dayId -> { gameIdx -> {w,l} }
+// plan: teamName -> { status: 'cand'|'save'|'maybe'|'never'|'none' }  (cross-day planning)
+let dayDesig = {}; // per-day designations
+let picks    = {};
+let results  = {};
+let plan     = {};
+DAYS.forEach(d=>{ dayDesig[d.id]={}; results[d.id]={}; });
+TEAMS.forEach(t=>{ plan[t.team]={status:'none'}; });
 
-let currentDayIdx = 2; // default to Thu Mar 19 (first real games)
+let curDay = 2; // Thu Mar 19 default
 let planFilter = 'all';
 
-// ── DERIVED ──────────────────────────────────────────────────────
-function getElim() {
-  const e = new Set();
-  Object.values(results).forEach(dr => Object.values(dr).forEach(g => { if(g&&g.l) e.add(g.l); }));
+// ── HELPERS ──────────────────────────────────────────────────────
+function tm(name){ return TEAMS.find(t=>t.team===name); }
+function sdCls(s){
+  if(!s) return 'sdlo';
+  return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';
+}
+function rdCls(r){ return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[r]||''; }
+
+function getElim(){
+  const e=new Set();
+  Object.values(results).forEach(dr=>Object.values(dr).forEach(g=>{if(g&&g.l)e.add(g.l);}));
   return e;
 }
-function getUsed() {
-  return new Set(Object.values(picks).filter(Boolean));
-}
-function getTeamMeta(name) {
-  return TEAMS.find(t => t.team === name);
-}
-function sdClass(seed) {
-  if(!seed) return 'sdlo';
-  if(seed===1) return 'sd1';
-  if(seed===2) return 'sd2';
-  if(seed===3) return 'sd3';
-  if(seed===4) return 'sd4';
-  if(seed<=7)  return 'sd567';
-  return 'sdlo';
-}
-function rdotClass(region) {
-  return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[region]||'';
-}
+function getUsed(){ return new Set(Object.values(picks).filter(Boolean)); }
 
-// Get actual games for a day — for later rounds, derive from results
-function getDayGames(dayIdx) {
-  const day = DAYS[dayIdx];
-  if(day.games.length > 0) return day.games;
-  // For R32+, winners from prior days populate games
-  // We store winners in results; for empty days return placeholder
-  return [];
-}
-
-// Resolve actual winner-derived games for days with no pre-set games
-// For simplicity: R32 Sat uses Thu winners pairs, R32 Sun uses Fri winners pairs
-function getResolvedGames(dayIdx) {
-  const day = DAYS[dayIdx];
-  if(day.games.length > 0) return day.games;
-
-  // Map days to their source days for bracket progression
-  const sourceMap = {
-    'sat-mar21': ['thu-mar19'], // R32 from Thu R64
-    'sun-mar22': ['fri-mar20'], // R32 from Fri R64
-    'thu-mar26': ['sat-mar21'], // S16 from Sat R32
-    'fri-mar27': ['sun-mar22'], // S16 from Sun R32
-    'sat-mar28': ['thu-mar26'], // E8 from Thu S16
-    'sun-mar29': ['fri-mar27'], // E8 from Fri S16
-    'sat-apr4':  ['sat-mar28','sun-mar29'], // F4 from both E8
-    'mon-apr6':  ['sat-apr4'],  // Champ from F4
+function getResolvedGames(di){
+  const day=DAYS[di];
+  if(day.games.length>0) return day.games;
+  const srcMap={
+    'sat-mar21':['thu-mar19'],'sun-mar22':['fri-mar20'],
+    'thu-mar26':['sat-mar21'],'fri-mar27':['sun-mar22'],
+    'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],
+    'sat-apr4':['sat-mar28','sun-mar29'],
+    'mon-apr6':['sat-apr4'],
   };
-
-  const srcDayIds = sourceMap[day.id];
-  if(!srcDayIds) return [];
-
-  let winners = [];
-  srcDayIds.forEach(srcId => {
-    const srcDay = DAYS.find(d=>d.id===srcId);
-    const srcGames = getResolvedGames(DAYS.indexOf(srcDay));
-    srcGames.forEach((g, gi) => {
-      const r = results[srcId] && results[srcId][gi];
-      winners.push(r ? r.w : `?? (win of ${g[0]}/${g[1]})`);
+  const srcIds=srcMap[day.id];
+  if(!srcIds) return [];
+  let winners=[];
+  srcIds.forEach(sid=>{
+    const sdi=DAYS.findIndex(d=>d.id===sid);
+    const sg=getResolvedGames(sdi);
+    sg.forEach((g,gi)=>{
+      const r=results[sid]&&results[sid][gi];
+      winners.push(r?r.w:`??(G${gi+1}@${sid})`);
     });
   });
-
-  // Pair winners: 0vs1, 2vs3, etc.
-  const pairs = [];
-  for(let i=0;i<winners.length;i+=2) {
-    if(winners[i+1] !== undefined) pairs.push([winners[i], winners[i+1]]);
+  const pairs=[];
+  for(let i=0;i<winners.length;i+=2){
+    if(winners[i+1]!==undefined) pairs.push([winners[i],winners[i+1]]);
   }
   return pairs;
 }
 
 // ── SAVE / LOAD ──────────────────────────────────────────────────
-function save() {
-  try {
-    localStorage.setItem('s26_picks', JSON.stringify(picks));
-    localStorage.setItem('s26_results', JSON.stringify(results));
-    localStorage.setItem('s26_plan', JSON.stringify(plan));
-  } catch(e) {}
+function save(){
+  try{
+    localStorage.setItem('s26_dd',JSON.stringify(dayDesig));
+    localStorage.setItem('s26_picks',JSON.stringify(picks));
+    localStorage.setItem('s26_res',JSON.stringify(results));
+    localStorage.setItem('s26_plan',JSON.stringify(plan));
+  }catch(e){}
 }
-function load() {
-  try {
-    const p  = localStorage.getItem('s26_picks');
-    const r  = localStorage.getItem('s26_results');
-    const pl = localStorage.getItem('s26_plan');
-    if(p)  picks   = JSON.parse(p);
-    if(r)  { const lr=JSON.parse(r); Object.keys(lr).forEach(k=>{ results[k]=lr[k]; }); }
-    if(pl) { const lpl=JSON.parse(pl); Object.keys(lpl).forEach(k=>{ if(plan[k]) plan[k]=lpl[k]; }); }
-  } catch(e) {}
+function load(){
+  try{
+    const dd=localStorage.getItem('s26_dd');
+    const pk=localStorage.getItem('s26_picks');
+    const rs=localStorage.getItem('s26_res');
+    const pl=localStorage.getItem('s26_plan');
+    if(dd){ const v=JSON.parse(dd); DAYS.forEach(d=>{ if(v[d.id]) dayDesig[d.id]=v[d.id]; }); }
+    if(pk) picks=JSON.parse(pk);
+    if(rs){ const v=JSON.parse(rs); DAYS.forEach(d=>{ if(v[d.id]) results[d.id]=v[d.id]; }); }
+    if(pl){ const v=JSON.parse(pl); Object.keys(v).forEach(k=>{ if(plan[k]) plan[k]=v[k]; }); }
+  }catch(e){}
 }
-function expJSON() {
-  const d = {v:3, t:new Date().toISOString(), picks, results, plan};
-  const b = new Blob([JSON.stringify(d)],{type:'application/json'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='survivor26.json'; a.click();
+function expJSON(){
+  const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};
+  const b=new Blob([JSON.stringify(d)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='survivor26.json';a.click();
 }
-function impJSON(ev) {
-  const f=ev.target.files[0]; if(!f) return;
+function impJSON(ev){
+  const f=ev.target.files[0];if(!f)return;
   const rd=new FileReader();
   rd.onload=e=>{
-    try {
+    try{
       const d=JSON.parse(e.target.result);
-      if(d.picks)   picks=d.picks;
-      if(d.results) Object.keys(d.results).forEach(k=>{results[k]=d.results[k];});
-      if(d.plan)    Object.keys(d.plan).forEach(k=>{ if(plan[k]) plan[k]=d.plan[k]; });
-      save(); refreshAll(); showToast('Loaded ✓');
-    } catch(e) { alert('Could not read file'); }
+      if(d.dayDesig) DAYS.forEach(dy=>{ if(d.dayDesig[dy.id]) dayDesig[dy.id]=d.dayDesig[dy.id]; });
+      if(d.picks) picks=d.picks;
+      if(d.results) DAYS.forEach(dy=>{ if(d.results[dy.id]) results[dy.id]=d.results[dy.id]; });
+      if(d.plan) Object.keys(d.plan).forEach(k=>{ if(plan[k]) plan[k]=d.plan[k]; });
+      save(); refreshAll(); toast('Loaded ✓');
+    }catch(e){ alert('Could not read file'); }
   };
   rd.readAsText(f); ev.target.value='';
 }
 
-// ── UI HELPERS ───────────────────────────────────────────────────
-function showPg(id, btn) {
+// ── UI ────────────────────────────────────────────────────────────
+function showPg(id,btn){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('pg-'+id).classList.add('active');
@@ -516,283 +433,249 @@ function showPg(id, btn) {
   if(id==='results') renderResults();
   if(id==='plan')    renderPlan();
 }
-function showToast(msg) {
+function changeDay(d){
+  const n=curDay+d;
+  if(n<0||n>=DAYS.length)return;
+  curDay=n; renderToday();
+}
+function refreshAll(){ renderToday();renderHistory();renderResults();renderPlan(); }
+function toast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-}
-function changeDay(dir) {
-  const next = currentDayIdx + dir;
-  if(next < 0 || next >= DAYS.length) return;
-  currentDayIdx = next;
-  renderToday();
-}
-function refreshAll() {
-  renderToday(); renderHistory(); renderResults(); renderPlan();
-}
-function closeModal() {
-  document.getElementById('modal').style.display='none';
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
 }
 
-// ── TODAY PAGE ───────────────────────────────────────────────────
-function renderToday() {
-  const day  = DAYS[currentDayIdx];
-  const elim = getElim();
-  const used = getUsed();
-  const games = getResolvedGames(currentDayIdx);
-
-  // Day nav
-  document.getElementById('day-name').textContent = day.label;
-  document.getElementById('day-sub').textContent  = day.round;
-  document.getElementById('prev-btn').disabled = currentDayIdx === 0;
-  document.getElementById('next-btn').disabled = currentDayIdx === DAYS.length-1;
-
-  // All unique teams playing today (not placeholders)
-  const todayTeams = [...new Set(games.flat().filter(n=>!n.startsWith('??')))];
-  const availToday = todayTeams.filter(n=>!elim.has(n)&&!used.has(n));
-
-  // Stats
-  const totalAlive = TEAMS.filter(t=>!elim.has(t.team)).length;
-  const totalUsed  = used.size;
-  const totalRemain= TEAMS.filter(t=>!elim.has(t.team)&&!used.has(t.team)).length - availToday.length;
-  document.getElementById('st-used').textContent   = totalUsed;
-  document.getElementById('st-alive').textContent  = totalAlive;
-  document.getElementById('st-avail').textContent  = availToday.length;
-  document.getElementById('st-remain').textContent = totalRemain;
-
-  // My pick
-  const myPick = picks[day.id];
-  const pickEl = document.getElementById('pick-display');
-  const pickLbl = document.getElementById('pick-status-label');
-
-  if(myPick) {
-    const tm = getTeamMeta(myPick);
-    const isElim = elim.has(myPick);
-    // Find result for this pick
-    const gameIdx = games.findIndex(([a,b])=>a===myPick||b===myPick);
-    const res = gameIdx>=0 && results[day.id] ? results[day.id][gameIdx] : null;
-    let resultHtml='', resultColor='';
-    if(res) {
-      if(res.w===myPick){ resultHtml='✅ WIN'; resultColor='var(--green)'; }
-      else { resultHtml='❌ LOSS'; resultColor='var(--red)'; }
-    }
-    pickLbl.innerHTML = res ? `<span style="color:${resultColor};font-weight:700;">${resultHtml}</span>` : '';
-    pickEl.innerHTML=`<div class="pick-set">
-      <span class="ps-seed ${sdClass(tm?tm.seed:0)}">${tm?tm.seed:'?'}</span>
-      <div class="ps-info">
-        <div class="ps-team">${myPick}</div>
-        <div class="ps-sub">${tm?tm.region+' · Seed '+tm.seed:''}</div>
-      </div>
-      <button class="ps-clear" onclick="clearPick('${day.id}')">✕</button>
-    </div>`;
+// ── TODAY ────────────────────────────────────────────────────────
+function setDesig(dayId, teamName, desig){
+  const cur = dayDesig[dayId][teamName];
+  if(cur===desig){
+    // toggle off
+    delete dayDesig[dayId][teamName];
+    if(desig==='pick' && picks[dayId]===teamName) delete picks[dayId];
   } else {
-    pickLbl.textContent = '';
-    pickEl.innerHTML=`<div class="pick-empty">
-      <span>${availToday.length > 0 ? 'Tap a team below to set your pick' : 'No available teams today'}</span>
-    </div>`;
+    // if switching away from pick, clear picks
+    if(desig==='pick'){
+      // clear old pick designation
+      const oldPick=picks[dayId];
+      if(oldPick && oldPick!==teamName) delete dayDesig[dayId][oldPick];
+      picks[dayId]=teamName;
+    }
+    if(cur==='pick') delete picks[dayId];
+    dayDesig[dayId][teamName]=desig;
   }
-
-  // Teams list
-  document.getElementById('games-label').textContent = `${day.label}'s games (${games.length} matchups)`;
-  const cont = document.getElementById('today-teams');
-  cont.innerHTML = '';
-
-  if(games.length === 0) {
-    cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Games will be set once prior round results are entered.</div>';
-    return;
-  }
-
-  games.forEach(([ta, tb], gi) => {
-    const res = results[day.id] ? results[day.id][gi] : null;
-    [ta,tb].forEach(name => {
-      if(name.startsWith('??')) return;
-      const tm = getTeamMeta(name);
-      const isElim = elim.has(name);
-      const isUsed = used.has(name) && picks[day.id]!==name;
-      const isPick = picks[day.id]===name;
-      const st = plan[name]?.status||'none';
-
-      let cardClass='tprow';
-      if(isPick)       cardClass+=' is-pick';
-      else if(isElim)  cardClass+=' is-elim';
-      else if(isUsed)  cardClass+=' is-used';
-      else if(st==='use')   cardClass+=' plan-use';
-      else if(st==='save')  cardClass+=' plan-save';
-      else if(st==='maybe') cardClass+=' plan-maybe';
-      else if(st==='skip')  cardClass+=' plan-skip';
-
-      let rightHtml='';
-      if(isPick)       rightHtml='<span class="tp-badge badge-pick">My Pick</span>';
-      else if(isElim)  rightHtml='<span class="tp-badge badge-elim">Out</span>';
-      else if(isUsed)  rightHtml='<span class="tp-badge badge-used">Used</span>';
-      else {
-        const ico = {use:'🎯',save:'⭐',maybe:'🤔',skip:'🚫'}[st]||'';
-        if(ico) rightHtml=`<span class="plan-icon">${ico}</span>`;
-      }
-
-      // Result indicator
-      let resHtml='';
-      if(res) {
-        if(res.w===name) resHtml='<span style="color:var(--green);font-size:14px;margin-right:4px;">✅</span>';
-        else resHtml='<span style="color:var(--red);font-size:14px;margin-right:4px;">❌</span>';
-      }
-
-      const opp = name===ta ? tb : ta;
-
-      const row=document.createElement('div');
-      row.className=cardClass;
-      row.innerHTML=`
-        ${resHtml}
-        <span class="tp-seed ${sdClass(tm?tm.seed:0)}">${tm?tm.seed:'?'}</span>
-        <span class="rdot ${rdotClass(tm?tm.region:'')}"></span>
-        <div class="tp-info">
-          <div class="tp-team">${name}</div>
-          <div class="tp-meta">${tm?tm.region:'?'} · vs ${opp.startsWith('??')?'TBD':opp}</div>
-        </div>
-        <div class="tp-right">${rightHtml}</div>
-      `;
-      if(!isElim && !isUsed) row.onclick=()=>openTodayModal(name, day.id, opp);
-      cont.appendChild(row);
-    });
-
-    // Small vs divider
-    const vs=document.createElement('div');
-    vs.style.cssText='text-align:center;font-size:10px;color:var(--dim);margin:-4px 0 3px;font-weight:700;letter-spacing:.1em;';
-    vs.textContent='— VS —';
-    if(gi < games.length-1) cont.insertBefore(vs, cont.lastChild.nextSibling);
-  });
-}
-
-function clearPick(dayId) {
-  delete picks[dayId];
   save(); renderToday(); renderHistory();
 }
 
-function openTodayModal(name, dayId, opp) {
-  const tm = getTeamMeta(name);
-  const st = plan[name]?.status||'none';
-  const isPick = picks[dayId]===name;
+function renderToday(){
+  const day=DAYS[curDay];
+  const elim=getElim();
+  const used=getUsed();
+  const games=getResolvedGames(curDay);
+  const desigs=dayDesig[day.id]||{};
 
-  document.getElementById('m-title').textContent = name;
-  document.getElementById('m-sub').textContent = `${tm?'Seed '+tm.seed+' · '+tm.region:'?'} · vs ${opp.startsWith('??')?'TBD':opp}`;
+  // Day nav
+  document.getElementById('day-name').textContent=day.label;
+  document.getElementById('day-sub').textContent=day.round+' · '+games.length+' games';
+  document.getElementById('prev-btn').disabled=curDay===0;
+  document.getElementById('next-btn').disabled=curDay===DAYS.length-1;
 
-  const opts = document.getElementById('m-opts');
-  opts.innerHTML='';
-
-  const options=[
-    { ico:'🏀', lbl: isPick?'✓ This is your pick':'Set as my pick for this day', sub:`Lock in ${name} for ${DAYS.find(d=>d.id===dayId)?.label||dayId}`, action:()=>{ picks[dayId]=name; save(); renderToday(); renderHistory(); showToast(`✓ ${name} set!`); }, sel: isPick },
-    { ico:'🎯', lbl:'Mark: Will use', sub:'Flag for planning — not your pick yet', action:()=>{ plan[name].status=plan[name].status==='use'?'none':'use'; save(); renderToday(); renderPlan(); showToast('Flagged: Will use'); }, sel:st==='use' },
-    { ico:'⭐', lbl:'Mark: Save for later', sub:'Hold back for Sweet 16 or later', action:()=>{ plan[name].status=plan[name].status==='save'?'none':'save'; save(); renderToday(); renderPlan(); showToast('Flagged: Saving'); }, sel:st==='save' },
-    { ico:'🤔', lbl:'Mark: Maybe', sub:'Keeping as an option', action:()=>{ plan[name].status=plan[name].status==='maybe'?'none':'maybe'; save(); renderToday(); renderPlan(); showToast('Flagged: Maybe'); }, sel:st==='maybe' },
-    { ico:'🚫', lbl:'Mark: Skip', sub:"Not using this team", action:()=>{ plan[name].status=plan[name].status==='skip'?'none':'skip'; save(); renderToday(); renderPlan(); showToast('Flagged: Skip'); }, sel:st==='skip' },
+  // ── BUCKETS ──
+  const BKTS=[
+    {key:'pick', ico:'🎯', lbl:'My Pick',   cls:'bc-pick'},
+    {key:'cand', ico:'✅', lbl:'Candidate', cls:'bc-cand'},
+    {key:'save', ico:'⭐', lbl:'Save',      cls:'bc-save'},
+    {key:'maybe',ico:'🤔', lbl:'Maybe',     cls:'bc-maybe'},
+    {key:'never',ico:'🚫', lbl:'Never',     cls:'bc-never'},
   ];
 
-  options.forEach(o=>{
-    const d=document.createElement('div');
-    d.className='modal-option'+(o.sel?' sel':'');
-    d.innerHTML=`<span class="mo-ico">${o.ico}</span><div><div class="mo-lbl">${o.lbl}</div><div class="mo-sub">${o.sub}</div></div>`;
-    d.onclick=()=>{ o.action(); closeModal(); };
-    opts.appendChild(d);
+  const bktEl=document.getElementById('buckets');
+  bktEl.innerHTML='';
+  BKTS.forEach(b=>{
+    const members=Object.entries(desigs).filter(([,v])=>v===b.key).map(([k])=>k);
+    const div=document.createElement('div');
+    div.className='bucket';
+    div.innerHTML=`<span class="bkt-ico">${b.ico}</span><span class="bkt-lbl">${b.lbl}</span>`;
+    const items=document.createElement('div');
+    items.className='bkt-items';
+    if(members.length===0){
+      const empty=document.createElement('div');
+      empty.style.cssText='font-size:9px;color:var(--dim);text-align:center;padding:2px 0;';
+      empty.textContent='—';
+      items.appendChild(empty);
+    } else {
+      members.forEach(name=>{
+        const chip=document.createElement('div');
+        chip.className='bkt-chip '+b.cls;
+        const t=tm(name);
+        chip.textContent=(t?t.seed+' ':'')+name;
+        chip.title=name;
+        chip.onclick=()=>{ setDesig(day.id,name,b.key); };
+        items.appendChild(chip);
+      });
+    }
+    div.appendChild(items);
+    bktEl.appendChild(div);
   });
 
-  document.getElementById('modal').style.display='flex';
+  // ── MATCHUPS ──
+  document.getElementById('matchups-hdr').textContent=
+    `${day.label} matchups (${games.length})`;
+  const cont=document.getElementById('matchups');
+  cont.innerHTML='';
+
+  if(games.length===0){
+    cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Games populate once prior round results are entered.</div>';
+    return;
+  }
+
+  games.forEach(([ta,tb],gi)=>{
+    const res=results[day.id]?results[day.id][gi]:null;
+    const hasPick=desigs[ta]==='pick'||desigs[tb]==='pick';
+    const card=document.createElement('div');
+    card.className='matchup'+(hasPick?' has-pick':'');
+
+    [ta,tb].forEach((name,ni)=>{
+      const t=tm(name);
+      const isElim=elim.has(name);
+      const isUsed=used.has(name)&&desigs[name]!=='pick';
+      const isPh=name.startsWith('??');
+      const d=desigs[name]||'none';
+      const resWon=res&&res.w===name;
+      const resLost=res&&res.l===name;
+      const opp=name===ta?tb:ta;
+
+      let rowCls='tr';
+      if(isPh) rowCls+=' used';
+      else if(resWon) rowCls+=' res-won';
+      else if(resLost) rowCls+=' res-lost';
+      else if(isElim) rowCls+=' elim';
+      else if(isUsed) rowCls+=' used';
+
+      const row=document.createElement('div');
+      row.className=rowCls;
+
+      let rightHtml='';
+      if(isPh){
+        rightHtml='<span style="font-size:10px;color:var(--dim)">TBD</span>';
+      } else if(resWon){
+        rightHtml='<span class="res-ico">✅</span>';
+      } else if(resLost){
+        rightHtml='<span class="res-ico">❌</span>';
+      } else if(isElim){
+        rightHtml='<span class="tr-tag tag-elim">Out</span>';
+      } else if(isUsed){
+        const ud=Object.entries(picks).find(([,n])=>n===name);
+        const udl=ud?DAYS.find(dx=>dx.id===ud[0])?.label.replace(/\w+ /,''):'';
+        rightHtml=`<span class="tr-tag tag-used">Used${udl?' '+udl:''}</span>`;
+      } else {
+        rightHtml=`<div class="tr-icons">
+          <button class="ti${d==='pick'?' on-pick':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','pick')"  title="My Pick">🎯</button>
+          <button class="ti${d==='cand'?' on-cand':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','cand')"  title="Candidate">✅</button>
+          <button class="ti${d==='save'?' on-save':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','save')"  title="Save">⭐</button>
+          <button class="ti${d==='maybe'?' on-maybe':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','maybe')" title="Maybe">🤔</button>
+          <button class="ti${d==='never'?' on-never':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','never')" title="Never">🚫</button>
+        </div>`;
+      }
+
+      row.innerHTML=`
+        <span class="tr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
+        <span class="rdot ${rdCls(t?t.region:'')}" style="margin-right:1px;"></span>
+        <div class="tr-info">
+          <div class="tr-name">${name}</div>
+          <div class="tr-meta">${t?t.region:''} · vs ${isPh?'TBD':opp.replace('??','TBD')}</div>
+        </div>
+        ${rightHtml}
+      `;
+      card.appendChild(row);
+
+      // VS bar between teams
+      if(ni===0){
+        const vs=document.createElement('div');
+        vs.className='vs-bar';
+        vs.textContent='VS';
+        card.appendChild(vs);
+      }
+    });
+
+    cont.appendChild(card);
+  });
 }
 
-// ── HISTORY PAGE ─────────────────────────────────────────────────
-function renderHistory() {
+// ── HISTORY ──────────────────────────────────────────────────────
+function renderHistory(){
   const cont=document.getElementById('history-list');
   cont.innerHTML='';
   const elim=getElim();
   const pickDays=DAYS.filter(d=>picks[d.id]);
-
   if(pickDays.length===0){
-    cont.innerHTML='<div class="empty"><div class="emo">📋</div>No picks yet.<br>Go to Today to make your first pick.</div>';
+    cont.innerHTML='<div class="empty"><div class="emo">📋</div>No picks yet.<br>Head to Today and tap 🎯 on a team.</div>';
     return;
   }
-
   [...pickDays].reverse().forEach(day=>{
     const name=picks[day.id];
-    const tm=getTeamMeta(name);
+    const t=tm(name);
     const games=getResolvedGames(DAYS.indexOf(day));
-    const gameIdx=games.findIndex(([a,b])=>a===name||b===name);
-    const res=gameIdx>=0&&results[day.id]?results[day.id][gameIdx]:null;
-    let cls='hist-pick pending', resultHtml='<span class="hp-result result-pending">Pending</span>';
+    const gi=games.findIndex(([a,b])=>a===name||b===name);
+    const res=gi>=0&&results[day.id]?results[day.id][gi]:null;
+    const opp=gi>=0?games[gi].find(n=>n!==name):'?';
+    let cls='hist-row',rHtml='<span class="hr-result r-pend">Pending</span>';
     if(res){
-      if(res.w===name){ cls='hist-pick won'; resultHtml='<span class="hp-result result-win">WIN ✓</span>'; }
-      else { cls='hist-pick lost'; resultHtml='<span class="hp-result result-loss">LOSS ✗</span>'; }
+      if(res.w===name){cls='hist-row won';rHtml='<span class="hr-result r-win">WIN ✓</span>';}
+      else{cls='hist-row lost';rHtml='<span class="hr-result r-loss">LOSS ✗</span>';}
     }
-    const opp=games[gameIdx]?games[gameIdx].find(n=>n!==name):'?';
-
     const lbl=document.createElement('div');
-    lbl.className='hist-day-label';
+    lbl.className='sec-lbl';
     lbl.textContent=day.label+' · '+day.round;
     cont.appendChild(lbl);
-
-    const pick=document.createElement('div');
-    pick.className=cls;
-    pick.innerHTML=`
-      <span class="hp-seed ${sdClass(tm?tm.seed:0)}">${tm?tm.seed:'?'}</span>
-      <div class="hp-info">
-        <div class="hp-team">${name}</div>
-        <div class="hp-sub">${tm?tm.region+' · Seed '+tm.seed:''} · vs ${opp&&!opp.startsWith('??')?opp:'TBD'}</div>
+    const row=document.createElement('div');
+    row.className=cls;
+    row.innerHTML=`
+      <span class="hr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
+      <div class="hr-info">
+        <div class="hr-team">${name}</div>
+        <div class="hr-sub">${t?t.region+' · Seed '+t.seed:''} · vs ${opp&&!opp.startsWith('??')?opp:'TBD'}</div>
       </div>
-      ${resultHtml}
+      ${rHtml}
     `;
-    cont.appendChild(pick);
+    cont.appendChild(row);
   });
 }
 
-// ── RESULTS PAGE ─────────────────────────────────────────────────
-function renderResults() {
+// ── RESULTS ──────────────────────────────────────────────────────
+function renderResults(){
   const cont=document.getElementById('results-list');
   cont.innerHTML='';
-
-  DAYS.forEach((day, di)=>{
+  DAYS.forEach((day,di)=>{
     const games=getResolvedGames(di);
     if(games.length===0) return;
-    // Only show days that have started (prior day has results or it's the first day)
-    if(di>0){
-      const prevHasResults=DAYS.slice(0,di).some(d=>Object.keys(results[d.id]||{}).length>0);
-      const hasPrev=DAYS.slice(0,di).some(d=>getResolvedGames(DAYS.indexOf(d)).length>0);
-      // Show if: it has games that can be played AND (it has results OR prev days have results OR di<=3)
-      if(di>3&&!prevHasResults&&Object.keys(results[day.id]||{}).length===0) return;
-    }
-
+    if(di>3&&!DAYS.slice(0,di).some(d=>Object.keys(results[d.id]||{}).length>0)&&
+       Object.keys(results[day.id]||{}).length===0) return;
     const entered=Object.keys(results[day.id]||{}).length;
     const lbl=document.createElement('div');
-    lbl.className='hist-day-label';
-    lbl.textContent=`${day.label} · ${day.round}`;
+    lbl.className='sec-lbl';
+    lbl.textContent=`${day.label} · ${day.round} · ${entered}/${games.length}`;
     cont.appendChild(lbl);
-
     games.forEach(([ta,tb],gi)=>{
       const res=results[day.id]?results[day.id][gi]:null;
       const phA=ta.startsWith('??'),phB=tb.startsWith('??');
-      const tmA=getTeamMeta(ta),tmB=getTeamMeta(tb);
-      const wA=res&&res.w===ta,lA=res&&res.l===ta;
-      const wB=res&&res.w===tb,lB=res&&res.l===tb;
-
-      const gc=document.createElement('div');
-      gc.className='game-card';
+      const tA=tm(ta),tB=tm(tb);
+      const gc=document.createElement('div');gc.className='game-card';
       gc.innerHTML=`<div class="game-hdr">Game ${gi+1}</div>`;
-
-      [
-        {name:ta,tm:tmA,won:wA,lost:lA,ph:phA,opp:tb},
-        {name:tb,tm:tmB,won:wB,lost:lB,ph:phB,opp:ta},
-      ].forEach(({name,tm,won,lost,ph,opp})=>{
+      [{name:ta,t:tA,won:res&&res.w===ta,lost:res&&res.l===ta,ph:phA,opp:tb},
+       {name:tb,t:tB,won:res&&res.w===tb,lost:res&&res.l===tb,ph:phB,opp:ta}
+      ].forEach(({name,t,won,lost,ph,opp})=>{
         const row=document.createElement('div');
-        row.className='game-team-row'+(won?' won':lost?' lost':'');
+        row.className='gtr'+(won?' won':lost?' lost':'');
         row.innerHTML=`
-          <span class="gtr-seed ${sdClass(tm?tm.seed:0)}">${tm?tm.seed:'?'}</span>
+          <span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
           <span class="gtr-name">${name}</span>
-          <span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:11px;color:var(--muted)">tap if won</span>'}</span>
+          <span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap if won</span>'}</span>
         `;
-        if(!res&&!ph) row.onclick=()=>{ recordResult(day.id,gi,name,opp); };
+        if(!res&&!ph) row.onclick=()=>recordResult(day.id,gi,name,opp);
         gc.appendChild(row);
       });
-
       if(res){
-        const ur=document.createElement('div');
-        ur.className='undo-row';
+        const ur=document.createElement('div');ur.className='undo-row';
         ur.innerHTML=`<button class="undo-btn" onclick="undoResult('${day.id}',${gi})">↩ Undo</button>`;
         gc.appendChild(ur);
       }
@@ -800,122 +683,92 @@ function renderResults() {
     });
   });
 }
-
 function recordResult(dayId,gi,w,l){
-  if(!results[dayId]) results[dayId]={};
   results[dayId][gi]={w,l};
-  // Clear future days' results that depend on this (cascading bracket)
-  const dayIdx=DAYS.findIndex(d=>d.id===dayId);
-  DAYS.slice(dayIdx+1).forEach(d=>{
-    if(d.games.length===0) results[d.id]={};
-  });
-  save(); refreshAll(); showToast(`${w} wins ✓`);
+  const di=DAYS.findIndex(d=>d.id===dayId);
+  DAYS.slice(di+1).forEach(d=>{ if(d.games.length===0) results[d.id]={}; });
+  save(); refreshAll(); toast(`${w} wins ✓`);
 }
 function undoResult(dayId,gi){
   delete results[dayId][gi];
-  const dayIdx=DAYS.findIndex(d=>d.id===dayId);
-  DAYS.slice(dayIdx+1).forEach(d=>{
-    if(d.games.length===0) results[d.id]={};
-  });
+  const di=DAYS.findIndex(d=>d.id===dayId);
+  DAYS.slice(di+1).forEach(d=>{ if(d.games.length===0) results[d.id]={}; });
   save(); refreshAll();
 }
 
-// ── PLAN PAGE ────────────────────────────────────────────────────
-function setPlanFilter(f,btn){
+// ── PLAN ─────────────────────────────────────────────────────────
+function setPF(f,btn){
   planFilter=f;
   document.querySelectorAll('.pchip').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderPlan();
 }
-
 function renderPlan(){
-  const elim=getElim();
-  const used=getUsed();
+  const elim=getElim(),used=getUsed();
   const cont=document.getElementById('plan-list');
   cont.innerHTML='';
-
   const tiers=[
-    {label:'1 seeds — Save for Final Four',seeds:[1]},
-    {label:'2 seeds — Sweet 16 or later',seeds:[2]},
-    {label:'3–4 seeds — Best early picks',seeds:[3,4]},
-    {label:'5–7 seeds — Solid mid options',seeds:[5,6,7]},
-    {label:'8–11 seeds — Risky',seeds:[8,9,10,11]},
-    {label:'12–16 seeds — Avoid',seeds:[12,13,14,15,16]},
+    {lbl:'1 seeds — save for late',seeds:[1]},
+    {lbl:'2 seeds — Sweet 16+',seeds:[2]},
+    {lbl:'3–4 seeds — best early picks',seeds:[3,4]},
+    {lbl:'5–7 seeds — solid options',seeds:[5,6,7]},
+    {lbl:'8–11 seeds — risky',seeds:[8,9,10,11]},
+    {lbl:'12–16 seeds — avoid',seeds:[12,13,14,15,16]},
   ];
-
-  // Unique teams (no dupes from First Four)
   const seen=new Set();
-  const allTeams=TEAMS.filter(t=>{ if(seen.has(t.team))return false; seen.add(t.team);return true; });
-
+  const all=TEAMS.filter(t=>{ if(seen.has(t.team))return false;seen.add(t.team);return true; });
   tiers.forEach(tier=>{
-    const tierTeams=allTeams.filter(t=>{
+    const list=all.filter(t=>{
       if(!tier.seeds.includes(t.seed)) return false;
-      const isElim=elim.has(t.team);
-      const isUsed=used.has(t.team);
-      const st=plan[t.team]?.status||'none';
+      const isE=elim.has(t.team),isU=used.has(t.team);
+      const s=plan[t.team]?.status||'none';
       if(planFilter==='all') return true;
-      if(planFilter==='available') return !isElim&&!isUsed;
-      if(planFilter==='used') return isUsed;
-      if(planFilter==='elim') return isElim;
-      return st===planFilter;
+      if(planFilter==='available') return !isE&&!isU;
+      if(planFilter==='used') return isU;
+      if(planFilter==='elim') return isE;
+      return s===planFilter;
     });
-    if(tierTeams.length===0) return;
-
-    const lbl=document.createElement('div');
-    lbl.className='hist-day-label';
-    lbl.textContent=tier.label;
+    if(!list.length) return;
+    const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=tier.lbl;
     cont.appendChild(lbl);
-
-    tierTeams.sort((a,b)=>a.seed-b.seed||a.region.localeCompare(b.region));
-    tierTeams.forEach(t=>{
-      const isElim=elim.has(t.team);
-      const isUsed=used.has(t.team);
-      const st=plan[t.team]?.status||'none';
-      const usedDay=isUsed?Object.entries(picks).find(([d,n])=>n===t.team):null;
-
-      let cls='plan-team';
-      if(isElim) cls+=' s-elim';
-      else if(isUsed) cls+=' s-used';
-      else if(st!=='none') cls+=' s-'+st;
-
+    list.sort((a,b)=>a.seed-b.seed||a.region.localeCompare(b.region));
+    list.forEach(t=>{
+      const isE=elim.has(t.team),isU=used.has(t.team);
+      const s=plan[t.team]?.status||'none';
+      const ud=isU?Object.entries(picks).find(([,n])=>n===t.team):null;
+      let cls='plan-row';
+      if(isE) cls+=' s-elim';
+      else if(isU) cls+=' s-used';
+      else if(s!=='none') cls+=' s-'+s;
       let right='';
-      if(isElim) right='<span class="tp-badge badge-elim">💀 Out</span>';
-      else if(isUsed) right=`<span class="tp-badge badge-used">Used${usedDay?' '+DAYS.find(d=>d.id===usedDay[0])?.label.split(' ')[0]:''}+</span>`;
-      else right=`<div class="pt-btns">
-        <button class="ptbtn${st==='use'?' on-use':''}" onclick="togglePlan(event,'${t.team}','use')">🎯</button>
-        <button class="ptbtn${st==='save'?' on-save':''}" onclick="togglePlan(event,'${t.team}','save')">⭐</button>
-        <button class="ptbtn${st==='maybe'?' on-maybe':''}" onclick="togglePlan(event,'${t.team}','maybe')">🤔</button>
-        <button class="ptbtn${st==='skip'?' on-skip':''}" onclick="togglePlan(event,'${t.team}','skip')">🚫</button>
+      if(isE) right='<span class="tr-tag tag-elim">💀 Out</span>';
+      else if(isU) right=`<span class="tr-tag tag-used">Used${ud?' '+DAYS.find(d=>d.id===ud[0])?.label.split(' ')[0]:''}.</span>`;
+      else right=`<div class="pr-btns">
+        <button class="pbtn${s==='cand'?' on-cand':''}"  onclick="tPlan(event,'${t.team}','cand')">✅</button>
+        <button class="pbtn${s==='save'?' on-save':''}"  onclick="tPlan(event,'${t.team}','save')">⭐</button>
+        <button class="pbtn${s==='maybe'?' on-maybe':''}" onclick="tPlan(event,'${t.team}','maybe')">🤔</button>
+        <button class="pbtn${s==='never'?' on-never':''}" onclick="tPlan(event,'${t.team}','never')">🚫</button>
       </div>`;
-
-      const row=document.createElement('div');
-      row.className=cls;
+      const row=document.createElement('div');row.className=cls;
       row.innerHTML=`
-        <span class="pt-seed ${sdClass(t.seed)}">${t.seed}</span>
-        <span class="rdot ${rdotClass(t.region)}"></span>
-        <div class="pt-info">
-          <div class="pt-team">${t.team}</div>
-          <div class="pt-sub">${t.region}</div>
-        </div>
+        <span class="pr-seed ${sdCls(t.seed)}">${t.seed}</span>
+        <span class="rdot ${rdCls(t.region)}"></span>
+        <div class="pr-info"><div class="pr-team">${t.team}</div><div class="pr-sub">${t.region}</div></div>
         ${right}
       `;
       cont.appendChild(row);
     });
   });
-
-  if(cont.children.length===0) cont.innerHTML='<div class="empty"><div class="emo">🔍</div>No teams match this filter.</div>';
+  if(!cont.children.length) cont.innerHTML='<div class="empty"><div class="emo">🔍</div>No teams match.</div>';
 }
-
-function togglePlan(e,name,st){
+function tPlan(e,name,s){
   e.stopPropagation();
-  plan[name].status=plan[name].status===st?'none':st;
-  save(); renderPlan(); renderToday();
+  plan[name].status=plan[name].status===s?'none':s;
+  save(); renderPlan();
 }
 
 // ── INIT ─────────────────────────────────────────────────────────
 load();
-// Jump to first day with games if no picks yet
-if(Object.keys(picks).length===0) currentDayIdx=2;
 renderToday();
 </script>
 </body>
