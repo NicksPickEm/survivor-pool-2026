@@ -497,11 +497,9 @@ async function pushToCloud(){
   const url = getScriptUrl();
   if(!url) return;
   try{
-    await fetch(url, {
-      method:'POST',
-      body: JSON.stringify(buildPayload()),
-      headers:{'Content-Type':'application/json'}
-    });
+    // Apps Script requires GET for CORS — encode payload as a query param
+    const encoded = encodeURIComponent(JSON.stringify(buildPayload()));
+    await fetch(url + '?action=save&data=' + encoded, {mode:'no-cors'});
     const t = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
     setSyncStatus('Synced ' + t, 'var(--green)');
   }catch(e){
@@ -514,7 +512,7 @@ async function pullFromCloud(){
   if(!url){ setSyncStatus('2026 · 1 pick per day','var(--muted)'); return; }
   setSyncStatus('Syncing...','var(--amber)');
   try{
-    const res = await fetch(url);
+    const res = await fetch(url + '?action=load');
     const json = await res.json();
     if(json.ok && json.data && json.data.picks){
       applyPayload(json.data);
