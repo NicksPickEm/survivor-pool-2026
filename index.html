@@ -161,12 +161,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="hdr">
   <div class="hdr-l">
     <h1>🏀 NCAA Survivor</h1>
-    <p>2026 · 1 pick per day</p>
+    <p id="sync-status" style="font-size:11px;color:var(--muted);margin-top:1px;">2026 · 1 pick per day</p>
   </div>
   <div class="hdr-r">
+    <button class="icobtn" onclick="manualSync()" title="Sync now" id="sync-btn">☁️</button>
+    <button class="icobtn" onclick="showSyncSetup()" title="Cloud settings">⚙️</button>
     <button class="icobtn" onclick="expJSON()" title="Export">📤</button>
     <button class="icobtn" onclick="document.getElementById('fimp').click()" title="Import">📥</button>
     <input type="file" id="fimp" accept=".json" style="display:none" onchange="impJSON(event)">
+  </div>
+</div>
+
+<!-- SYNC SETUP MODAL -->
+<div id="sync-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:flex-end;justify-content:center;">
+  <div style="background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:20px 16px 40px;width:100%;max-width:520px;border:1px solid var(--border);">
+    <div style="width:36px;height:4px;background:var(--dim);border-radius:2px;margin:0 auto 16px;"></div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:6px;">☁️ Cloud sync setup</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Paste your Google Apps Script Web App URL below to sync picks and results across all your devices automatically.</div>
+    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Web App URL</div>
+    <input id="script-url-input" type="url" placeholder="https://script.google.com/macros/s/..." 
+      style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;">
+    <button onclick="saveScriptUrl()" style="width:100%;padding:14px;background:var(--blue);border:none;border-radius:var(--rsm);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;">Save &amp; sync now</button>
+    <button onclick="document.getElementById('sync-modal').style.display='none'" style="width:100%;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Cancel</button>
   </div>
 </div>
 
@@ -421,6 +437,18 @@ function getResolvedGames(di){
 }
 
 // ── SAVE / LOAD ──────────────────────────────────────────────────
+let scriptUrl = '';
+let syncTimer = null;
+
+function getScriptUrl(){
+  return localStorage.getItem('s26_scriptUrl')||'';
+}
+
+function setSyncStatus(msg, color){
+  const el = document.getElementById('sync-status');
+  if(el){ el.textContent = msg; el.style.color = color||'var(--muted)'; }
+}
+
 function save(){
   try{
     localStorage.setItem('s26_dd',JSON.stringify(dayDesig));
@@ -428,7 +456,14 @@ function save(){
     localStorage.setItem('s26_res',JSON.stringify(results));
     localStorage.setItem('s26_plan',JSON.stringify(plan));
   }catch(e){}
+  // Debounce cloud sync — wait 1.5s after last change before pushing
+  if(getScriptUrl()){
+    clearTimeout(syncTimer);
+    setSyncStatus('Saving...','var(--amber)');
+    syncTimer = setTimeout(()=>pushToCloud(), 1500);
+  }
 }
+
 function load(){
   try{
     const dd=localStorage.getItem('s26_dd');
@@ -440,6 +475,77 @@ function load(){
     if(rs){ const v=JSON.parse(rs); DAYS.forEach(d=>{ if(v[d.id]) results[d.id]=v[d.id]; }); }
     if(pl){ const v=JSON.parse(pl); Object.keys(v).forEach(k=>{ if(plan[k]) plan[k]=v[k]; }); }
   }catch(e){}
+}
+
+function buildPayload(){
+  return { dayDesig, picks, results, plan, savedAt: new Date().toISOString() };
+}
+
+function applyPayload(d){
+  if(d.dayDesig) DAYS.forEach(dy=>{ if(d.dayDesig[dy.id]) dayDesig[dy.id]=d.dayDesig[dy.id]; });
+  if(d.picks)   picks=d.picks;
+  if(d.results) DAYS.forEach(dy=>{ if(d.results[dy.id]) results[dy.id]=d.results[dy.id]; });
+  if(d.plan)    Object.keys(d.plan).forEach(k=>{ if(plan[k]) plan[k]=d.plan[k]; });
+  // also write back to localStorage
+  localStorage.setItem('s26_dd',JSON.stringify(dayDesig));
+  localStorage.setItem('s26_picks',JSON.stringify(picks));
+  localStorage.setItem('s26_res',JSON.stringify(results));
+  localStorage.setItem('s26_plan',JSON.stringify(plan));
+}
+
+async function pushToCloud(){
+  const url = getScriptUrl();
+  if(!url) return;
+  try{
+    await fetch(url, {
+      method:'POST',
+      body: JSON.stringify(buildPayload()),
+      headers:{'Content-Type':'application/json'}
+    });
+    const t = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced ' + t, 'var(--green)');
+  }catch(e){
+    setSyncStatus('Sync failed', 'var(--red)');
+  }
+}
+
+async function pullFromCloud(){
+  const url = getScriptUrl();
+  if(!url){ setSyncStatus('2026 · 1 pick per day','var(--muted)'); return; }
+  setSyncStatus('Syncing...','var(--amber)');
+  try{
+    const res = await fetch(url);
+    const json = await res.json();
+    if(json.ok && json.data && json.data.picks){
+      applyPayload(json.data);
+      refreshAll();
+      const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+      setSyncStatus('Synced ' + t, 'var(--green)');
+    } else {
+      setSyncStatus('2026 · 1 pick per day','var(--muted)');
+    }
+  }catch(e){
+    setSyncStatus('Offline — using local data','var(--red)');
+  }
+}
+
+function manualSync(){
+  pullFromCloud();
+}
+
+function showSyncSetup(){
+  const modal = document.getElementById('sync-modal');
+  document.getElementById('script-url-input').value = getScriptUrl();
+  modal.style.display='flex';
+}
+
+function saveScriptUrl(){
+  const val = document.getElementById('script-url-input').value.trim();
+  if(!val){ alert('Please paste your Web App URL first.'); return; }
+  localStorage.setItem('s26_scriptUrl', val);
+  document.getElementById('sync-modal').style.display='none';
+  toast('URL saved — syncing...');
+  pullFromCloud();
 }
 function expJSON(){
   const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};
@@ -742,6 +848,8 @@ function undoResult(dayId,gi){
 // ── INIT ─────────────────────────────────────────────────────────
 load();
 renderToday();
+// Pull latest from cloud on startup (if configured)
+pullFromCloud();
 </script>
 </body>
 </html>
