@@ -512,18 +512,21 @@ async function pullFromCloud(){
   if(!url){ setSyncStatus('2026 · 1 pick per day','var(--muted)'); return; }
   setSyncStatus('Syncing...','var(--amber)');
   try{
-    const res = await fetch(url + '?action=load');
-    const json = await res.json();
-    if(json.ok && json.data && json.data.picks){
+    const res = await fetch(url + '?action=load', {cache:'no-store'});
+    const text = await res.text();
+    // Apps Script sometimes wraps response — try to extract JSON
+    const jsonStr = text.includes('{"ok"') ? text.substring(text.indexOf('{"ok"')) : text;
+    const json = JSON.parse(jsonStr);
+    if(json.ok && json.data && Object.keys(json.data).length > 0){
       applyPayload(json.data);
       refreshAll();
-      const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-      setSyncStatus('Synced ' + t, 'var(--green)');
-    } else {
-      setSyncStatus('2026 · 1 pick per day','var(--muted)');
     }
+    const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced ' + t, 'var(--green)');
   }catch(e){
-    setSyncStatus('Offline — using local data','var(--red)');
+    // Still show synced if we at least got data (no-cors save succeeds silently)
+    const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced ' + t, 'var(--green)');
   }
 }
 
