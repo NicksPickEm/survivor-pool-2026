@@ -71,31 +71,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .eteam{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid;margin:2px;}
 .et-good{background:var(--gbg);color:var(--green);border-color:var(--gdim);}
 .et-ok{background:var(--card2);color:var(--muted);border-color:var(--border);}
+.sync-bar{padding:8px 14px;font-size:11px;font-weight:600;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.sync-status{font-size:11px;}
+.sync-btn{padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;}
 .empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
 .elim-tag{font-size:11px;color:var(--red);font-style:italic;}
+.setup-box{margin:14px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);}
+.setup-box p{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+.setup-input{width:100%;height:38px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;padding:0 10px;outline:none;margin-bottom:8px;}
+.setup-save{width:100%;padding:12px;background:var(--blue);border:none;border-radius:var(--rsm);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
 </style>
 </head>
 <body>
 <div class="hdr">
-  <div><h1>🏀 Pool Tracker</h1><p>Nick · Matt · Gene · 2026</p></div>
+  <div><h1>🏀 Pool Tracker</h1><p id="sync-status">Nick · Matt · Gene · 2026</p></div>
   <div class="hdr-r">
-    <button class="icobtn" onclick="expJSON()">📤 Export</button>
-    <button class="icobtn" onclick="document.getElementById('fimp').click()">📥 Import</button>
+    <button class="icobtn" onclick="manualSync()">☁️</button>
+    <button class="icobtn" onclick="expJSON()">📤</button>
+    <button class="icobtn" onclick="document.getElementById('fimp').click()">📥</button>
     <input type="file" id="fimp" accept=".json" style="display:none" onchange="impJSON(event)">
   </div>
 </div>
-<div class="players" id="players"></div>
-<div class="day-nav">
-  <button class="dnbtn" id="prev-btn" onclick="changeDay(-1)">&#8249;</button>
-  <div class="day-center"><div class="day-name" id="day-name">-</div><div class="day-sub" id="day-sub">-</div></div>
-  <button class="dnbtn" id="next-btn" onclick="changeDay(1)">&#8250;</button>
+
+<div id="setup-section" style="display:none;">
+  <div class="setup-box">
+    <p>Paste your Google Apps Script URL to sync picks across all devices. Use the same URL from your personal planner.</p>
+    <input class="setup-input" id="url-input" type="url" placeholder="https://script.google.com/macros/s/...">
+    <button class="setup-save" onclick="saveUrl()">Save & sync</button>
+  </div>
 </div>
-<div class="section"><div class="sec-lbl">Picks</div><div id="picks-entry"></div></div>
-<div class="hist-wrap"><div class="sec-lbl" style="padding:4px 0 10px;">History</div><table class="hist-table"><thead><tr><th>Day</th><th style="color:var(--nick)">Nick</th><th style="color:var(--matt)">Matt</th><th style="color:var(--gene)">Gene</th></tr></thead><tbody id="hist-body"></tbody></table></div>
-<div class="section"><div class="sec-lbl">Edge analysis</div><div id="edge"></div></div>
+
+<div id="main-section">
+  <div class="players" id="players"></div>
+  <div class="day-nav">
+    <button class="dnbtn" id="prev-btn" onclick="changeDay(-1)">&#8249;</button>
+    <div class="day-center"><div class="day-name" id="day-name">-</div><div class="day-sub" id="day-sub">-</div></div>
+    <button class="dnbtn" id="next-btn" onclick="changeDay(1)">&#8250;</button>
+  </div>
+  <div class="section"><div class="sec-lbl">Picks</div><div id="picks-entry"></div></div>
+  <div class="hist-wrap"><div class="sec-lbl" style="padding:4px 0 10px;">History</div><table class="hist-table"><thead><tr><th>Day</th><th style="color:var(--nick)">Nick</th><th style="color:var(--matt)">Matt</th><th style="color:var(--gene)">Gene</th></tr></thead><tbody id="hist-body"></tbody></table></div>
+  <div class="section"><div class="sec-lbl">Edge analysis</div><div id="edge"></div></div>
+</div>
+
 <div class="toast" id="toast"></div>
+
 <script>
 const PLAYERS=[{id:'nick',name:'Nick',color:'var(--nick)'},{id:'matt',name:'Matt',color:'var(--matt)'},{id:'gene',name:'Gene',color:'var(--gene)'}];
 const ALL_TEAMS=[
@@ -135,26 +156,115 @@ const DAYS=[
   {id:'sat-apr4', label:'Sat Apr 4', round:'Final Four'},
   {id:'mon-apr6', label:'Mon Apr 6', round:'Championship'},
 ];
+
 let picks={},results={};
 DAYS.forEach(d=>{picks[d.id]={};results[d.id]={};});
 let curDay=0;
+let syncTimer=null;
+
+// Use pool_ prefix so it doesn't clash with personal planner in same sheet
+const STORE_KEY='pool26_data';
+
+function getUrl(){return localStorage.getItem('pool26_scriptUrl')||'';}
+function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
+
 function getUsed(pid){const u=new Set();DAYS.forEach(d=>{if(picks[d.id]?.[pid])u.add(picks[d.id][pid]);});return u;}
 function isElim(pid){for(const d of DAYS){const p=picks[d.id]?.[pid];if(p&&results[d.id]?.[p]==='loss')return true;}return false;}
 function getWins(pid){let w=0;DAYS.forEach(d=>{const p=picks[d.id]?.[pid];if(p&&results[d.id]?.[p]==='win')w++;});return w;}
 function edgeScore(pid){const used=getUsed(pid);let s=0;ALL_TEAMS.forEach(t=>{if(!used.has(t.name)){s+=t.seed<=2?10:t.seed<=4?6:t.seed<=7?3:1;}});return s;}
-function save(){try{localStorage.setItem('pool26p',JSON.stringify(picks));localStorage.setItem('pool26r',JSON.stringify(results));}catch(e){}}
-function load(){try{const p=localStorage.getItem('pool26p'),r=localStorage.getItem('pool26r');if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])picks[d.id]=v[d.id];});}if(r){const v=JSON.parse(r);DAYS.forEach(d=>{if(v[d.id])results[d.id]=v[d.id];});}}catch(e){}}
+
+function buildPayload(){return {pool_picks:picks,pool_results:results,pool_saved:new Date().toISOString()};}
+
+function saveLocal(){
+  try{localStorage.setItem('pool26p',JSON.stringify(picks));localStorage.setItem('pool26r',JSON.stringify(results));}catch(e){}
+}
+function loadLocal(){
+  try{
+    const p=localStorage.getItem('pool26p'),r=localStorage.getItem('pool26r');
+    if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])picks[d.id]=v[d.id];});}
+    if(r){const v=JSON.parse(r);DAYS.forEach(d=>{if(v[d.id])results[d.id]=v[d.id];});}
+  }catch(e){}
+}
+
+function save(){
+  saveLocal();
+  if(getUrl()){
+    clearTimeout(syncTimer);
+    setSyncStatus('Saving...','var(--amber)');
+    syncTimer=setTimeout(()=>pushToCloud(),1500);
+  }
+}
+
+async function pushToCloud(){
+  const url=getUrl();if(!url)return;
+  try{
+    const encoded=encodeURIComponent(JSON.stringify(buildPayload()));
+    await fetch(url+'?action=save&data='+encoded,{mode:'no-cors'});
+    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced '+t,'var(--green)');
+  }catch(e){setSyncStatus('Sync failed','var(--red)');}
+}
+
+async function pullFromCloud(){
+  const url=getUrl();
+  if(!url){setSyncStatus('Nick · Matt · Gene · 2026','var(--muted)');return;}
+  setSyncStatus('Syncing...','var(--amber)');
+  try{
+    const res=await fetch(url+'?action=load',{cache:'no-store'});
+    const text=await res.text();
+    const jsonStr=text.includes('{"ok"')?text.substring(text.indexOf('{"ok"')):text;
+    const json=JSON.parse(jsonStr);
+    if(json.ok&&json.data&&json.data.pool_picks){
+      const d=json.data;
+      if(d.pool_picks) DAYS.forEach(dy=>{if(d.pool_picks[dy.id])picks[dy.id]=d.pool_picks[dy.id];});
+      if(d.pool_results) DAYS.forEach(dy=>{if(d.pool_results[dy.id])results[dy.id]=d.pool_results[dy.id];});
+      saveLocal();refresh();
+    }
+    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced '+t,'var(--green)');
+  }catch(e){
+    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced '+t,'var(--green)');
+  }
+}
+
+function manualSync(){pullFromCloud();}
+
+function saveUrl(){
+  const val=document.getElementById('url-input').value.trim();
+  if(!val){alert('Please paste your Apps Script URL.');return;}
+  localStorage.setItem('pool26_scriptUrl',val);
+  document.getElementById('setup-section').style.display='none';
+  document.getElementById('main-section').style.display='block';
+  toast('URL saved — syncing...');
+  pullFromCloud();
+}
+
 function expJSON(){const b=new Blob([JSON.stringify({v:1,picks,results})],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pool2026.json';a.click();}
 function impJSON(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.picks)DAYS.forEach(dy=>{if(d.picks[dy.id])picks[dy.id]=d.picks[dy.id];});if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});save();refresh();toast('Loaded');}catch(e){alert('Bad file');}};rd.readAsText(f);ev.target.value='';}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
 function changeDay(d){const n=curDay+d;if(n<0||n>=DAYS.length)return;curDay=n;refresh();}
+
 function renderPlayers(){const cont=document.getElementById('players');cont.innerHTML='';const scores=PLAYERS.map(p=>edgeScore(p.id));const maxS=Math.max(...scores,1);PLAYERS.forEach((p,i)=>{const e=isElim(p.id),w=getWins(p.id),s=scores[i],pct=s/maxS;const ecls=e?'':pct>.7?'edge-s':pct>.4?'edge-m':'edge-w';const etxt=e?'':pct>.7?'Strong edge':pct>.4?'Moderate':'Weak edge';const div=document.createElement('div');div.className='player-card'+(e?' elim':'');div.style.borderColor=e?'':p.color;div.innerHTML=`<div class="pc-name" style="color:${p.color}">${p.name}</div><div class="pc-status" style="color:${e?'var(--red)':'var(--green)'}">${e?'Eliminated':'Alive'}</div><div class="pc-wins">${w} win${w!==1?'s':''}</div>${!e?`<span class="pc-edge ${ecls}">${etxt}</span>`:''}`;cont.appendChild(div);});}
 function renderDay(){const day=DAYS[curDay];document.getElementById('day-name').textContent=day.label;document.getElementById('day-sub').textContent=day.round;document.getElementById('prev-btn').disabled=curDay===0;document.getElementById('next-btn').disabled=curDay===DAYS.length-1;}
 function renderPicks(){const day=DAYS[curDay];const cont=document.getElementById('picks-entry');cont.innerHTML='';PLAYERS.forEach(p=>{const e=isElim(p.id),used=getUsed(p.id);const curPick=picks[day.id]?.[p.id]||'';const res=curPick?results[day.id]?.[curPick]:null;const row=document.createElement('div');row.className='pick-row';const lbl=document.createElement('div');lbl.className='plbl '+p.id;lbl.textContent=p.name;row.appendChild(lbl);if(e){const t=document.createElement('div');t.className='elim-tag';t.textContent='Eliminated';row.appendChild(t);}else{const sel=document.createElement('select');sel.className='pick-sel'+(curPick?' picked':'');sel.innerHTML='<option value="">- no pick -</option>';const todayNames=new Set(DAY_TEAMS[day.id]||[]);const todayTeams=ALL_TEAMS.filter(t=>todayNames.has(t.name));const avail=todayTeams.filter(t=>!used.has(t.name));const usedArr=todayTeams.filter(t=>used.has(t.name));if(avail.length){const g=document.createElement('optgroup');g.label='Available';avail.sort((a,b)=>a.seed-b.seed).forEach(t=>{const o=document.createElement('option');o.value=t.name;o.textContent=t.seed+' '+t.name;if(t.name===curPick)o.selected=true;g.appendChild(o);});sel.appendChild(g);}if(usedArr.length){const g=document.createElement('optgroup');g.label='Already used';usedArr.sort((a,b)=>a.seed-b.seed).forEach(t=>{const o=document.createElement('option');o.value=t.name;o.textContent=t.seed+' '+t.name+' (used)';o.disabled=true;g.appendChild(o);});sel.appendChild(g);}sel.onchange=()=>{if(sel.value)picks[day.id][p.id]=sel.value;else delete picks[day.id][p.id];save();refresh();};row.appendChild(sel);const badge=document.createElement('div');badge.className='rbadge '+(res==='win'?'rb-w':res==='loss'?'rb-l':'rb-p');badge.textContent=res==='win'?'WIN':res==='loss'?'LOSS':'—';row.appendChild(badge);}cont.appendChild(row);});const todayPicks=[...new Set(Object.values(picks[day.id]).filter(Boolean))];if(todayPicks.length){const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.style.marginTop='14px';lbl.textContent='Results';cont.appendChild(lbl);todayPicks.forEach(tn=>{const res=results[day.id]?.[tn];const rr=document.createElement('div');rr.className='res-row';const nm=document.createElement('div');nm.className='res-team';nm.textContent=tn;rr.appendChild(nm);const wb=document.createElement('button');wb.className='rbtn'+(res==='win'?' win-on':'');wb.textContent='WIN';wb.onclick=()=>{results[day.id][tn]=res==='win'?undefined:'win';if(!results[day.id][tn])delete results[day.id][tn];save();refresh();toast(tn+' WIN');};const lb=document.createElement('button');lb.className='rbtn'+(res==='loss'?' loss-on':'');lb.textContent='LOSS';lb.onclick=()=>{results[day.id][tn]=res==='loss'?undefined:'loss';if(!results[day.id][tn])delete results[day.id][tn];save();refresh();toast(tn+' LOSS');};rr.appendChild(wb);rr.appendChild(lb);cont.appendChild(rr);});}}
 function renderHistory(){const tbody=document.getElementById('hist-body');tbody.innerHTML='';const active=DAYS.filter(d=>PLAYERS.some(p=>picks[d.id]?.[p.id]));if(!active.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No picks yet.</td></tr>';return;}active.forEach(day=>{const tr=document.createElement('tr');let c=`<td style="font-size:11px;font-weight:700;color:var(--muted);">${day.label.replace(/\w+ /,'')}<br><span style="font-size:9px;color:var(--dim);font-weight:400">${day.round}</span></td>`;PLAYERS.forEach(p=>{const pick=picks[day.id]?.[p.id],res=pick?results[day.id]?.[pick]:null;const elimBefore=DAYS.slice(0,DAYS.indexOf(day)).some(d=>{const pp=picks[d.id]?.[p.id];return pp&&results[d.id]?.[pp]==='loss';});if(!pick)c+=`<td>${elimBefore?'<span style="color:var(--red);font-size:12px;">💀</span>':'<span class="chip-none">—</span>'}</td>`;else{const cls=res==='win'?'chip-w':res==='loss'?'chip-l':'chip-p';c+=`<td><span class="chip ${cls}">${res==='win'?'✓ ':res==='loss'?'✗ ':''}${pick}</span></td>`;}});tr.innerHTML=c;tbody.appendChild(tr);});}
 function renderEdge(){const cont=document.getElementById('edge');cont.innerHTML='';PLAYERS.forEach(p=>{if(isElim(p.id))return;const used=getUsed(p.id);const rem=ALL_TEAMS.filter(t=>!used.has(t.name)).sort((a,b)=>a.seed-b.seed);const usedList=ALL_TEAMS.filter(t=>used.has(t.name)).sort((a,b)=>a.seed-b.seed);const card=document.createElement('div');card.className='edge-card';card.style.borderColor=p.color;card.innerHTML=`<h3><span style="color:${p.color}">${p.name}</span> — ${rem.length} teams left</h3>`;const list=document.createElement('div');rem.slice(0,10).forEach(t=>{const s=document.createElement('span');s.className='eteam '+(t.seed<=4?'et-good':'et-ok');s.textContent=t.seed+' '+t.name;list.appendChild(s);});if(rem.length>10){const s=document.createElement('span');s.className='eteam et-ok';s.textContent='+'+(rem.length-10)+' more';list.appendChild(s);}card.appendChild(list);if(usedList.length){const u=document.createElement('div');u.style.cssText='margin-top:8px;font-size:10px;color:var(--muted);';u.textContent='Used: '+usedList.map(t=>t.name).join(', ');card.appendChild(u);}cont.appendChild(card);});if(!cont.children.length)cont.innerHTML='<div class="empty">All players eliminated.</div>';}
+
 function refresh(){renderPlayers();renderDay();renderPicks();renderHistory();renderEdge();}
-load();refresh();
+
+// Init
+loadLocal();
+const savedUrl=getUrl();
+if(!savedUrl){
+  document.getElementById('setup-section').style.display='block';
+  document.getElementById('main-section').style.display='none';
+} else {
+  document.getElementById('setup-section').style.display='none';
+  document.getElementById('main-section').style.display='block';
+  pullFromCloud();
+}
+refresh();
 </script>
 </body>
 </html>
