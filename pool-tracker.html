@@ -173,13 +173,37 @@ function isPlayerElim(pid){for(const d of DAYS){const p=poolPicks[d.id]?.[pid];i
 function getWins(pid){let w=0;DAYS.forEach(d=>{const p=poolPicks[d.id]?.[pid];if(p&&poolGames[d.id]?.[p]==='win')w++;});return w;}
 function edgeScore(pid){const used=getUsed(pid),elim=getElimTeams();let s=0;ALL_TEAMS.forEach(t=>{if(!used.has(t.name)&&!elim.has(t.name)){s+=t.seed<=2?10:t.seed<=4?6:t.seed<=7?3:1;}});return s;}
 function saveLocal(){try{localStorage.setItem('pt26_picks',JSON.stringify(poolPicks));localStorage.setItem('pt26_games',JSON.stringify(poolGames));}catch(e){}}
-function loadLocal(){try{const p=localStorage.getItem('pt26_picks'),g=localStorage.getItem('pt26_games');if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])poolPicks[d.id]=v[d.id];});}if(g){const v=JSON.parse(g);DAYS.forEach(d=>{if(v[d.id])poolGames[d.id]=v[d.id];});}}catch(e){}}
 function getUrl(){const u=localStorage.getItem('pt26_url')||'';return u==='skip'?'':u;}
 function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
 function buildPayload(){return{pt_picks:poolPicks,pt_games:poolGames};}
 function save(){saveLocal();if(getUrl()){clearTimeout(syncTimer);setSyncStatus('Saving...','var(--amber)');syncTimer=setTimeout(pushToCloud,1500);}}
 async function pushToCloud(){const url=getUrl();if(!url)return;try{const enc=encodeURIComponent(JSON.stringify(buildPayload()));await fetch(url+'?action=save&data='+enc,{mode:'no-cors'});const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){setSyncStatus('Sync failed','var(--red)');}}
-async function pullFromCloud(){const url=getUrl();if(!url){setSyncStatus('Nick · Matt · Gene · 2026','var(--muted)');return;}setSyncStatus('Syncing...','var(--amber)');try{const res=await fetch(url+'?action=load',{cache:'no-store'});const text=await res.text();const start=text.indexOf('{"ok"');const json=JSON.parse(start>=0?text.substring(start):text);if(json.ok&&json.data){const d=json.data;if(d.pt_picks&&typeof d.pt_picks==='object'){DAYS.forEach(dy=>{poolPicks[dy.id]={};});DAYS.forEach(dy=>{if(d.pt_picks[dy.id])poolPicks[dy.id]=d.pt_picks[dy.id];});}if(d.pt_games&&typeof d.pt_games==='object'){DAYS.forEach(dy=>{poolGames[dy.id]={};});DAYS.forEach(dy=>{if(d.pt_games[dy.id])poolGames[dy.id]=d.pt_games[dy.id];});}saveLocal();refresh();}const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){setSyncStatus('Offline','var(--red)');}}
+async function pullFromCloud(){
+  const url=getUrl();
+  if(!url){setSyncStatus('Nick · Matt · Gene · 2026','var(--muted)');return;}
+  setSyncStatus('Syncing...','var(--amber)');
+  try{
+    const res=await fetch(url+'?action=load',{cache:'no-store'});
+    const text=await res.text();
+    const start=text.indexOf('{"ok"');
+    const json=JSON.parse(start>=0?text.substring(start):text);
+    if(json.ok&&json.data){
+      const d=json.data;
+      // ALWAYS overwrite local with cloud — cloud is master
+      if(d.pt_picks&&typeof d.pt_picks==='object'){
+        DAYS.forEach(dy=>{poolPicks[dy.id]={};});
+        DAYS.forEach(dy=>{if(d.pt_picks[dy.id])poolPicks[dy.id]=d.pt_picks[dy.id];});
+      }
+      if(d.pt_games&&typeof d.pt_games==='object'){
+        DAYS.forEach(dy=>{poolGames[dy.id]={};});
+        DAYS.forEach(dy=>{if(d.pt_games[dy.id])poolGames[dy.id]=d.pt_games[dy.id];});
+      }
+      saveLocal();refresh();
+    }
+    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('Synced '+t,'var(--green)');
+  }catch(e){setSyncStatus('Offline','var(--red)');}
+}
 function manualSync(){pullFromCloud();}
 function showMain(){document.getElementById('setup-section').style.display='none';document.getElementById('main-section').style.display='block';}
 function saveUrl(){const val=document.getElementById('url-input').value.trim();if(!val){alert('Please paste your Apps Script URL.');return;}localStorage.setItem('pt26_url',val);showMain();toast('URL saved — syncing...');pullFromCloud();}
@@ -202,6 +226,8 @@ const _url=localStorage.getItem('pt26_url')||'';
 if(!_url){document.getElementById('setup-section').style.display='block';}
 else{showMain();if(_url!=='skip')pullFromCloud();}
 refresh();
+
+function loadLocal(){try{const p=localStorage.getItem('pt26_picks'),g=localStorage.getItem('pt26_games');if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])poolPicks[d.id]=v[d.id];});}if(g){const v=JSON.parse(g);DAYS.forEach(d=>{if(v[d.id])poolGames[d.id]=v[d.id];});}}catch(e){}}
 </script>
 </body>
 </html>
