@@ -41,8 +41,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .section{padding:12px 14px;}
 .sec-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:4px 0 10px;display:flex;align-items:center;gap:8px;}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* Pick rows */
 .pick-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .plbl{width:44px;font-size:12px;font-weight:700;flex-shrink:0;}
 .plbl.nick{color:var(--nick)}.plbl.matt{color:var(--matt)}.plbl.gene{color:var(--gene)}
@@ -54,8 +52,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .rb-w{background:var(--gbg);color:var(--green);border:1px solid var(--gdim);}
 .rb-l{background:var(--rbg);color:var(--red);border:1px solid #4a1515;}
 .rb-p{background:var(--card2);color:var(--muted);border:1px solid var(--border);}
-
-/* Team picker panel */
 .picker-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
 .picker-panel.open{display:block;}
 .picker-hdr{padding:10px 12px;font-size:11px;font-weight:700;color:var(--muted);background:var(--card2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
@@ -66,8 +62,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .team-btn.used{opacity:.35;cursor:default;text-decoration:line-through;color:var(--muted);}
 .team-btn.elim{opacity:.35;cursor:default;color:var(--red);text-decoration:line-through;}
 .team-seed{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;}
-
-/* Game results */
 .game-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow:hidden;}
 .game-card.done{border-color:var(--gdim);}
 .game-hdr-row{font-size:9px;color:var(--muted);padding:5px 11px;background:var(--card2);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.07em;}
@@ -82,8 +76,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gr-btn{padding:5px 10px;border-radius:var(--rsm);border:1px solid var(--border);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--card2);color:var(--muted);}
 .gr-ico{font-size:14px;flex-shrink:0;}
 .undo-btn{font-size:10px;padding:3px 8px;border:1px solid var(--dim);border-radius:5px;background:var(--card2);color:var(--muted);cursor:pointer;font-family:inherit;margin:4px 11px 6px;display:block;}
-
-/* History */
 .hist-wrap{padding:0 14px 20px;overflow-x:auto;}
 .hist-table{width:100%;border-collapse:collapse;font-size:12px;min-width:360px;}
 .hist-table th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;background:var(--card2);border-bottom:1px solid var(--border);}
@@ -94,15 +86,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .chip-l{background:var(--rbg);border-color:#4a1515;color:var(--red);text-decoration:line-through;opacity:.7;}
 .chip-p{background:var(--card2);border-color:var(--border);color:var(--muted);}
 .chip-none{color:var(--dim);font-style:italic;font-size:11px;}
-
-/* Edge */
 .edge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;}
 .edge-card h3{font-size:13px;font-weight:700;margin-bottom:10px;}
 .eteam{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid;margin:2px;}
 .et-good{background:var(--gbg);color:var(--green);border-color:var(--gdim);}
 .et-ok{background:var(--card2);color:var(--muted);border-color:var(--border);}
 .et-elim{background:var(--rbg);color:var(--red);border-color:#4a1515;text-decoration:line-through;opacity:.6;}
-
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;}
 .empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
@@ -139,15 +128,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="day-center"><div class="day-name" id="day-name">-</div><div class="day-sub" id="day-sub">-</div></div>
     <button class="dnbtn" id="next-btn" onclick="changeDay(1)">&#8250;</button>
   </div>
-  <div class="section">
-    <div class="sec-lbl">Picks</div>
-    <div id="picks-entry"></div>
-  </div>
+  <div class="section"><div class="sec-lbl">Picks</div><div id="picks-entry"></div></div>
+  <div class="hist-wrap"><div class="sec-lbl" style="padding:4px 0 10px;">History</div><table class="hist-table"><thead><tr><th>Day</th><th style="color:var(--nick)">Nick</th><th style="color:var(--matt)">Matt</th><th style="color:var(--gene)">Gene</th></tr></thead><tbody id="hist-body"></tbody></table></div>
   <div class="section"><div class="sec-lbl">Game results</div><div id="game-results"></div></div>
-  <div class="hist-wrap">
-    <div class="sec-lbl" style="padding:4px 0 10px;">History</div>
-    <table class="hist-table"><thead><tr><th>Day</th><th style="color:var(--nick)">Nick</th><th style="color:var(--matt)">Matt</th><th style="color:var(--gene)">Gene</th></tr></thead><tbody id="hist-body"></tbody></table>
-  </div>
   <div class="section"><div class="sec-lbl">Edge analysis</div><div id="edge"></div></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -183,7 +166,6 @@ const DAYS=[{id:'thu-mar19',label:'Thu Mar 19',round:'Round of 64'},{id:'fri-mar
 let poolPicks={},poolGames={};
 DAYS.forEach(d=>{poolPicks[d.id]={};poolGames[d.id]={};});
 let curDay=0,syncTimer=null,openPicker=null;
-
 function sdCls(s){return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';}
 function getElimTeams(){const e=new Set();DAYS.forEach(d=>{Object.entries(poolGames[d.id]).forEach(([t,r])=>{if(r==='loss')e.add(t);});});return e;}
 function getUsed(pid){const u=new Set();DAYS.forEach(d=>{if(poolPicks[d.id]?.[pid])u.add(poolPicks[d.id][pid]);});return u;}
@@ -206,115 +188,15 @@ function expJSON(){const b=new Blob([JSON.stringify({v:3,poolPicks,poolGames})],
 function impJSON(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.poolPicks)DAYS.forEach(dy=>{if(d.poolPicks[dy.id])poolPicks[dy.id]=d.poolPicks[dy.id];});if(d.poolGames)DAYS.forEach(dy=>{if(d.poolGames[dy.id])poolGames[dy.id]=d.poolGames[dy.id];});save();refresh();toast('Loaded');}catch(e){alert('Bad file');}};rd.readAsText(f);ev.target.value='';}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
 function changeDay(d){const n=curDay+d;if(n<0||n>=DAYS.length)return;curDay=n;openPicker=null;refresh();}
-
-function togglePicker(pid){
-  openPicker=openPicker===pid?null:pid;
-  renderPicks();
-}
-
-function setPick(pid,team,dayId){
-  if(poolPicks[dayId][pid]===team){
-    delete poolPicks[dayId][pid];
-  } else {
-    poolPicks[dayId][pid]=team;
-  }
-  openPicker=null;
-  save();
-  refresh();
-}
-
+function togglePicker(pid){openPicker=openPicker===pid?null:pid;renderPicks();}
+function setPick(pid,team,dayId){if(poolPicks[dayId][pid]===team){delete poolPicks[dayId][pid];}else{poolPicks[dayId][pid]=team;}openPicker=null;save();refresh();}
 function renderPlayers(){const cont=document.getElementById('players');cont.innerHTML='';const scores=PLAYERS.map(p=>edgeScore(p.id));const maxS=Math.max(...scores,1);PLAYERS.forEach((p,i)=>{const e=isPlayerElim(p.id),w=getWins(p.id),s=scores[i],pct=s/maxS;const ecls=e?'':pct>.7?'edge-s':pct>.4?'edge-m':'edge-w';const etxt=e?'':pct>.7?'Strong edge':pct>.4?'Moderate':'Weak edge';const div=document.createElement('div');div.className='player-card'+(e?' elim':'');div.style.borderColor=e?'':p.color;div.innerHTML=`<div class="pc-name" style="color:${p.color}">${p.name}</div><div class="pc-status" style="color:${e?'var(--red)':'var(--green)'}">${e?'Eliminated':'Alive'}</div><div class="pc-wins">${w} win${w!==1?'s':''}</div>${!e?`<span class="pc-edge ${ecls}">${etxt}</span>`:''}`;cont.appendChild(div);});}
 function renderDay(){const day=DAYS[curDay];document.getElementById('day-name').textContent=day.label;document.getElementById('day-sub').textContent=day.round;document.getElementById('prev-btn').disabled=curDay===0;document.getElementById('next-btn').disabled=curDay===DAYS.length-1;}
-
-function renderPicks(){
-  const day=DAYS[curDay];
-  const cont=document.getElementById('picks-entry');
-  cont.innerHTML='';
-  const elimTeams=getElimTeams();
-  const todayNames=new Set(DAY_TEAMS[day.id]||[]);
-  const todayTeams=ALL_TEAMS.filter(t=>todayNames.has(t.name)).sort((a,b)=>a.seed-b.seed);
-
-  PLAYERS.forEach(p=>{
-    const e=isPlayerElim(p.id);
-    const used=getUsed(p.id);
-    const curPick=poolPicks[day.id]?.[p.id]||'';
-    const res=curPick?poolGames[day.id]?.[curPick]:null;
-
-    // Pick row
-    const row=document.createElement('div');
-    row.className='pick-row';
-
-    const lbl=document.createElement('div');
-    lbl.className='plbl '+p.id;
-    lbl.textContent=p.name;
-    row.appendChild(lbl);
-
-    const disp=document.createElement('div');
-    if(e){
-      disp.className='pick-display elim';
-      disp.textContent='Eliminated';
-    } else if(curPick){
-      disp.className='pick-display has-pick';
-      disp.textContent='✓ '+curPick+' (tap to change)';
-      disp.onclick=()=>togglePicker(p.id);
-    } else {
-      disp.className='pick-display no-pick';
-      disp.textContent='Tap to pick a team';
-      disp.onclick=()=>togglePicker(p.id);
-    }
-    row.appendChild(disp);
-
-    const badge=document.createElement('div');
-    badge.className='rbadge '+(res==='win'?'rb-w':res==='loss'?'rb-l':'rb-p');
-    badge.textContent=res==='win'?'WIN':res==='loss'?'LOSS':'—';
-    row.appendChild(badge);
-    cont.appendChild(row);
-
-    // Collapsible picker panel
-    if(!e){
-      const panel=document.createElement('div');
-      panel.className='picker-panel'+(openPicker===p.id?' open':'');
-
-      const phdr=document.createElement('div');
-      phdr.className='picker-hdr';
-      phdr.innerHTML=`<span>Pick for ${p.name}</span><span class="picker-close" onclick="togglePicker('${p.id}')">✕</span>`;
-      panel.appendChild(phdr);
-
-      const grid=document.createElement('div');
-      grid.className='team-grid';
-      todayTeams.forEach(t=>{
-        const isUsedElsewhere=used.has(t.name)&&t.name!==curPick;
-        const isElim=elimTeams.has(t.name);
-        const isSelected=t.name===curPick;
-        const btn=document.createElement('button');
-        let cls='team-btn';
-        if(isSelected)cls+=' selected';
-        else if(isUsedElsewhere)cls+=' used';
-        else if(isElim)cls+=' elim';
-        btn.className=cls;
-        btn.disabled=isUsedElsewhere||isElim;
-        const seed=document.createElement('span');
-        seed.className='team-seed '+sdCls(t.seed);
-        seed.textContent=t.seed;
-        btn.appendChild(seed);
-        const nm=document.createElement('span');
-        nm.textContent=t.name;
-        btn.appendChild(nm);
-        if(!isUsedElsewhere&&!isElim){
-          btn.onclick=()=>setPick(p.id,t.name,day.id);
-        }
-        grid.appendChild(btn);
-      });
-      panel.appendChild(grid);
-      cont.appendChild(panel);
-    }
-  });
-}
-
+function renderPicks(){const day=DAYS[curDay];const cont=document.getElementById('picks-entry');cont.innerHTML='';const elimTeams=getElimTeams();const todayNames=new Set(DAY_TEAMS[day.id]||[]);const todayTeams=ALL_TEAMS.filter(t=>todayNames.has(t.name)).sort((a,b)=>a.seed-b.seed);PLAYERS.forEach(p=>{const e=isPlayerElim(p.id);const used=getUsed(p.id);const curPick=poolPicks[day.id]?.[p.id]||'';const res=curPick?poolGames[day.id]?.[curPick]:null;const row=document.createElement('div');row.className='pick-row';const lbl=document.createElement('div');lbl.className='plbl '+p.id;lbl.textContent=p.name;row.appendChild(lbl);const disp=document.createElement('div');if(e){disp.className='pick-display elim';disp.textContent='Eliminated';}else if(curPick){disp.className='pick-display has-pick';disp.textContent='✓ '+curPick+' (tap to change)';disp.onclick=()=>togglePicker(p.id);}else{disp.className='pick-display no-pick';disp.textContent='Tap to pick a team';disp.onclick=()=>togglePicker(p.id);}row.appendChild(disp);const badge=document.createElement('div');badge.className='rbadge '+(res==='win'?'rb-w':res==='loss'?'rb-l':'rb-p');badge.textContent=res==='win'?'WIN':res==='loss'?'LOSS':'—';row.appendChild(badge);cont.appendChild(row);if(!e){const panel=document.createElement('div');panel.className='picker-panel'+(openPicker===p.id?' open':'');const phdr=document.createElement('div');phdr.className='picker-hdr';phdr.innerHTML=`<span>Pick for ${p.name}</span><span class="picker-close" onclick="togglePicker('${p.id}')">✕</span>`;panel.appendChild(phdr);const grid=document.createElement('div');grid.className='team-grid';todayTeams.forEach(t=>{const isUsedElsewhere=used.has(t.name)&&t.name!==curPick;const isElim=elimTeams.has(t.name);const isSelected=t.name===curPick;const btn=document.createElement('button');let cls='team-btn';if(isSelected)cls+=' selected';else if(isUsedElsewhere)cls+=' used';else if(isElim)cls+=' elim';btn.className=cls;btn.disabled=isUsedElsewhere||isElim;const seed=document.createElement('span');seed.className='team-seed '+sdCls(t.seed);seed.textContent=t.seed;btn.appendChild(seed);const nm=document.createElement('span');nm.textContent=t.name;btn.appendChild(nm);if(!isUsedElsewhere&&!isElim){btn.onclick=()=>setPick(p.id,t.name,day.id);}grid.appendChild(btn);});panel.appendChild(grid);cont.appendChild(panel);}});}
 function renderGameResults(){const day=DAYS[curDay];const cont=document.getElementById('game-results');cont.innerHTML='';const games=DAY_GAMES[day.id]||[];if(!games.length){cont.innerHTML='<div class="empty" style="padding:12px;">Game results for later rounds entered here once matchups are known.</div>';return;}games.forEach(([ta,tb],gi)=>{const resA=poolGames[day.id]?.[ta],resB=poolGames[day.id]?.[tb],done=!!(resA||resB);const tmA=ALL_TEAMS.find(t=>t.name===ta),tmB=ALL_TEAMS.find(t=>t.name===tb);const card=document.createElement('div');card.className='game-card'+(done?' done':'');card.innerHTML=`<div class="game-hdr-row">Game ${gi+1}</div>`;[{name:ta,tm:tmA,res:resA,opp:tb},{name:tb,tm:tmB,res:resB,opp:ta}].forEach(({name,tm,res,opp})=>{const row=document.createElement('div');row.className='game-row'+(res==='win'?' won':res==='loss'?' lost':'');const seed=document.createElement('span');seed.className='gr-seed '+(tm?sdCls(tm.seed):'sdlo');seed.textContent=tm?tm.seed:'?';const nm=document.createElement('span');nm.className='gr-name';nm.textContent=name;row.appendChild(seed);row.appendChild(nm);if(!done){const btn=document.createElement('button');btn.className='gr-btn';btn.textContent='Won';btn.onclick=()=>{poolGames[day.id][name]='win';poolGames[day.id][opp]='loss';save();refresh();toast(name+' wins ✓');};row.appendChild(btn);}else{const ico=document.createElement('span');ico.className='gr-ico';ico.textContent=res==='win'?'✅':res==='loss'?'❌':'';row.appendChild(ico);}card.appendChild(row);});if(done){const ub=document.createElement('button');ub.className='undo-btn';ub.textContent='↩ Undo';ub.onclick=()=>{delete poolGames[day.id][ta];delete poolGames[day.id][tb];save();refresh();};card.appendChild(ub);}cont.appendChild(card);});}
 function renderHistory(){const tbody=document.getElementById('hist-body');tbody.innerHTML='';const active=DAYS.filter(d=>PLAYERS.some(p=>poolPicks[d.id]?.[p.id]));if(!active.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No picks yet.</td></tr>';return;}active.forEach(day=>{const tr=document.createElement('tr');let c=`<td style="font-size:11px;font-weight:700;color:var(--muted);">${day.label.replace(/\w+ /,'')}<br><span style="font-size:9px;color:var(--dim);font-weight:400">${day.round}</span></td>`;PLAYERS.forEach(p=>{const pick=poolPicks[day.id]?.[p.id],res=pick?poolGames[day.id]?.[pick]:null;const elimBefore=DAYS.slice(0,DAYS.indexOf(day)).some(d=>{const pp=poolPicks[d.id]?.[p.id];return pp&&poolGames[d.id]?.[pp]==='loss';});if(!pick)c+=`<td>${elimBefore?'<span style="color:var(--red);font-size:12px;">💀</span>':'<span class="chip-none">—</span>'}</td>`;else{const cls=res==='win'?'chip-w':res==='loss'?'chip-l':'chip-p';c+=`<td><span class="chip ${cls}">${res==='win'?'✓ ':res==='loss'?'✗ ':''}${pick}</span></td>`;}});tr.innerHTML=c;tbody.appendChild(tr);});}
 function renderEdge(){const cont=document.getElementById('edge');cont.innerHTML='';const elimTeams=getElimTeams();PLAYERS.forEach(p=>{if(isPlayerElim(p.id))return;const used=getUsed(p.id);const rem=ALL_TEAMS.filter(t=>!used.has(t.name)).sort((a,b)=>a.seed-b.seed);const usedList=ALL_TEAMS.filter(t=>used.has(t.name));const card=document.createElement('div');card.className='edge-card';card.style.borderColor=p.color;const alive=rem.filter(t=>!elimTeams.has(t.name)).length;card.innerHTML=`<h3><span style="color:${p.color}">${p.name}</span> — ${alive} available</h3>`;const list=document.createElement('div');rem.slice(0,12).forEach(t=>{const isElim=elimTeams.has(t.name);const s=document.createElement('span');s.className='eteam '+(isElim?'et-elim':t.seed<=4?'et-good':'et-ok');s.textContent=t.seed+' '+t.name;list.appendChild(s);});if(rem.length>12){const s=document.createElement('span');s.className='eteam et-ok';s.textContent='+'+(rem.length-12)+' more';list.appendChild(s);}card.appendChild(list);if(usedList.length){const u=document.createElement('div');u.style.cssText='margin-top:8px;font-size:10px;color:var(--muted);';u.textContent='Used: '+usedList.map(t=>t.name).join(', ');card.appendChild(u);}cont.appendChild(card);});if(!cont.children.length)cont.innerHTML='<div class="empty">All players eliminated.</div>';}
-function refresh(){renderPlayers();renderDay();renderPicks();renderGameResults();renderHistory();renderEdge();}
+function refresh(){renderPlayers();renderDay();renderPicks();renderHistory();renderGameResults();renderEdge();}
 loadLocal();
 const _url=localStorage.getItem('pt26_url')||'';
 if(!_url){document.getElementById('setup-section').style.display='block';}
