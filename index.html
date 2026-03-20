@@ -18,38 +18,24 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:520px;margin:0 auto;padding-bottom:160px;}
-
-/* HEADER */
 .hdr{padding:16px 14px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;}
 .hdr-l h1{font-size:18px;font-weight:800;letter-spacing:-.3px;}
 .hdr-l p{font-size:11px;color:var(--muted);margin-top:1px;}
 .hdr-r{display:flex;gap:6px;}
 .icobtn{width:34px;height:34px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;}
-
-/* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:50;}
 .nbtn{flex:1;padding:9px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--muted);font-family:inherit;}
 .nbtn.active{color:var(--blue);}
 .nbtn svg{width:21px;height:21px;}
 .nbtn span{font-size:10px;font-weight:600;}
-
-/* PAGES */
 .pg{display:none;padding:0 13px;}
 .pg.active{display:block;}
-
-/* ────────────────────────────────────────────
-   TODAY TAB
-──────────────────────────────────────────── */
-
-/* Day nav strip */
 .day-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;}
 .dnbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;}
 .dnbtn:disabled{opacity:.2;cursor:default;}
 .day-center{text-align:center;}
 .day-name{font-size:17px;font-weight:800;letter-spacing:-.3px;}
 .day-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-
-/* 5 BUCKETS */
 .buckets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:14px;}
 .bucket{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:7px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;}
 .bkt-ico{font-size:18px;line-height:1;}
@@ -62,19 +48,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .bc-save{background:var(--pbg);color:var(--purple);border:1px solid #6b21a8;}
 .bc-maybe{background:var(--abg);color:var(--amber);border:1px solid #92400e;}
 .bc-never{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
-
-/* Section header */
 .sec-hdr{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:2px 0 8px;display:flex;align-items:center;gap:8px;}
 .sec-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* MATCHUP CARDS */
 .matchup{background:var(--card2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;padding:8px;}
 .matchup.has-pick{border-color:var(--green);}
 .vs-row{display:flex;align-items:center;gap:6px;margin:4px 0;}
 .vs-line{flex:1;height:1px;background:var(--border);}
 .vs-txt{font-size:9px;font-weight:800;color:var(--dim);letter-spacing:.14em;flex-shrink:0;}
-
-/* TEAM ROW inside matchup */
 .tr{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card);border-radius:var(--rsm);}
 .tr.elim{opacity:.3;background:var(--rbg);}
 .tr.used{opacity:.4;background:var(--card2);}
@@ -89,7 +69,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tr-icons{display:flex;gap:3px;flex-shrink:0;}
 .ti{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
 .ti:active{transform:scale(.88);}
-.ti.on{opacity:1;}
 .ti.on-pick{background:var(--green);border-color:var(--green);}
 .ti.on-cand{background:var(--blue);border-color:var(--blue);}
 .ti.on-save{background:var(--purple);border-color:var(--purple);}
@@ -99,14 +78,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tag-elim{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
 .tag-used{background:var(--dim);color:var(--muted);}
 .res-ico{font-size:14px;flex-shrink:0;}
-
-/* ────────────────────────────────────────────
-   HISTORY / RESULTS / PLAN TABS
-──────────────────────────────────────────── */
 .sec-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:12px 0 8px;display:flex;align-items:center;gap:8px;}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* History rows */
 .hist-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 13px;margin-bottom:7px;}
 .hist-row.won{border-color:var(--gdim);background:var(--gbg);}
 .hist-row.lost{border-color:#4a1515;background:var(--rbg);opacity:.7;}
@@ -116,8 +89,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hr-sub{font-size:11px;color:var(--muted);margin-top:1px;}
 .hr-result{font-size:12px;font-weight:700;flex-shrink:0;}
 .r-win{color:var(--green);}.r-loss{color:var(--red);}.r-pend{color:var(--amber);}
-
-/* Results game cards */
 .game-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow:hidden;}
 .game-hdr{font-size:9px;color:var(--muted);padding:5px 12px;background:var(--card2);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.07em;}
 .gtr{display:flex;align-items:center;gap:9px;padding:12px 12px;border-bottom:1px solid var(--border);cursor:pointer;}
@@ -132,7 +103,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gtr-ico{font-size:14px;}
 .undo-row{padding:6px 12px;display:flex;justify-content:flex-end;background:var(--card2);border-top:1px solid var(--border);}
 .undo-btn{font-size:11px;color:var(--muted);background:none;border:1px solid var(--dim);border-radius:6px;padding:3px 9px;cursor:pointer;font-family:inherit;}
-
 .strat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
 .strat-card h3{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);}
 .strat-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid;margin:2px;white-space:nowrap;}
@@ -142,14 +112,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tag-watch{background:var(--bbg);color:var(--blue);border-color:#1e40af;}
 .strat-tip{font-size:12px;color:var(--muted);line-height:1.65;padding:10px 12px;background:var(--card2);border-radius:var(--rsm);margin-bottom:6px;}
 .strat-tip b{color:var(--text);}
-
-/* Seed colors */
 .sd1{background:#ffd700;color:#000;}.sd2{background:#c0c0c0;color:#000;}.sd3{background:#cd7f32;color:#fff;}
 .sd4{background:var(--blue);color:#fff;}.sd567{background:var(--card2);color:var(--text);}.sdlo{background:var(--card2);color:var(--muted);}
 .rdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .rE{background:#3b82f6;}.rW{background:#22c55e;}.rS{background:#ef4444;}.rM{background:#a855f7;}
-
-/* TOAST */
 .toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;}
 .empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;}
@@ -157,7 +123,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </style>
 </head>
 <body>
-
 <div class="hdr">
   <div class="hdr-l">
     <h1>🏀 NCAA Survivor</h1>
@@ -171,24 +136,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <input type="file" id="fimp" accept=".json" style="display:none" onchange="impJSON(event)">
   </div>
 </div>
-
-<!-- SYNC SETUP MODAL -->
 <div id="sync-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:flex-end;justify-content:center;">
   <div style="background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:20px 16px 40px;width:100%;max-width:520px;border:1px solid var(--border);">
     <div style="width:36px;height:4px;background:var(--dim);border-radius:2px;margin:0 auto 16px;"></div>
     <div style="font-size:17px;font-weight:800;margin-bottom:6px;">☁️ Cloud sync setup</div>
     <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Paste your Google Apps Script Web App URL below to sync picks and results across all your devices automatically.</div>
     <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Web App URL</div>
-    <input id="script-url-input" type="url" placeholder="https://script.google.com/macros/s/..." 
-      style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;">
+    <input id="script-url-input" type="url" placeholder="https://script.google.com/macros/s/..." style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;">
     <button onclick="saveScriptUrl()" style="width:100%;padding:14px;background:var(--blue);border:none;border-radius:var(--rsm);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;">Save &amp; sync now</button>
     <button onclick="document.getElementById('sync-modal').style.display='none'" style="width:100%;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Cancel</button>
   </div>
 </div>
-
-<!-- TODAY -->
 <div id="pg-today" class="pg active">
-
   <div class="day-nav">
     <button class="dnbtn" id="prev-btn" onclick="changeDay(-1)">‹</button>
     <div class="day-center">
@@ -197,42 +156,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <button class="dnbtn" id="next-btn" onclick="changeDay(1)">›</button>
   </div>
-
-  <!-- 5 buckets -->
   <div class="buckets" id="buckets"></div>
-
-  <!-- Matchups -->
   <div class="sec-hdr" id="matchups-hdr">Matchups</div>
   <div id="matchups"></div>
-<div style="height:40px;"></div>
-
+  <div style="height:40px;"></div>
 </div>
-
-<!-- MY PICKS -->
 <div id="pg-history" class="pg">
   <div id="history-list" style="padding-top:4px;"></div>
-<div style="height:40px;"></div>
+  <div style="height:40px;"></div>
 </div>
-
-<!-- RESULTS -->
 <div id="pg-results" class="pg">
   <div id="results-list" style="padding-top:4px;"></div>
-<div style="height:40px;"></div>
+  <div style="height:40px;"></div>
 </div>
-
-<!-- STRATEGY -->
 <div id="pg-strategy" class="pg">
   <div style="padding-top:14px;">
-
   <div class="sec-lbl">Core rules</div>
   <div class="strat-tip"><b>One pick per day.</b> Pick one team playing that day. They win — you survive. They lose — you're out. Each team can only be used once all tournament.</div>
   <div class="strat-tip"><b>Plan your whole roadmap now.</b> Don't just think about today. Map out which teams you'll use each round so you don't burn your best teams early.</div>
   <div class="strat-tip"><b>Save 1-seeds for later.</b> You need safe picks in the Sweet 16 and Elite Eight. Don't waste Duke or Michigan in Round 1 when Gonzaga will do the same job.</div>
   <div class="strat-tip"><b>Go contrarian when it matters.</b> If everyone in your pool picks Duke on the same day and Duke loses, you gain a massive edge by picking differently.</div>
   <div class="strat-tip"><b>Never pick 8/9 matchups.</b> Both teams are roughly 50/50. There are always better options on the same day.</div>
-
   <div class="sec-lbl" style="margin-top:8px;">Team tiers</div>
-
   <div class="strat-card">
     <h3>⭐ Save for Sweet 16 or later</h3>
     <span class="strat-tag tag-save">Duke</span>
@@ -241,7 +186,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span class="strat-tag tag-save">Florida</span>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);">The 4 one-seeds. Michigan is the betting favorite (+325). Duke has the hardest path — UConn and Michigan State are both in his region.</div>
   </div>
-
   <div class="strat-card">
     <h3>✅ Best early picks — R64 &amp; R32</h3>
     <span class="strat-tag tag-burn">Gonzaga</span>
@@ -253,7 +197,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span class="strat-tag tag-burn">Kansas</span>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);">Strong enough to win comfortably in early rounds. Safe to burn here so you can save the 1-seeds.</div>
   </div>
-
   <div class="strat-card">
     <h3>👀 Watch — good mid-tournament picks</h3>
     <span class="strat-tag tag-watch">UConn</span>
@@ -263,7 +206,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span class="strat-tag tag-watch">Virginia</span>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);">Solid 2–3 seeds. Deploy in Round of 32 or Sweet 16 if your 1-seeds need to be saved longer.</div>
   </div>
-
   <div class="strat-card">
     <h3>🚫 Avoid entirely</h3>
     <span class="strat-tag tag-avoid">Seeds 12–16</span>
@@ -271,18 +213,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span class="strat-tag tag-avoid">North Carolina</span>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);">UNC is without Caleb Wilson (season-ending hand surgery). 8/9 games are coin flips. Seeds 12–16 are trap games.</div>
   </div>
-
   <div class="sec-lbl" style="margin-top:8px;">Round-by-round guide</div>
-  <div class="strat-tip"><b>R64 Thu Mar 19:</b> Gonzaga, Nebraska, Houston, Kansas, Virginia — all easy wins against weak opponents.</div>
-  <div class="strat-tip"><b>R64 Fri Mar 20:</b> Vanderbilt, Illinois, Iowa State, Purdue — strong favorites on a deep day.</div>
+  <div class="strat-tip"><b>R64 Thu Mar 19:</b> Gonzaga, Nebraska, Houston, Michigan, Illinois — all easy wins against weak opponents.</div>
+  <div class="strat-tip"><b>R64 Fri Mar 20:</b> Vanderbilt, Iowa State, Purdue, Kansas — strong favorites on a deep day.</div>
   <div class="strat-tip"><b>R32 (Mar 21–22):</b> Deploy UConn, Michigan State, Alabama, or Arkansas. Save the 1-seeds.</div>
   <div class="strat-tip"><b>Sweet 16 (Mar 26–27):</b> Now use a 1-seed. Michigan or Arizona are safer than Duke (tougher region).</div>
   <div class="strat-tip"><b>Elite Eight (Mar 28–29):</b> Duke or Florida. This is where chalk pools get massacred by upsets.</div>
   <div class="strat-tip"><b>Final Four / Champ:</b> Your last 1-seed. Michigan (+325) is the overall betting favorite.</div>
-
   </div>
 </div>
-
 <nav class="bnav">
   <button class="nbtn active" onclick="showPg('today',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -301,37 +240,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span>Strategy</span>
   </button>
 </nav>
-
 <div class="toast" id="toast"></div>
-
 <script>
-// ── DATA ─────────────────────────────────────────────────────────
 const DAYS=[
-  {id:'tue-mar17',label:'Tue Mar 17',round:'First Four',
-   games:[['Texas','NC State'],['UMBC','Howard']]},
-  {id:'wed-mar18',label:'Wed Mar 18',round:'First Four',
-   games:[['SMU','Miami (OH)'],['Prairie View A&M','Lehigh']]},
-  {id:'thu-mar19',label:'Thu Mar 19',round:'Round of 64',
-   games:[
+  {id:'tue-mar17',label:'Tue Mar 17',round:'First Four',games:[['Texas','NC State'],['UMBC','Howard']]},
+  {id:'wed-mar18',label:'Wed Mar 18',round:'First Four',games:[['SMU','Miami (OH)'],['Prairie View A&M','Lehigh']]},
+  {id:'thu-mar19',label:'Thu Mar 19',round:'Round of 64',games:[
     ['Duke','Siena'],['Ohio State','TCU'],
     ['Louisville','South Florida'],['Michigan State','North Dakota St.'],
     ['Wisconsin','High Point'],['Arkansas','Hawaii'],
-    ['BYU','Texas/NC State'],['Gonzaga','Kennesaw State'],
+    ['BYU','Texas'],['Gonzaga','Kennesaw State'],
     ["Saint Mary's",'Texas A&M'],['Houston','Idaho'],
-    ['Michigan','UMBC/Howard'],['Virginia','Wright State'],
+    ['Michigan','Howard'],['Georgia','Saint Louis'],
     ['Nebraska','Troy'],['North Carolina','VCU'],
     ['Vanderbilt','McNeese'],['Illinois','Penn'],
   ]},
-  {id:'fri-mar20',label:'Fri Mar 20',round:'Round of 64',
-   games:[
+  {id:'fri-mar20',label:'Fri Mar 20',round:'Round of 64',games:[
     ["St. John's",'Northern Iowa'],['Kansas','Cal Baptist'],
     ['UCLA','UCF'],['UConn','Furman'],
     ['Arizona','LIU'],['Villanova','Utah State'],
     ['Purdue','Queens'],['Miami (FL)','Missouri'],
-    ['Florida','PV A&M/Lehigh'],['Clemson','Iowa'],
-    ['Alabama','Hofstra'],['Tennessee','SMU/Miami OH'],
+    ['Florida','Prairie View A&M'],['Clemson','Iowa'],
+    ['Alabama','Hofstra'],['Tennessee','Miami (OH)'],
     ['Texas Tech','Akron'],['Kentucky','Santa Clara'],
-    ['Georgia','Saint Louis'],['Iowa State','Tennessee State'],
+    ['Virginia','Wright State'],['Iowa State','Tennessee State'],
   ]},
   {id:'sat-mar21',label:'Sat Mar 21',round:'Round of 32',games:[]},
   {id:'sun-mar22',label:'Sun Mar 22',round:'Round of 32',games:[]},
@@ -342,7 +274,6 @@ const DAYS=[
   {id:'sat-apr4', label:'Sat Apr 4', round:'Final Four',games:[]},
   {id:'mon-apr6', label:'Mon Apr 6', round:'Championship',games:[]},
 ];
-
 const TEAMS=[
   {seed:1,team:'Duke',region:'East'},{seed:2,team:'UConn',region:'East'},
   {seed:3,team:'Michigan State',region:'East'},{seed:4,team:'Kansas',region:'East'},
@@ -357,7 +288,7 @@ const TEAMS=[
   {seed:5,team:'Wisconsin',region:'West'},{seed:6,team:'BYU',region:'West'},
   {seed:7,team:'Miami (FL)',region:'West'},{seed:8,team:'Villanova',region:'West'},
   {seed:9,team:'Utah State',region:'West'},{seed:10,team:'Missouri',region:'West'},
-  {seed:11,team:'Texas/NC State',region:'West'},{seed:12,team:'High Point',region:'West'},
+  {seed:11,team:'Texas',region:'West'},{seed:12,team:'High Point',region:'West'},
   {seed:13,team:'Hawaii',region:'West'},{seed:14,team:'Kennesaw State',region:'West'},
   {seed:15,team:'Queens',region:'West'},{seed:16,team:'LIU',region:'West'},
   {seed:1,team:'Florida',region:'South'},{seed:2,team:'Houston',region:'South'},
@@ -367,492 +298,54 @@ const TEAMS=[
   {seed:9,team:'Iowa',region:'South'},{seed:10,team:'Texas A&M',region:'South'},
   {seed:11,team:'VCU',region:'South'},{seed:12,team:'McNeese',region:'South'},
   {seed:13,team:'Troy',region:'South'},{seed:14,team:'Penn',region:'South'},
-  {seed:15,team:'Idaho',region:'South'},{seed:16,team:'PV A&M/Lehigh',region:'South'},
+  {seed:15,team:'Idaho',region:'South'},{seed:16,team:'Prairie View A&M',region:'South'},
   {seed:1,team:'Michigan',region:'Midwest'},{seed:2,team:'Iowa State',region:'Midwest'},
   {seed:3,team:'Virginia',region:'Midwest'},{seed:4,team:'Alabama',region:'Midwest'},
   {seed:5,team:'Texas Tech',region:'Midwest'},{seed:6,team:'Tennessee',region:'Midwest'},
   {seed:7,team:'Kentucky',region:'Midwest'},{seed:8,team:'Georgia',region:'Midwest'},
   {seed:9,team:'Saint Louis',region:'Midwest'},{seed:10,team:'Santa Clara',region:'Midwest'},
-  {seed:11,team:'SMU/Miami OH',region:'Midwest'},{seed:12,team:'Akron',region:'Midwest'},
+  {seed:11,team:'Miami (OH)',region:'Midwest'},{seed:12,team:'Akron',region:'Midwest'},
   {seed:13,team:'Hofstra',region:'Midwest'},{seed:14,team:'Wright State',region:'Midwest'},
-  {seed:15,team:'Tennessee State',region:'Midwest'},{seed:16,team:'UMBC/Howard',region:'Midwest'},
-  {seed:11,team:'Texas',region:'West'},{seed:11,team:'NC State',region:'West'},
-  {seed:16,team:'UMBC',region:'Midwest'},{seed:16,team:'Howard',region:'Midwest'},
-  {seed:11,team:'SMU',region:'Midwest'},{seed:11,team:'Miami (OH)',region:'Midwest'},
-  {seed:16,team:'Prairie View A&M',region:'South'},{seed:16,team:'Lehigh',region:'South'},
+  {seed:15,team:'Tennessee State',region:'Midwest'},{seed:16,team:'Howard',region:'Midwest'},
+  {seed:11,team:'NC State',region:'West'},{seed:16,team:'UMBC',region:'Midwest'},
+  {seed:11,team:'SMU',region:'Midwest'},{seed:16,team:'Lehigh',region:'South'},
 ];
-
-// day designations: dayId -> { teamName -> 'pick'|'cand'|'save'|'maybe'|'never' }
-// picks: dayId -> teamName (the actual confirmed pick)
-// results: dayId -> { gameIdx -> {w,l} }
-// plan: teamName -> { status: 'cand'|'save'|'maybe'|'never'|'none' }  (cross-day planning)
-let dayDesig = {}; // per-day designations
-let picks    = {};
-let results  = {};
-let plan     = {};
-DAYS.forEach(d=>{ dayDesig[d.id]={}; results[d.id]={}; });
-TEAMS.forEach(t=>{ plan[t.team]={status:'none'}; });
-
-let curDay = 2; // Thu Mar 19 default
-
-
-// ── HELPERS ──────────────────────────────────────────────────────
-function tm(name){ return TEAMS.find(t=>t.team===name); }
-function sdCls(s){
-  if(!s) return 'sdlo';
-  return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';
-}
-function rdCls(r){ return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[r]||''; }
-
-function getElim(){
-  const e=new Set();
-  Object.values(results).forEach(dr=>Object.values(dr).forEach(g=>{if(g&&g.l)e.add(g.l);}));
-  return e;
-}
-function getUsed(){ return new Set(Object.values(picks).filter(Boolean)); }
-
-function getResolvedGames(di){
-  const day=DAYS[di];
-  if(day.games.length>0) return day.games;
-  const srcMap={
-    'sat-mar21':['thu-mar19'],'sun-mar22':['fri-mar20'],
-    'thu-mar26':['sat-mar21'],'fri-mar27':['sun-mar22'],
-    'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],
-    'sat-apr4':['sat-mar28','sun-mar29'],
-    'mon-apr6':['sat-apr4'],
-  };
-  const srcIds=srcMap[day.id];
-  if(!srcIds) return [];
-  let winners=[];
-  srcIds.forEach(sid=>{
-    const sdi=DAYS.findIndex(d=>d.id===sid);
-    const sg=getResolvedGames(sdi);
-    sg.forEach((g,gi)=>{
-      const r=results[sid]&&results[sid][gi];
-      winners.push(r?r.w:`??(G${gi+1}@${sid})`);
-    });
-  });
-  const pairs=[];
-  for(let i=0;i<winners.length;i+=2){
-    if(winners[i+1]!==undefined) pairs.push([winners[i],winners[i+1]]);
-  }
-  return pairs;
-}
-
-// ── SAVE / LOAD ──────────────────────────────────────────────────
-let scriptUrl = '';
-let syncTimer = null;
-
-function getScriptUrl(){
-  return localStorage.getItem('s26_scriptUrl')||'';
-}
-
-function setSyncStatus(msg, color){
-  const el = document.getElementById('sync-status');
-  if(el){ el.textContent = msg; el.style.color = color||'var(--muted)'; }
-}
-
-function save(){
-  try{
-    localStorage.setItem('s26_dd',JSON.stringify(dayDesig));
-    localStorage.setItem('s26_picks',JSON.stringify(picks));
-    localStorage.setItem('s26_res',JSON.stringify(results));
-    localStorage.setItem('s26_plan',JSON.stringify(plan));
-  }catch(e){}
-  // Debounce cloud sync — wait 1.5s after last change before pushing
-  if(getScriptUrl()){
-    clearTimeout(syncTimer);
-    setSyncStatus('Saving...','var(--amber)');
-    syncTimer = setTimeout(()=>pushToCloud(), 1500);
-  }
-}
-
-function load(){
-  try{
-    const dd=localStorage.getItem('s26_dd');
-    const pk=localStorage.getItem('s26_picks');
-    const rs=localStorage.getItem('s26_res');
-    const pl=localStorage.getItem('s26_plan');
-    if(dd){ const v=JSON.parse(dd); DAYS.forEach(d=>{ if(v[d.id]) dayDesig[d.id]=v[d.id]; }); }
-    if(pk) picks=JSON.parse(pk);
-    if(rs){ const v=JSON.parse(rs); DAYS.forEach(d=>{ if(v[d.id]) results[d.id]=v[d.id]; }); }
-    if(pl){ const v=JSON.parse(pl); Object.keys(v).forEach(k=>{ if(plan[k]) plan[k]=v[k]; }); }
-  }catch(e){}
-}
-
-function buildPayload(){
-  return { dayDesig, picks, results, plan, savedAt: new Date().toISOString() };
-}
-
-function applyPayload(d){
-  if(d.dayDesig) DAYS.forEach(dy=>{ if(d.dayDesig[dy.id]) dayDesig[dy.id]=d.dayDesig[dy.id]; });
-  if(d.picks)   picks=d.picks;
-  if(d.results) DAYS.forEach(dy=>{ if(d.results[dy.id]) results[dy.id]=d.results[dy.id]; });
-  if(d.plan)    Object.keys(d.plan).forEach(k=>{ if(plan[k]) plan[k]=d.plan[k]; });
-  // also write back to localStorage
-  localStorage.setItem('s26_dd',JSON.stringify(dayDesig));
-  localStorage.setItem('s26_picks',JSON.stringify(picks));
-  localStorage.setItem('s26_res',JSON.stringify(results));
-  localStorage.setItem('s26_plan',JSON.stringify(plan));
-}
-
-async function pushToCloud(){
-  const url = getScriptUrl();
-  if(!url) return;
-  try{
-    // Apps Script requires GET for CORS — encode payload as a query param
-    const encoded = encodeURIComponent(JSON.stringify(buildPayload()));
-    await fetch(url + '?action=save&data=' + encoded, {mode:'no-cors'});
-    const t = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced ' + t, 'var(--green)');
-  }catch(e){
-    setSyncStatus('Sync failed', 'var(--red)');
-  }
-}
-
-async function pullFromCloud(){
-  const url = getScriptUrl();
-  if(!url){ setSyncStatus('2026 · 1 pick per day','var(--muted)'); return; }
-  setSyncStatus('Syncing...','var(--amber)');
-  try{
-    const res = await fetch(url + '?action=load', {cache:'no-store'});
-    const text = await res.text();
-    // Apps Script sometimes wraps response — try to extract JSON
-    const jsonStr = text.includes('{"ok"') ? text.substring(text.indexOf('{"ok"')) : text;
-    const json = JSON.parse(jsonStr);
-    if(json.ok && json.data && Object.keys(json.data).length > 0){
-      applyPayload(json.data);
-      refreshAll();
-    }
-    const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced ' + t, 'var(--green)');
-  }catch(e){
-    // Still show synced if we at least got data (no-cors save succeeds silently)
-    const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced ' + t, 'var(--green)');
-  }
-}
-
-function manualSync(){
-  pullFromCloud();
-}
-
-function showSyncSetup(){
-  const modal = document.getElementById('sync-modal');
-  document.getElementById('script-url-input').value = getScriptUrl();
-  modal.style.display='flex';
-}
-
-function saveScriptUrl(){
-  const val = document.getElementById('script-url-input').value.trim();
-  if(!val){ alert('Please paste your Web App URL first.'); return; }
-  localStorage.setItem('s26_scriptUrl', val);
-  document.getElementById('sync-modal').style.display='none';
-  toast('URL saved — syncing...');
-  pullFromCloud();
-}
-function expJSON(){
-  const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};
-  const b=new Blob([JSON.stringify(d)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='survivor26.json';a.click();
-}
-function impJSON(ev){
-  const f=ev.target.files[0];if(!f)return;
-  const rd=new FileReader();
-  rd.onload=e=>{
-    try{
-      const d=JSON.parse(e.target.result);
-      if(d.dayDesig) DAYS.forEach(dy=>{ if(d.dayDesig[dy.id]) dayDesig[dy.id]=d.dayDesig[dy.id]; });
-      if(d.picks) picks=d.picks;
-      if(d.results) DAYS.forEach(dy=>{ if(d.results[dy.id]) results[dy.id]=d.results[dy.id]; });
-      if(d.plan) Object.keys(d.plan).forEach(k=>{ if(plan[k]) plan[k]=d.plan[k]; });
-      save(); refreshAll(); toast('Loaded ✓');
-    }catch(e){ alert('Could not read file'); }
-  };
-  rd.readAsText(f); ev.target.value='';
-}
-
-// ── UI ────────────────────────────────────────────────────────────
-function showPg(id,btn){
-  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='today')   renderToday();
-  if(id==='history') renderHistory();
-  if(id==='results') renderResults();
-  // strategy tab is static
-}
-function changeDay(d){
-  const n=curDay+d;
-  if(n<0||n>=DAYS.length)return;
-  curDay=n; renderToday();
-}
-function refreshAll(){ renderToday();renderHistory();renderResults();renderPlan(); }
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),1800);
-}
-
-// ── TODAY ────────────────────────────────────────────────────────
-function setDesig(dayId, teamName, desig){
-  const cur = dayDesig[dayId][teamName];
-  if(cur===desig){
-    // toggle off
-    delete dayDesig[dayId][teamName];
-    if(desig==='pick' && picks[dayId]===teamName) delete picks[dayId];
-  } else {
-    // if switching away from pick, clear picks
-    if(desig==='pick'){
-      // clear old pick designation
-      const oldPick=picks[dayId];
-      if(oldPick && oldPick!==teamName) delete dayDesig[dayId][oldPick];
-      picks[dayId]=teamName;
-    }
-    if(cur==='pick') delete picks[dayId];
-    dayDesig[dayId][teamName]=desig;
-  }
-  save(); renderToday(); renderHistory();
-}
-
-function renderToday(){
-  const day=DAYS[curDay];
-  const elim=getElim();
-  const used=getUsed();
-  const games=getResolvedGames(curDay);
-  const desigs=dayDesig[day.id]||{};
-
-  // Day nav
-  document.getElementById('day-name').textContent=day.label;
-  document.getElementById('day-sub').textContent=day.round+' · '+games.length+' games';
-  document.getElementById('prev-btn').disabled=curDay===0;
-  document.getElementById('next-btn').disabled=curDay===DAYS.length-1;
-
-  // ── BUCKETS ──
-  const BKTS=[
-    {key:'pick', ico:'🎯', lbl:'My Pick',   cls:'bc-pick'},
-    {key:'cand', ico:'✅', lbl:'Candidate', cls:'bc-cand'},
-    {key:'save', ico:'⭐', lbl:'Save',      cls:'bc-save'},
-    {key:'maybe',ico:'🤔', lbl:'Maybe',     cls:'bc-maybe'},
-    {key:'never',ico:'🚫', lbl:'Never',     cls:'bc-never'},
-  ];
-
-  const bktEl=document.getElementById('buckets');
-  bktEl.innerHTML='';
-  BKTS.forEach(b=>{
-    const members=Object.entries(desigs).filter(([,v])=>v===b.key).map(([k])=>k);
-    const div=document.createElement('div');
-    div.className='bucket';
-    div.innerHTML=`<span class="bkt-ico">${b.ico}</span><span class="bkt-lbl">${b.lbl}</span>`;
-    const items=document.createElement('div');
-    items.className='bkt-items';
-    if(members.length===0){
-      const empty=document.createElement('div');
-      empty.style.cssText='font-size:9px;color:var(--dim);text-align:center;padding:2px 0;';
-      empty.textContent='—';
-      items.appendChild(empty);
-    } else {
-      members.forEach(name=>{
-        const chip=document.createElement('div');
-        chip.className='bkt-chip '+b.cls;
-        const t=tm(name);
-        chip.textContent=(t?t.seed+' ':'')+name;
-        chip.title=name;
-        chip.onclick=()=>{ setDesig(day.id,name,b.key); };
-        items.appendChild(chip);
-      });
-    }
-    div.appendChild(items);
-    bktEl.appendChild(div);
-  });
-
-  // ── MATCHUPS ──
-  document.getElementById('matchups-hdr').textContent=
-    `${day.label} matchups (${games.length})`;
-  const cont=document.getElementById('matchups');
-  cont.innerHTML='';
-
-  if(games.length===0){
-    cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Games populate once prior round results are entered.</div>';
-    return;
-  }
-
-  games.forEach(([ta,tb],gi)=>{
-    const res=results[day.id]?results[day.id][gi]:null;
-    const hasPick=desigs[ta]==='pick'||desigs[tb]==='pick';
-    const card=document.createElement('div');
-    card.className='matchup'+(hasPick?' has-pick':'');
-
-    [ta,tb].forEach((name,ni)=>{
-      const t=tm(name);
-      const isElim=elim.has(name);
-      const isUsed=used.has(name)&&desigs[name]!=='pick';
-      const isPh=name.startsWith('??');
-      const d=desigs[name]||'none';
-      const resWon=res&&res.w===name;
-      const resLost=res&&res.l===name;
-      const opp=name===ta?tb:ta;
-
-      let rowCls='tr';
-      if(isPh) rowCls+=' used';
-      else if(resWon) rowCls+=' res-won';
-      else if(resLost) rowCls+=' res-lost';
-      else if(isElim) rowCls+=' elim';
-      else if(isUsed) rowCls+=' used';
-
-      const row=document.createElement('div');
-      row.className=rowCls;
-
-      let rightHtml='';
-      if(isPh){
-        rightHtml='<span style="font-size:10px;color:var(--dim)">TBD</span>';
-      } else if(resWon){
-        rightHtml='<span class="res-ico">✅</span>';
-      } else if(resLost){
-        rightHtml='<span class="res-ico">❌</span>';
-      } else if(isElim){
-        rightHtml='<span class="tr-tag tag-elim">Out</span>';
-      } else if(isUsed){
-        const ud=Object.entries(picks).find(([,n])=>n===name);
-        const udl=ud?DAYS.find(dx=>dx.id===ud[0])?.label.replace(/\w+ /,''):'';
-        rightHtml=`<span class="tr-tag tag-used">Used${udl?' '+udl:''}</span>`;
-      } else {
-        rightHtml=`<div class="tr-icons">
-          <button class="ti${d==='pick'?' on-pick':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','pick')"  title="My Pick">🎯</button>
-          <button class="ti${d==='cand'?' on-cand':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','cand')"  title="Candidate">✅</button>
-          <button class="ti${d==='save'?' on-save':''}"  onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','save')"  title="Save">⭐</button>
-          <button class="ti${d==='maybe'?' on-maybe':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','maybe')" title="Maybe">🤔</button>
-          <button class="ti${d==='never'?' on-never':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','never')" title="Never">🚫</button>
-        </div>`;
-      }
-
-      row.innerHTML=`
-        <span class="tr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
-        <span class="rdot ${rdCls(t?t.region:'')}" style="margin-right:1px;"></span>
-        <div class="tr-info">
-          <div class="tr-name">${name}</div>
-          <div class="tr-meta">${t?t.region:''} · vs ${isPh?'TBD':opp.replace('??','TBD')}</div>
-        </div>
-        ${rightHtml}
-      `;
-      card.appendChild(row);
-
-      // VS row between teams
-      if(ni===0){
-        const vs=document.createElement('div');
-        vs.className='vs-row';
-        vs.innerHTML='<div class="vs-line"></div><span class="vs-txt">VS</span><div class="vs-line"></div>';
-        card.appendChild(vs);
-      }
-    });
-
-    cont.appendChild(card);
-  });
-}
-
-// ── HISTORY ──────────────────────────────────────────────────────
-function renderHistory(){
-  const cont=document.getElementById('history-list');
-  cont.innerHTML='';
-  const elim=getElim();
-  const pickDays=DAYS.filter(d=>picks[d.id]);
-  if(pickDays.length===0){
-    cont.innerHTML='<div class="empty"><div class="emo">📋</div>No picks yet.<br>Head to Today and tap 🎯 on a team.</div>';
-    return;
-  }
-  [...pickDays].reverse().forEach(day=>{
-    const name=picks[day.id];
-    const t=tm(name);
-    const games=getResolvedGames(DAYS.indexOf(day));
-    const gi=games.findIndex(([a,b])=>a===name||b===name);
-    const res=gi>=0&&results[day.id]?results[day.id][gi]:null;
-    const opp=gi>=0?games[gi].find(n=>n!==name):'?';
-    let cls='hist-row',rHtml='<span class="hr-result r-pend">Pending</span>';
-    if(res){
-      if(res.w===name){cls='hist-row won';rHtml='<span class="hr-result r-win">WIN ✓</span>';}
-      else{cls='hist-row lost';rHtml='<span class="hr-result r-loss">LOSS ✗</span>';}
-    }
-    const lbl=document.createElement('div');
-    lbl.className='sec-lbl';
-    lbl.textContent=day.label+' · '+day.round;
-    cont.appendChild(lbl);
-    const row=document.createElement('div');
-    row.className=cls;
-    row.innerHTML=`
-      <span class="hr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
-      <div class="hr-info">
-        <div class="hr-team">${name}</div>
-        <div class="hr-sub">${t?t.region+' · Seed '+t.seed:''} · vs ${opp&&!opp.startsWith('??')?opp:'TBD'}</div>
-      </div>
-      ${rHtml}
-    `;
-    cont.appendChild(row);
-  });
-}
-
-// ── RESULTS ──────────────────────────────────────────────────────
-function renderResults(){
-  const cont=document.getElementById('results-list');
-  cont.innerHTML='';
-  DAYS.forEach((day,di)=>{
-    const games=getResolvedGames(di);
-    if(games.length===0) return;
-    if(di>3&&!DAYS.slice(0,di).some(d=>Object.keys(results[d.id]||{}).length>0)&&
-       Object.keys(results[day.id]||{}).length===0) return;
-    const entered=Object.keys(results[day.id]||{}).length;
-    const lbl=document.createElement('div');
-    lbl.className='sec-lbl';
-    lbl.textContent=`${day.label} · ${day.round} · ${entered}/${games.length}`;
-    cont.appendChild(lbl);
-    games.forEach(([ta,tb],gi)=>{
-      const res=results[day.id]?results[day.id][gi]:null;
-      const phA=ta.startsWith('??'),phB=tb.startsWith('??');
-      const tA=tm(ta),tB=tm(tb);
-      const gc=document.createElement('div');gc.className='game-card';
-      gc.innerHTML=`<div class="game-hdr">Game ${gi+1}</div>`;
-      [{name:ta,t:tA,won:res&&res.w===ta,lost:res&&res.l===ta,ph:phA,opp:tb},
-       {name:tb,t:tB,won:res&&res.w===tb,lost:res&&res.l===tb,ph:phB,opp:ta}
-      ].forEach(({name,t,won,lost,ph,opp})=>{
-        const row=document.createElement('div');
-        row.className='gtr'+(won?' won':lost?' lost':'');
-        row.innerHTML=`
-          <span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span>
-          <span class="gtr-name">${name}</span>
-          <span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap if won</span>'}</span>
-        `;
-        if(!res&&!ph) row.onclick=()=>recordResult(day.id,gi,name,opp);
-        gc.appendChild(row);
-      });
-      if(res){
-        const ur=document.createElement('div');ur.className='undo-row';
-        ur.innerHTML=`<button class="undo-btn" onclick="undoResult('${day.id}',${gi})">↩ Undo</button>`;
-        gc.appendChild(ur);
-      }
-      cont.appendChild(gc);
-    });
-  });
-}
-function recordResult(dayId,gi,w,l){
-  results[dayId][gi]={w,l};
-  const di=DAYS.findIndex(d=>d.id===dayId);
-  DAYS.slice(di+1).forEach(d=>{ if(d.games.length===0) results[d.id]={}; });
-  save(); refreshAll(); toast(`${w} wins ✓`);
-}
-function undoResult(dayId,gi){
-  delete results[dayId][gi];
-  const di=DAYS.findIndex(d=>d.id===dayId);
-  DAYS.slice(di+1).forEach(d=>{ if(d.games.length===0) results[d.id]={}; });
-  save(); refreshAll();
-}
-
-// ── PLAN ─────────────────────────────────────────────────────────
-// Strategy tab is static HTML — no JS needed
-
-// ── INIT ─────────────────────────────────────────────────────────
+let dayDesig={},picks={},results={},plan={};
+DAYS.forEach(d=>{dayDesig[d.id]={};results[d.id]={};});
+TEAMS.forEach(t=>{plan[t.team]={status:'none'};});
+let curDay=2;
+function tm(name){return TEAMS.find(t=>t.team===name);}
+function sdCls(s){if(!s)return 'sdlo';return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';}
+function rdCls(r){return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[r]||'';}
+function getElim(){const e=new Set();Object.values(results).forEach(dr=>Object.values(dr).forEach(g=>{if(g&&g.l)e.add(g.l);}));return e;}
+function getUsed(){return new Set(Object.values(picks).filter(Boolean));}
+function getResolvedGames(di){const day=DAYS[di];if(day.games.length>0)return day.games;const srcMap={'sat-mar21':['thu-mar19'],'sun-mar22':['fri-mar20'],'thu-mar26':['sat-mar21'],'fri-mar27':['sun-mar22'],'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],'sat-apr4':['sat-mar28','sun-mar29'],'mon-apr6':['sat-apr4']};const srcIds=srcMap[day.id];if(!srcIds)return[];let winners=[];srcIds.forEach(sid=>{const sdi=DAYS.findIndex(d=>d.id===sid);const sg=getResolvedGames(sdi);sg.forEach((g,gi)=>{const r=results[sid]&&results[sid][gi];winners.push(r?r.w:`??(G${gi+1}@${sid})`);});});const pairs=[];for(let i=0;i<winners.length;i+=2){if(winners[i+1]!==undefined)pairs.push([winners[i],winners[i+1]]);}return pairs;}
+let syncTimer=null;
+function getScriptUrl(){return localStorage.getItem('s26_scriptUrl')||'';}
+function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
+function save(){try{localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));}catch(e){}if(getScriptUrl()){clearTimeout(syncTimer);setSyncStatus('Saving...','var(--amber)');syncTimer=setTimeout(()=>pushToCloud(),1500);}}
+function load(){try{const dd=localStorage.getItem('s26_dd');const pk=localStorage.getItem('s26_picks');const rs=localStorage.getItem('s26_res');const pl=localStorage.getItem('s26_plan');if(dd){const v=JSON.parse(dd);DAYS.forEach(d=>{if(v[d.id])dayDesig[d.id]=v[d.id];});}if(pk)picks=JSON.parse(pk);if(rs){const v=JSON.parse(rs);DAYS.forEach(d=>{if(v[d.id])results[d.id]=v[d.id];});}if(pl){const v=JSON.parse(pl);Object.keys(v).forEach(k=>{if(plan[k])plan[k]=v[k];});}}catch(e){}}
+function buildPayload(){return{dayDesig,picks,results,plan,savedAt:new Date().toISOString()};}
+function applyPayload(d){if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});if(d.picks)picks=d.picks;if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));}
+async function pushToCloud(){const url=getScriptUrl();if(!url)return;try{const encoded=encodeURIComponent(JSON.stringify(buildPayload()));await fetch(url+'?action=save&data='+encoded,{mode:'no-cors'});const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){setSyncStatus('Sync failed','var(--red)');}}
+async function pullFromCloud(){const url=getScriptUrl();if(!url){setSyncStatus('2026 · 1 pick per day','var(--muted)');return;}setSyncStatus('Syncing...','var(--amber)');try{const res=await fetch(url+'?action=load',{cache:'no-store'});const text=await res.text();const jsonStr=text.includes('{"ok"')?text.substring(text.indexOf('{"ok"')):text;const json=JSON.parse(jsonStr);if(json.ok&&json.data&&Object.keys(json.data).length>0){applyPayload(json.data);refreshAll();}const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}}
+function manualSync(){pullFromCloud();}
+function showSyncSetup(){const modal=document.getElementById('sync-modal');document.getElementById('script-url-input').value=getScriptUrl();modal.style.display='flex';}
+function saveScriptUrl(){const val=document.getElementById('script-url-input').value.trim();if(!val){alert('Please paste your Web App URL first.');return;}localStorage.setItem('s26_scriptUrl',val);document.getElementById('sync-modal').style.display='none';toast('URL saved — syncing...');pullFromCloud();}
+function expJSON(){const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};const b=new Blob([JSON.stringify(d)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='survivor26.json';a.click();}
+function impJSON(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});if(d.picks)picks=d.picks;if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});save();refreshAll();toast('Loaded ✓');}catch(e){alert('Could not read file');}};rd.readAsText(f);ev.target.value='';}
+function showPg(id,btn){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));document.getElementById('pg-'+id).classList.add('active');btn.classList.add('active');if(id==='today')renderToday();if(id==='history')renderHistory();if(id==='results')renderResults();}
+function changeDay(d){const n=curDay+d;if(n<0||n>=DAYS.length)return;curDay=n;renderToday();}
+function refreshAll(){renderToday();renderHistory();renderResults();}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+function setDesig(dayId,teamName,desig){const cur=dayDesig[dayId][teamName];if(cur===desig){delete dayDesig[dayId][teamName];if(desig==='pick'&&picks[dayId]===teamName)delete picks[dayId];}else{if(desig==='pick'){const oldPick=picks[dayId];if(oldPick&&oldPick!==teamName)delete dayDesig[dayId][oldPick];picks[dayId]=teamName;}if(cur==='pick')delete picks[dayId];dayDesig[dayId][teamName]=desig;}save();renderToday();renderHistory();}
+function renderToday(){const day=DAYS[curDay];const elim=getElim();const used=getUsed();const games=getResolvedGames(curDay);const desigs=dayDesig[day.id]||{};document.getElementById('day-name').textContent=day.label;document.getElementById('day-sub').textContent=day.round+' · '+games.length+' games';document.getElementById('prev-btn').disabled=curDay===0;document.getElementById('next-btn').disabled=curDay===DAYS.length-1;const BKTS=[{key:'pick',ico:'🎯',lbl:'My Pick',cls:'bc-pick'},{key:'cand',ico:'✅',lbl:'Candidate',cls:'bc-cand'},{key:'save',ico:'⭐',lbl:'Save',cls:'bc-save'},{key:'maybe',ico:'🤔',lbl:'Maybe',cls:'bc-maybe'},{key:'never',ico:'🚫',lbl:'Never',cls:'bc-never'}];const bktEl=document.getElementById('buckets');bktEl.innerHTML='';BKTS.forEach(b=>{const members=Object.entries(desigs).filter(([,v])=>v===b.key).map(([k])=>k);const div=document.createElement('div');div.className='bucket';div.innerHTML=`<span class="bkt-ico">${b.ico}</span><span class="bkt-lbl">${b.lbl}</span>`;const items=document.createElement('div');items.className='bkt-items';if(members.length===0){const empty=document.createElement('div');empty.style.cssText='font-size:9px;color:var(--dim);text-align:center;padding:2px 0;';empty.textContent='—';items.appendChild(empty);}else{members.forEach(name=>{const chip=document.createElement('div');chip.className='bkt-chip '+b.cls;const t=tm(name);chip.textContent=(t?t.seed+' ':'')+name;chip.title=name;chip.onclick=()=>{setDesig(day.id,name,b.key);};items.appendChild(chip);});}div.appendChild(items);bktEl.appendChild(div);});document.getElementById('matchups-hdr').textContent=`${day.label} matchups (${games.length})`;const cont=document.getElementById('matchups');cont.innerHTML='';if(games.length===0){cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Games populate once prior round results are entered.</div>';return;}games.forEach(([ta,tb],gi)=>{const res=results[day.id]?results[day.id][gi]:null;const hasPick=desigs[ta]==='pick'||desigs[tb]==='pick';const card=document.createElement('div');card.className='matchup'+(hasPick?' has-pick':'');[ta,tb].forEach((name,ni)=>{const t=tm(name);const isElim=elim.has(name);const isUsed=used.has(name)&&desigs[name]!=='pick';const isPh=name.startsWith('??');const d=desigs[name]||'none';const resWon=res&&res.w===name;const resLost=res&&res.l===name;const opp=name===ta?tb:ta;let rowCls='tr';if(isPh)rowCls+=' used';else if(resWon)rowCls+=' res-won';else if(resLost)rowCls+=' res-lost';else if(isElim)rowCls+=' elim';else if(isUsed)rowCls+=' used';const row=document.createElement('div');row.className=rowCls;let rightHtml='';if(isPh){rightHtml='<span style="font-size:10px;color:var(--dim)">TBD</span>';}else if(resWon){rightHtml='<span class="res-ico">✅</span>';}else if(resLost){rightHtml='<span class="res-ico">❌</span>';}else if(isElim){rightHtml='<span class="tr-tag tag-elim">Out</span>';}else if(isUsed){const ud=Object.entries(picks).find(([,n])=>n===name);const udl=ud?DAYS.find(dx=>dx.id===ud[0])?.label.replace(/\w+ /,''):'';rightHtml=`<span class="tr-tag tag-used">Used${udl?' '+udl:''}</span>`;}else{rightHtml=`<div class="tr-icons"><button class="ti${d==='pick'?' on-pick':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','pick')" title="My Pick">🎯</button><button class="ti${d==='cand'?' on-cand':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','cand')" title="Candidate">✅</button><button class="ti${d==='save'?' on-save':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','save')" title="Save">⭐</button><button class="ti${d==='maybe'?' on-maybe':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','maybe')" title="Maybe">🤔</button><button class="ti${d==='never'?' on-never':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','never')" title="Never">🚫</button></div>`;}row.innerHTML=`<span class="tr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="rdot ${rdCls(t?t.region:'')}" style="margin-right:1px;"></span><div class="tr-info"><div class="tr-name">${name}</div><div class="tr-meta">${t?t.region:''}  · vs ${isPh?'TBD':opp.replace('??','TBD')}</div></div>${rightHtml}`;card.appendChild(row);if(ni===0){const vs=document.createElement('div');vs.className='vs-row';vs.innerHTML='<div class="vs-line"></div><span class="vs-txt">VS</span><div class="vs-line"></div>';card.appendChild(vs);}});cont.appendChild(card);});}
+function renderHistory(){const cont=document.getElementById('history-list');cont.innerHTML='';const elim=getElim();const pickDays=DAYS.filter(d=>picks[d.id]);if(pickDays.length===0){cont.innerHTML='<div class="empty"><div class="emo">📋</div>No picks yet.<br>Head to Today and tap 🎯 on a team.</div>';return;}[...pickDays].reverse().forEach(day=>{const name=picks[day.id];const t=tm(name);const games=getResolvedGames(DAYS.indexOf(day));const gi=games.findIndex(([a,b])=>a===name||b===name);const res=gi>=0&&results[day.id]?results[day.id][gi]:null;const opp=gi>=0?games[gi].find(n=>n!==name):'?';let cls='hist-row',rHtml='<span class="hr-result r-pend">Pending</span>';if(res){if(res.w===name){cls='hist-row won';rHtml='<span class="hr-result r-win">WIN ✓</span>';}else{cls='hist-row lost';rHtml='<span class="hr-result r-loss">LOSS ✗</span>';}}const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=day.label+' · '+day.round;cont.appendChild(lbl);const row=document.createElement('div');row.className=cls;row.innerHTML=`<span class="hr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><div class="hr-info"><div class="hr-team">${name}</div><div class="hr-sub">${t?t.region+' · Seed '+t.seed:''} · vs ${opp&&!opp.startsWith('??')?opp:'TBD'}</div></div>${rHtml}`;cont.appendChild(row);});}
+function renderResults(){const cont=document.getElementById('results-list');cont.innerHTML='';DAYS.forEach((day,di)=>{const games=getResolvedGames(di);if(games.length===0)return;if(di>3&&!DAYS.slice(0,di).some(d=>Object.keys(results[d.id]||{}).length>0)&&Object.keys(results[day.id]||{}).length===0)return;const entered=Object.keys(results[day.id]||{}).length;const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=`${day.label} · ${day.round} · ${entered}/${games.length}`;cont.appendChild(lbl);games.forEach(([ta,tb],gi=>{const res=results[day.id]?results[day.id][gi]:null;const phA=ta.startsWith('??'),phB=tb.startsWith('??');const tA=tm(ta),tB=tm(tb);const gc=document.createElement('div');gc.className='game-card';gc.innerHTML=`<div class="game-hdr">Game ${gi+1}</div>`;[{name:ta,t:tA,won:res&&res.w===ta,lost:res&&res.l===ta,ph:phA,opp:tb},{name:tb,t:tB,won:res&&res.w===tb,lost:res&&res.l===tb,ph:phB,opp:ta}].forEach(({name,t,won,lost,ph,opp})=>{const row=document.createElement('div');row.className='gtr'+(won?' won':lost?' lost':'');row.innerHTML=`<span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="gtr-name">${name}</span><span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap if won</span>'}</span>`;if(!res&&!ph)row.onclick=()=>recordResult(day.id,gi,name,opp);gc.appendChild(row);});if(res){const ur=document.createElement('div');ur.className='undo-row';ur.innerHTML=`<button class="undo-btn" onclick="undoResult('${day.id}',${gi})">↩ Undo</button>`;gc.appendChild(ur);}cont.appendChild(gc);});});}
+function recordResult(dayId,gi,w,l){results[dayId][gi]={w,l};const di=DAYS.findIndex(d=>d.id===dayId);DAYS.slice(di+1).forEach(d=>{if(d.games.length===0)results[d.id]={};});save();refreshAll();toast(`${w} wins ✓`);}
+function undoResult(dayId,gi){delete results[dayId][gi];const di=DAYS.findIndex(d=>d.id===dayId);DAYS.slice(di+1).forEach(d=>{if(d.games.length===0)results[d.id]={};});save();refreshAll();}
 load();
 renderToday();
-// Pull latest from cloud on startup (if configured)
 pullFromCloud();
 </script>
 </body>
