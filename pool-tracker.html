@@ -147,16 +147,26 @@ const ALL_TEAMS=[
   {seed:8,name:'Ohio State'},{seed:8,name:'Clemson'},{seed:8,name:'Villanova'},{seed:8,name:'Georgia'},
   {seed:9,name:'TCU'},{seed:9,name:'Iowa'},{seed:9,name:'Utah State'},{seed:9,name:'Saint Louis'},
   {seed:10,name:'UCF'},{seed:10,name:'Missouri'},{seed:10,name:'Santa Clara'},{seed:10,name:'Texas A&M'},
-  {seed:11,name:'South Florida'},{seed:11,name:'VCU'},{seed:11,name:'Texas/NC State'},{seed:11,name:'SMU/Miami OH'},
+  {seed:11,name:'South Florida'},{seed:11,name:'VCU'},{seed:11,name:'Texas'},{seed:11,name:'Miami (OH)'},
   {seed:12,name:'Northern Iowa'},{seed:12,name:'High Point'},{seed:12,name:'Akron'},{seed:12,name:'McNeese'},
   {seed:13,name:'Cal Baptist'},{seed:13,name:'Hawaii'},{seed:13,name:'Hofstra'},{seed:13,name:'Troy'},
-  {seed:14,name:'North Dakota St.'},{seed:14,name:'Kennesaw State'},{seed:14,name:'Penn'},{seed:14,name:'Wright State'},
+  {seed:14,name:'North Dakota St.'},{seed:14,name:'Kennesaw State'},{seed:14,name:'Wright State'},{seed:14,name:'Howard'},
   {seed:15,name:'Furman'},{seed:15,name:'Queens'},{seed:15,name:'Idaho'},{seed:15,name:'Tennessee State'},
-  {seed:16,name:'Siena'},{seed:16,name:'LIU'},{seed:16,name:'PV A&M/Lehigh'},{seed:16,name:'UMBC/Howard'},
+  {seed:16,name:'Siena'},{seed:16,name:'LIU'},{seed:16,name:'Prairie View A&M'},{seed:16,name:'UMBC'},
 ];
 const DAY_GAMES={
-  'thu-mar19':[['Duke','Siena'],['Michigan State','North Dakota St.'],['Gonzaga','Kennesaw State'],['Virginia','Wright State'],['Illinois','Penn'],['Nebraska','Troy'],['Arkansas','Hawaii'],['Vanderbilt','McNeese'],['Wisconsin','High Point'],['Louisville','South Florida'],['North Carolina','VCU'],['BYU','Texas/NC State'],["Saint Mary's",'Texas A&M'],['Ohio State','TCU'],['Georgia','Saint Louis'],['Houston','Idaho']],
-  'fri-mar20':[['Arizona','LIU'],['Florida','PV A&M/Lehigh'],['Michigan','UMBC/Howard'],['UConn','Furman'],['Purdue','Queens'],['Iowa State','Tennessee State'],['Kansas','Cal Baptist'],['Alabama','Hofstra'],["St. John's",'Northern Iowa'],['Tennessee','SMU/Miami OH'],['UCLA','UCF'],['Kentucky','Santa Clara'],['Miami (FL)','Missouri'],['Clemson','Iowa'],['Villanova','Utah State'],['Texas Tech','Akron']],
+  'thu-mar19':[
+    ['Duke','Siena'],['Ohio State','TCU'],['Louisville','South Florida'],['Michigan State','North Dakota St.'],
+    ['Vanderbilt','McNeese'],['Nebraska','Troy'],['North Carolina','VCU'],['Illinois','Penn'],
+    ["Saint Mary's",'Texas A&M'],['Houston','Idaho'],['Arkansas','Hawaii'],['Wisconsin','High Point'],
+    ['BYU','Texas'],['Georgia','Saint Louis'],['Gonzaga','Kennesaw State'],['Michigan','Howard'],
+  ],
+  'fri-mar20':[
+    ["St. John's",'Northern Iowa'],['Kansas','Cal Baptist'],['UCLA','UCF'],['UConn','Furman'],
+    ['Florida','Prairie View A&M'],['Clemson','Iowa'],['Arizona','LIU'],['Villanova','Utah State'],
+    ['Virginia','Wright State'],['Tennessee','Miami (OH)'],['Iowa State','Tennessee State'],['Alabama','Hofstra'],
+    ['Kentucky','Santa Clara'],['Purdue','Queens'],['Texas Tech','Akron'],['Miami (FL)','Missouri'],
+  ],
 };
 ['sat-mar21','sun-mar22','thu-mar26','fri-mar27','sat-mar28','sun-mar29','sat-apr4','mon-apr6'].forEach(d=>{DAY_GAMES[d]=[];});
 const DAY_TEAMS={};
@@ -173,37 +183,13 @@ function isPlayerElim(pid){for(const d of DAYS){const p=poolPicks[d.id]?.[pid];i
 function getWins(pid){let w=0;DAYS.forEach(d=>{const p=poolPicks[d.id]?.[pid];if(p&&poolGames[d.id]?.[p]==='win')w++;});return w;}
 function edgeScore(pid){const used=getUsed(pid),elim=getElimTeams();let s=0;ALL_TEAMS.forEach(t=>{if(!used.has(t.name)&&!elim.has(t.name)){s+=t.seed<=2?10:t.seed<=4?6:t.seed<=7?3:1;}});return s;}
 function saveLocal(){try{localStorage.setItem('pt26_picks',JSON.stringify(poolPicks));localStorage.setItem('pt26_games',JSON.stringify(poolGames));}catch(e){}}
+function loadLocal(){try{const p=localStorage.getItem('pt26_picks'),g=localStorage.getItem('pt26_games');if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])poolPicks[d.id]=v[d.id];});}if(g){const v=JSON.parse(g);DAYS.forEach(d=>{if(v[d.id])poolGames[d.id]=v[d.id];});}}catch(e){}}
 function getUrl(){const u=localStorage.getItem('pt26_url')||'';return u==='skip'?'':u;}
 function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
 function buildPayload(){return{pt_picks:poolPicks,pt_games:poolGames};}
 function save(){saveLocal();if(getUrl()){clearTimeout(syncTimer);setSyncStatus('Saving...','var(--amber)');syncTimer=setTimeout(pushToCloud,1500);}}
 async function pushToCloud(){const url=getUrl();if(!url)return;try{const enc=encodeURIComponent(JSON.stringify(buildPayload()));await fetch(url+'?action=save&data='+enc,{mode:'no-cors'});const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){setSyncStatus('Sync failed','var(--red)');}}
-async function pullFromCloud(){
-  const url=getUrl();
-  if(!url){setSyncStatus('Nick · Matt · Gene · 2026','var(--muted)');return;}
-  setSyncStatus('Syncing...','var(--amber)');
-  try{
-    const res=await fetch(url+'?action=load',{cache:'no-store'});
-    const text=await res.text();
-    const start=text.indexOf('{"ok"');
-    const json=JSON.parse(start>=0?text.substring(start):text);
-    if(json.ok&&json.data){
-      const d=json.data;
-      // ALWAYS overwrite local with cloud — cloud is master
-      if(d.pt_picks&&typeof d.pt_picks==='object'){
-        DAYS.forEach(dy=>{poolPicks[dy.id]={};});
-        DAYS.forEach(dy=>{if(d.pt_picks[dy.id])poolPicks[dy.id]=d.pt_picks[dy.id];});
-      }
-      if(d.pt_games&&typeof d.pt_games==='object'){
-        DAYS.forEach(dy=>{poolGames[dy.id]={};});
-        DAYS.forEach(dy=>{if(d.pt_games[dy.id])poolGames[dy.id]=d.pt_games[dy.id];});
-      }
-      saveLocal();refresh();
-    }
-    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced '+t,'var(--green)');
-  }catch(e){setSyncStatus('Offline','var(--red)');}
-}
+async function pullFromCloud(){const url=getUrl();if(!url){setSyncStatus('Nick · Matt · Gene · 2026','var(--muted)');return;}setSyncStatus('Syncing...','var(--amber)');try{const res=await fetch(url+'?action=load',{cache:'no-store'});const text=await res.text();const start=text.indexOf('{"ok"');const json=JSON.parse(start>=0?text.substring(start):text);if(json.ok&&json.data){const d=json.data;if(d.pt_picks&&typeof d.pt_picks==='object'){DAYS.forEach(dy=>{poolPicks[dy.id]={};});DAYS.forEach(dy=>{if(d.pt_picks[dy.id])poolPicks[dy.id]=d.pt_picks[dy.id];});}if(d.pt_games&&typeof d.pt_games==='object'){DAYS.forEach(dy=>{poolGames[dy.id]={};});DAYS.forEach(dy=>{if(d.pt_games[dy.id])poolGames[dy.id]=d.pt_games[dy.id];});}saveLocal();refresh();}const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}catch(e){setSyncStatus('Offline','var(--red)');}}
 function manualSync(){pullFromCloud();}
 function showMain(){document.getElementById('setup-section').style.display='none';document.getElementById('main-section').style.display='block';}
 function saveUrl(){const val=document.getElementById('url-input').value.trim();if(!val){alert('Please paste your Apps Script URL.');return;}localStorage.setItem('pt26_url',val);showMain();toast('URL saved — syncing...');pullFromCloud();}
@@ -226,8 +212,6 @@ const _url=localStorage.getItem('pt26_url')||'';
 if(!_url){document.getElementById('setup-section').style.display='block';}
 else{showMain();if(_url!=='skip')pullFromCloud();}
 refresh();
-
-function loadLocal(){try{const p=localStorage.getItem('pt26_picks'),g=localStorage.getItem('pt26_games');if(p){const v=JSON.parse(p);DAYS.forEach(d=>{if(v[d.id])poolPicks[d.id]=v[d.id];});}if(g){const v=JSON.parse(g);DAYS.forEach(d=>{if(v[d.id])poolGames[d.id]=v[d.id];});}}catch(e){}}
 </script>
 </body>
 </html>
