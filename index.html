@@ -129,7 +129,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <p id="sync-status" style="font-size:11px;color:var(--muted);margin-top:1px;">2026 · 1 pick per day</p>
   </div>
   <div class="hdr-r">
-    <button class="icobtn" onclick="manualSync()" title="Sync now" id="sync-btn">☁️</button>
+    <button class="icobtn" onclick="manualSync()" title="Sync now">☁️</button>
     <button class="icobtn" onclick="showSyncSetup()" title="Cloud settings">⚙️</button>
     <button class="icobtn" onclick="expJSON()" title="Export">📤</button>
     <button class="icobtn" onclick="document.getElementById('fimp').click()" title="Import">📥</button>
@@ -140,8 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div style="background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:20px 16px 40px;width:100%;max-width:520px;border:1px solid var(--border);">
     <div style="width:36px;height:4px;background:var(--dim);border-radius:2px;margin:0 auto 16px;"></div>
     <div style="font-size:17px;font-weight:800;margin-bottom:6px;">☁️ Cloud sync setup</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Paste your Google Apps Script Web App URL below to sync picks and results across all your devices automatically.</div>
-    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Web App URL</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Paste your Google Apps Script Web App URL to sync picks across devices.</div>
     <input id="script-url-input" type="url" placeholder="https://script.google.com/macros/s/..." style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;">
     <button onclick="saveScriptUrl()" style="width:100%;padding:14px;background:var(--blue);border:none;border-radius:var(--rsm);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;">Save &amp; sync now</button>
     <button onclick="document.getElementById('sync-modal').style.display='none'" style="width:100%;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Cancel</button>
@@ -299,7 +298,13 @@ function applyPayload(d){
 async function pushToCloud(){
   const url=getScriptUrl();if(!url)return;
   try{
-    await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(buildPayload())});
+    const p=buildPayload();
+    const keys=['dayDesig','picks','results','plan'];
+    for(const key of keys){
+      const chunk={};chunk[key]=p[key];
+      const encoded=encodeURIComponent(JSON.stringify(chunk));
+      await fetch(url+'?action=save&data='+encoded,{mode:'no-cors'});
+    }
     const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
     setSyncStatus('Synced '+t,'var(--green)');
   }catch(e){setSyncStatus('Sync failed','var(--red)');}
