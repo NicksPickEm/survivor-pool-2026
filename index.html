@@ -169,25 +169,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div style="padding-top:14px;">
   <div class="sec-lbl">Core rules</div>
   <div class="strat-tip"><b>One pick per day.</b> Pick one team playing that day. They win — you survive. They lose — you're out. Each team can only be used once all tournament.</div>
-  <div class="strat-tip"><b>Plan your whole roadmap now.</b> Don't just think about today. Map out which teams you'll use each round so you don't burn your best teams early.</div>
-  <div class="strat-tip"><b>Save 1-seeds for later.</b> You need safe picks in the Sweet 16 and Elite Eight. Don't waste Duke or Michigan in Round 1 when Gonzaga will do the same job.</div>
-  <div class="strat-tip"><b>Go contrarian when it matters.</b> If everyone in your pool picks Duke on the same day and Duke loses, you gain a massive edge by picking differently.</div>
-  <div class="strat-tip"><b>Never pick 8/9 matchups.</b> Both teams are roughly 50/50. There are always better options on the same day.</div>
-  <div class="sec-lbl" style="margin-top:8px;">Team tiers</div>
+  <div class="strat-tip"><b>Save 1-seeds for later.</b> You need safe picks in the Elite Eight and Final Four. Don't waste Michigan or Duke in the Sweet 16 if a 2-seed can do the same job.</div>
+  <div class="strat-tip"><b>Never pick 8/9 matchups.</b> Both teams are roughly 50/50. Always better options on the same day.</div>
+  <div class="sec-lbl" style="margin-top:8px;">Still alive</div>
   <div class="strat-card">
-    <h3>⭐ Save for Sweet 16 or later</h3>
-    <span class="strat-tag tag-save">Duke</span><span class="strat-tag tag-save">Michigan</span><span class="strat-tag tag-save">Arizona</span><span class="strat-tag tag-save">Florida</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">The 4 one-seeds. Michigan is the betting favorite. Duke has the hardest path.</div>
+    <h3>⭐ Save for Elite Eight+</h3>
+    <span class="strat-tag tag-save">Duke</span><span class="strat-tag tag-save">Michigan</span><span class="strat-tag tag-save">Arizona</span>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Three 1-seeds still alive. Florida is out. Save these for the final rounds.</div>
   </div>
   <div class="strat-card">
-    <h3>✅ Best R32 picks</h3>
-    <span class="strat-tag tag-burn">Illinois</span><span class="strat-tag tag-burn">Houston</span><span class="strat-tag tag-burn">Iowa State</span><span class="strat-tag tag-burn">UConn</span><span class="strat-tag tag-burn">Purdue</span><span class="strat-tag tag-burn">Kansas</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Strong seeds with favorable matchups. Safe to burn now.</div>
+    <h3>✅ Best Sweet 16 picks</h3>
+    <span class="strat-tag tag-burn">Houston</span><span class="strat-tag tag-burn">Illinois</span><span class="strat-tag tag-burn">Iowa State</span><span class="strat-tag tag-burn">Purdue</span><span class="strat-tag tag-burn">Nebraska</span>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Strong seeds, favorable matchups. Burn these now.</div>
   </div>
   <div class="strat-card">
-    <h3>🚫 Avoid</h3>
-    <span class="strat-tag tag-avoid">TCU</span><span class="strat-tag tag-avoid">VCU</span><span class="strat-tag tag-avoid">Texas A&M</span><span class="strat-tag tag-avoid">Iowa</span><span class="strat-tag tag-avoid">Saint Louis</span><span class="strat-tag tag-avoid">Utah State</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Upset teams — risky matchups ahead.</div>
+    <h3>🚫 Risky</h3>
+    <span class="strat-tag tag-avoid">Iowa</span><span class="strat-tag tag-avoid">Texas</span><span class="strat-tag tag-avoid">St. John's</span><span class="strat-tag tag-avoid">Tennessee</span>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Upset teams — dangerous to use in survivor.</div>
   </div>
   </div>
 </div>
@@ -227,24 +225,55 @@ const DAYS=[
     ['Texas Tech','Akron'],['Kentucky','Santa Clara'],['Virginia','Wright State'],['Iowa State','Tennessee State'],
   ]},
   {id:'sat-mar21',label:'Sat Mar 21',round:'Round of 32',games:[
-    ['Duke','TCU'],['Michigan State','Louisville'],
-    ['Arkansas','High Point'],['Vanderbilt','Nebraska'],
-    ['VCU','Illinois'],['Texas A&M','Houston'],
-    ['Texas','Gonzaga'],['Saint Louis','Michigan'],
+    ['Duke','TCU'],['Michigan State','Louisville'],['Arkansas','High Point'],['Vanderbilt','Nebraska'],
+    ['VCU','Illinois'],['Texas A&M','Houston'],['Texas','Gonzaga'],['Saint Louis','Michigan'],
   ]},
   {id:'sun-mar22',label:'Sun Mar 22',round:'Round of 32',games:[
-    ['Miami (FL)','Purdue'],['Kentucky','Iowa State'],
-    ["St. John's",'Kansas'],['UCLA','UConn'],
-    ['Florida','Iowa'],['Texas Tech','Alabama'],
-    ['Virginia','Tennessee'],['Arizona','Utah State'],
+    ['Miami (FL)','Purdue'],['Kentucky','Iowa State'],["St. John's",'Kansas'],['UCLA','UConn'],
+    ['Florida','Iowa'],['Texas Tech','Alabama'],['Virginia','Tennessee'],['Arizona','Utah State'],
   ]},
-  {id:'thu-mar26',label:'Thu Mar 26',round:'Sweet 16',games:[]},
-  {id:'fri-mar27',label:'Fri Mar 27',round:'Sweet 16',games:[]},
+  {id:'thu-mar26',label:'Thu Mar 26',round:'Sweet 16',games:[
+    ['Purdue','Texas'],['Nebraska','Iowa'],['Arizona','Arkansas'],['Houston','Illinois'],
+  ]},
+  {id:'fri-mar27',label:'Fri Mar 27',round:'Sweet 16',games:[
+    ['Duke',"St. John's"],['Michigan','Alabama'],['UConn','Michigan State'],['Iowa State','Tennessee'],
+  ]},
   {id:'sat-mar28',label:'Sat Mar 28',round:'Elite Eight',games:[]},
   {id:'sun-mar29',label:'Sun Mar 29',round:'Elite Eight',games:[]},
   {id:'sat-apr4', label:'Sat Apr 4', round:'Final Four',games:[]},
   {id:'mon-apr6', label:'Mon Apr 6', round:'Championship',games:[]},
 ];
+
+// Pre-loaded results through Round of 32
+const PRESET_RESULTS={
+  'thu-mar19':{
+    0:{w:'Duke',l:'Siena'},1:{w:'TCU',l:'Ohio State'},2:{w:'Louisville',l:'South Florida'},
+    3:{w:'Michigan State',l:'North Dakota St.'},4:{w:'High Point',l:'Wisconsin'},5:{w:'Arkansas',l:'Hawaii'},
+    6:{w:'Texas',l:'BYU'},7:{w:'Gonzaga',l:'Kennesaw State'},8:{w:'Texas A&M',l:"Saint Mary's"},
+    9:{w:'Houston',l:'Idaho'},10:{w:'Michigan',l:'Howard'},11:{w:'Saint Louis',l:'Georgia'},
+    12:{w:'Nebraska',l:'Troy'},13:{w:'VCU',l:'North Carolina'},14:{w:'Vanderbilt',l:'McNeese'},
+    15:{w:'Illinois',l:'Penn'},
+  },
+  'fri-mar20':{
+    0:{w:"St. John's",l:'Northern Iowa'},1:{w:'Kansas',l:'Cal Baptist'},2:{w:'UCLA',l:'UCF'},
+    3:{w:'UConn',l:'Furman'},4:{w:'Arizona',l:'LIU'},5:{w:'Utah State',l:'Villanova'},
+    6:{w:'Purdue',l:'Queens'},7:{w:'Miami (FL)',l:'Missouri'},8:{w:'Florida',l:'Prairie View A&M'},
+    9:{w:'Iowa',l:'Clemson'},10:{w:'Alabama',l:'Hofstra'},11:{w:'Tennessee',l:'Miami (OH)'},
+    12:{w:'Texas Tech',l:'Akron'},13:{w:'Kentucky',l:'Santa Clara'},14:{w:'Virginia',l:'Wright State'},
+    15:{w:'Iowa State',l:'Tennessee State'},
+  },
+  'sat-mar21':{
+    0:{w:'Duke',l:'TCU'},1:{w:'Michigan State',l:'Louisville'},2:{w:'Arkansas',l:'High Point'},
+    3:{w:'Nebraska',l:'Vanderbilt'},4:{w:'Illinois',l:'VCU'},5:{w:'Houston',l:'Texas A&M'},
+    6:{w:'Texas',l:'Gonzaga'},7:{w:'Michigan',l:'Saint Louis'},
+  },
+  'sun-mar22':{
+    0:{w:'Purdue',l:'Miami (FL)'},1:{w:'Iowa State',l:'Kentucky'},2:{w:"St. John's",l:'Kansas'},
+    3:{w:'UConn',l:'UCLA'},4:{w:'Iowa',l:'Florida'},5:{w:'Alabama',l:'Texas Tech'},
+    6:{w:'Tennessee',l:'Virginia'},7:{w:'Arizona',l:'Utah State'},
+  },
+};
+
 const TEAMS=[
   {seed:1,team:'Duke',region:'East'},{seed:2,team:'UConn',region:'East'},{seed:3,team:'Michigan State',region:'East'},{seed:4,team:'Kansas',region:'East'},
   {seed:5,team:"St. John's",region:'East'},{seed:6,team:'Louisville',region:'East'},{seed:7,team:'UCLA',region:'East'},{seed:8,team:'Ohio State',region:'East'},
@@ -264,30 +293,49 @@ const TEAMS=[
   {seed:13,team:'Hofstra',region:'Midwest'},{seed:14,team:'Wright State',region:'Midwest'},{seed:15,team:'Tennessee State',region:'Midwest'},{seed:16,team:'Howard',region:'Midwest'},
   {seed:11,team:'NC State',region:'West'},{seed:16,team:'UMBC',region:'Midwest'},{seed:11,team:'SMU',region:'Midwest'},{seed:16,team:'Lehigh',region:'South'},
 ];
+
 let dayDesig={},picks={},results={},plan={};
 DAYS.forEach(d=>{dayDesig[d.id]={};results[d.id]={};});
 TEAMS.forEach(t=>{plan[t.team]={status:'none'};});
-let curDay=5,syncTimer=null;
+let curDay=6,syncTimer=null;
+
 function tm(name){return TEAMS.find(t=>t.team===name);}
 function sdCls(s){if(!s)return 'sdlo';return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';}
 function rdCls(r){return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[r]||'';}
 function getElim(){const e=new Set();Object.values(results).forEach(dr=>Object.values(dr).forEach(g=>{if(g&&g.l)e.add(g.l);}));return e;}
 function getUsed(){return new Set(Object.values(picks).filter(Boolean));}
+
 function getResolvedGames(di){
-  const day=DAYS[di];if(day.games.length>0)return day.games;
-  const srcMap={'thu-mar26':['sat-mar21'],'fri-mar27':['sun-mar22'],'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],'sat-apr4':['sat-mar28','sun-mar29'],'mon-apr6':['sat-apr4']};
+  const day=DAYS[di];
+  if(day.games.length>0)return day.games;
+  // For Elite Eight+ derive from Sweet 16 winners
+  const srcMap={
+    'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],
+    'sat-apr4':['sat-mar28','sun-mar29'],'mon-apr6':['sat-apr4']
+  };
   const srcIds=srcMap[day.id];if(!srcIds)return[];
   let winners=[];
-  srcIds.forEach(sid=>{const sdi=DAYS.findIndex(d=>d.id===sid);const sg=getResolvedGames(sdi);sg.forEach((g,gi)=>{const r=results[sid]&&results[sid][gi];winners.push(r?r.w:`??(G${gi+1}@${sid})`);});});
-  const pairs=[];for(let i=0;i<winners.length;i+=2){if(winners[i+1]!==undefined)pairs.push([winners[i],winners[i+1]]);}
+  srcIds.forEach(sid=>{
+    const sdi=DAYS.findIndex(d=>d.id===sid);
+    const sg=getResolvedGames(sdi);
+    sg.forEach((g,gi)=>{
+      const r=results[sid]&&results[sid][gi];
+      winners.push(r?r.w:`??(G${gi+1}@${sid})`);
+    });
+  });
+  const pairs=[];
+  for(let i=0;i<winners.length;i+=2){if(winners[i+1]!==undefined)pairs.push([winners[i],winners[i+1]]);}
   return pairs;
 }
+
 function getScriptUrl(){return localStorage.getItem('s26_scriptUrl')||'';}
 function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
+
 function save(){
   try{localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));}catch(e){}
   if(getScriptUrl()){clearTimeout(syncTimer);setSyncStatus('Saving...','var(--amber)');syncTimer=setTimeout(()=>pushToCloud(),1500);}
 }
+
 function load(){
   try{
     const dd=localStorage.getItem('s26_dd'),pk=localStorage.getItem('s26_picks'),rs=localStorage.getItem('s26_res'),pl=localStorage.getItem('s26_plan');
@@ -296,29 +344,44 @@ function load(){
     if(rs){const v=JSON.parse(rs);DAYS.forEach(d=>{if(v[d.id])results[d.id]=v[d.id];});}
     if(pl){const v=JSON.parse(pl);Object.keys(v).forEach(k=>{if(plan[k])plan[k]=v[k];});}
   }catch(e){}
+  // Apply preset results for any day not yet in saved results
+  Object.entries(PRESET_RESULTS).forEach(([dayId,dayRes])=>{
+    if(!results[dayId])results[dayId]={};
+    Object.entries(dayRes).forEach(([gi,res])=>{
+      if(!results[dayId][gi])results[dayId][gi]=res;
+    });
+  });
 }
+
 function buildPayload(){return{dayDesig,picks,results,plan,savedAt:new Date().toISOString()};}
+
 function applyPayload(d){
   if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});
   if(d.picks)picks=d.picks;
   if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});
   if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});
+  // Re-apply presets for any missing
+  Object.entries(PRESET_RESULTS).forEach(([dayId,dayRes])=>{
+    if(!results[dayId])results[dayId]={};
+    Object.entries(dayRes).forEach(([gi,res])=>{
+      if(!results[dayId][gi])results[dayId][gi]=res;
+    });
+  });
   localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));
 }
+
 async function pushToCloud(){
   const url=getScriptUrl();if(!url)return;
   try{
     const p=buildPayload();
-    const keys=['dayDesig','picks','results','plan'];
-    for(const key of keys){
+    for(const key of ['dayDesig','picks','results','plan']){
       const chunk={};chunk[key]=p[key];
-      const encoded=encodeURIComponent(JSON.stringify(chunk));
-      await fetch(url+'?action=save&data='+encoded,{mode:'no-cors'});
+      await fetch(url+'?action=save&data='+encodeURIComponent(JSON.stringify(chunk)),{mode:'no-cors'});
     }
-    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced '+t,'var(--green)');
+    setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');
   }catch(e){setSyncStatus('Sync failed','var(--red)');}
 }
+
 async function pullFromCloud(){
   const url=getScriptUrl();if(!url){setSyncStatus('2026 · 1 pick per day','var(--muted)');return;}
   setSyncStatus('Syncing...','var(--amber)');
@@ -328,20 +391,28 @@ async function pullFromCloud(){
     const jsonStr=text.includes('{"ok"')?text.substring(text.indexOf('{"ok"')):text;
     const json=JSON.parse(jsonStr);
     if(json.ok&&json.data&&Object.keys(json.data).length>0){applyPayload(json.data);refreshAll();}
-    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('Synced '+t,'var(--green)');
-  }catch(e){const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSyncStatus('Synced '+t,'var(--green)');}
+    setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');
+  }catch(e){setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');}
 }
+
 function manualSync(){pullFromCloud();}
 function showSyncSetup(){document.getElementById('script-url-input').value=getScriptUrl();document.getElementById('sync-modal').style.display='flex';}
 function saveScriptUrl(){const val=document.getElementById('script-url-input').value.trim();if(!val){alert('Please paste your Web App URL first.');return;}localStorage.setItem('s26_scriptUrl',val);document.getElementById('sync-modal').style.display='none';toast('URL saved — syncing...');pullFromCloud();}
 function expJSON(){const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};const b=new Blob([JSON.stringify(d)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='survivor26.json';a.click();}
 function impJSON(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});if(d.picks)picks=d.picks;if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});save();refreshAll();toast('Loaded ✓');}catch(e){alert('Could not read file');}};rd.readAsText(f);ev.target.value='';}
+
 function showPg(id,btn){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));document.getElementById('pg-'+id).classList.add('active');btn.classList.add('active');if(id==='today')renderToday();if(id==='history')renderHistory();if(id==='results')renderResults();}
 function changeDay(d){const n=curDay+d;if(n<0||n>=DAYS.length)return;curDay=n;renderToday();}
 function refreshAll(){renderToday();renderHistory();renderResults();}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
-function setDesig(dayId,teamName,desig){const cur=dayDesig[dayId][teamName];if(cur===desig){delete dayDesig[dayId][teamName];if(desig==='pick'&&picks[dayId]===teamName)delete picks[dayId];}else{if(desig==='pick'){const oldPick=picks[dayId];if(oldPick&&oldPick!==teamName)delete dayDesig[dayId][oldPick];picks[dayId]=teamName;}if(cur==='pick')delete picks[dayId];dayDesig[dayId][teamName]=desig;}save();renderToday();renderHistory();}
+
+function setDesig(dayId,teamName,desig){
+  const cur=dayDesig[dayId][teamName];
+  if(cur===desig){delete dayDesig[dayId][teamName];if(desig==='pick'&&picks[dayId]===teamName)delete picks[dayId];}
+  else{if(desig==='pick'){const oldPick=picks[dayId];if(oldPick&&oldPick!==teamName)delete dayDesig[dayId][oldPick];picks[dayId]=teamName;}if(cur==='pick')delete picks[dayId];dayDesig[dayId][teamName]=desig;}
+  save();renderToday();renderHistory();
+}
+
 function renderToday(){
   const day=DAYS[curDay],elim=getElim(),used=getUsed(),games=getResolvedGames(curDay),desigs=dayDesig[day.id]||{};
   document.getElementById('day-name').textContent=day.label;
@@ -353,7 +424,7 @@ function renderToday(){
   BKTS.forEach(b=>{const members=Object.entries(desigs).filter(([,v])=>v===b.key).map(([k])=>k);const div=document.createElement('div');div.className='bucket';div.innerHTML=`<span class="bkt-ico">${b.ico}</span><span class="bkt-lbl">${b.lbl}</span>`;const items=document.createElement('div');items.className='bkt-items';if(members.length===0){const empty=document.createElement('div');empty.style.cssText='font-size:9px;color:var(--dim);text-align:center;padding:2px 0;';empty.textContent='—';items.appendChild(empty);}else{members.forEach(name=>{const chip=document.createElement('div');chip.className='bkt-chip '+b.cls;const t=tm(name);chip.textContent=(t?t.seed+' ':'')+name;chip.title=name;chip.onclick=()=>{setDesig(day.id,name,b.key);};items.appendChild(chip);});}div.appendChild(items);bktEl.appendChild(div);});
   document.getElementById('matchups-hdr').textContent=`${day.label} matchups (${games.length})`;
   const cont=document.getElementById('matchups');cont.innerHTML='';
-  if(games.length===0){cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Games populate once prior round results are entered.</div>';return;}
+  if(games.length===0){cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Enter Sweet 16 results to unlock these matchups.</div>';return;}
   games.forEach(([ta,tb],gi)=>{
     const res=results[day.id]?results[day.id][gi]:null,hasPick=desigs[ta]==='pick'||desigs[tb]==='pick';
     const card=document.createElement('div');card.className='matchup'+(hasPick?' has-pick':'');
@@ -375,6 +446,7 @@ function renderToday(){
     cont.appendChild(card);
   });
 }
+
 function renderHistory(){
   const cont=document.getElementById('history-list');cont.innerHTML='';
   const pickDays=DAYS.filter(d=>picks[d.id]);
@@ -392,19 +464,20 @@ function renderHistory(){
     cont.appendChild(row);
   });
 }
+
 function renderResults(){
   const cont=document.getElementById('results-list');cont.innerHTML='';
   DAYS.forEach((day,di)=>{
     const games=getResolvedGames(di);if(games.length===0)return;
-    if(di>5&&!DAYS.slice(0,di).some(d=>Object.keys(results[d.id]||{}).length>0)&&Object.keys(results[day.id]||{}).length===0)return;
     const entered=Object.keys(results[day.id]||{}).length;
     const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=`${day.label} · ${day.round} · ${entered}/${games.length}`;cont.appendChild(lbl);
     games.forEach(([ta,tb],gi)=>{
-      const res=results[day.id]?results[day.id][gi]:null,phA=ta.startsWith('??'),phB=tb.startsWith('??'),tA=tm(ta),tB=tm(tb);
+      const res=results[day.id]?results[day.id][gi]:null;
+      const phA=ta.startsWith('??'),phB=tb.startsWith('??'),tA=tm(ta),tB=tm(tb);
       const gc=document.createElement('div');gc.className='game-card';gc.innerHTML=`<div class="game-hdr">Game ${gi+1}</div>`;
       [{name:ta,t:tA,won:res&&res.w===ta,lost:res&&res.l===ta,ph:phA,opp:tb},{name:tb,t:tB,won:res&&res.w===tb,lost:res&&res.l===tb,ph:phB,opp:ta}].forEach(({name,t,won,lost,ph,opp})=>{
         const row=document.createElement('div');row.className='gtr'+(won?' won':lost?' lost':'');
-        row.innerHTML=`<span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="gtr-name">${name}</span><span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap if won</span>'}</span>`;
+        row.innerHTML=`<span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="gtr-name">${name}</span><span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap to pick winner</span>'}</span>`;
         if(!res&&!ph)row.onclick=()=>recordResult(day.id,gi,name,opp);
         gc.appendChild(row);
       });
@@ -413,10 +486,18 @@ function renderResults(){
     });
   });
 }
-function recordResult(dayId,gi,w,l){results[dayId][gi]={w,l};const di=DAYS.findIndex(d=>d.id===dayId);DAYS.slice(di+1).forEach(d=>{if(d.games.length===0)results[d.id]={};});save();refreshAll();toast(`${w} wins ✓`);}
-function undoResult(dayId,gi){delete results[dayId][gi];const di=DAYS.findIndex(d=>d.id===dayId);DAYS.slice(di+1).forEach(d=>{if(d.games.length===0)results[d.id]={};});save();refreshAll();}
+
+function recordResult(dayId,gi,w,l){
+  results[dayId][gi]={w,l};
+  save();refreshAll();toast(`${w} wins ✓`);
+}
+function undoResult(dayId,gi){
+  delete results[dayId][gi];
+  save();refreshAll();
+}
+
 load();
-curDay=5;
+curDay=6;
 renderToday();
 pullFromCloud();
 </script>
