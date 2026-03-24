@@ -2,504 +2,357 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>2026 NCAA Survivor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 NCAA Survivor — Scenario Planner</title>
 <style>
 :root{
   --bg:#0f1117;--card:#1a1d27;--card2:#222536;--border:#2e3248;
   --text:#f0f2ff;--muted:#7b80a0;--dim:#3a3f58;
-  --green:#22c55e;--gbg:#0d2818;--gdim:#134d28;
+  --green:#22c55e;--gbg:#0d2818;
   --red:#ef4444;--rbg:#2a0d0d;
   --amber:#f59e0b;--abg:#2a1d05;
   --blue:#3b82f6;--bbg:#0d1a2e;
-  --purple:#a855f7;--pbg:#1a0d2e;
-  --r:12px;--rsm:8px;
+  --gold:#ffd700;
+  --r:10px;--rsm:6px;
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:520px;margin:0 auto;padding-bottom:160px;}
-.hdr{padding:16px 14px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;}
-.hdr-l h1{font-size:18px;font-weight:800;letter-spacing:-.3px;}
-.hdr-l p{font-size:11px;color:var(--muted);margin-top:1px;}
-.hdr-r{display:flex;gap:6px;}
-.icobtn{width:34px;height:34px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;}
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:50;}
-.nbtn{flex:1;padding:9px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--muted);font-family:inherit;}
-.nbtn.active{color:var(--blue);}
-.nbtn svg{width:21px;height:21px;}
-.nbtn span{font-size:10px;font-weight:600;}
-.pg{display:none;padding:0 13px;}
-.pg.active{display:block;}
-.day-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;}
-.dnbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;}
-.dnbtn:disabled{opacity:.2;cursor:default;}
-.day-center{text-align:center;}
-.day-name{font-size:17px;font-weight:800;letter-spacing:-.3px;}
-.day-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-.buckets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:14px;}
-.bucket{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:7px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bkt-ico{font-size:18px;line-height:1;}
-.bkt-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;}
-.bkt-items{display:flex;flex-direction:column;gap:3px;width:100%;padding:0 2px;}
-.bkt-chip{font-size:10px;font-weight:700;padding:3px 4px;border-radius:5px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3;}
-.bkt-chip:active{opacity:.7;}
-.bc-pick{background:var(--green);color:#000;}
-.bc-cand{background:var(--bbg);color:var(--blue);border:1px solid #1e40af;}
-.bc-save{background:var(--pbg);color:var(--purple);border:1px solid #6b21a8;}
-.bc-maybe{background:var(--abg);color:var(--amber);border:1px solid #92400e;}
-.bc-never{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
-.sec-hdr{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:2px 0 8px;display:flex;align-items:center;gap:8px;}
-.sec-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
-.matchup{background:var(--card2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;padding:8px;}
-.matchup.has-pick{border-color:var(--green);}
-.vs-row{display:flex;align-items:center;gap:6px;margin:4px 0;}
-.vs-line{flex:1;height:1px;background:var(--border);}
-.vs-txt{font-size:9px;font-weight:800;color:var(--dim);letter-spacing:.14em;flex-shrink:0;}
-.tr{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card);border-radius:var(--rsm);}
-.tr.elim{opacity:.3;background:var(--rbg);}
-.tr.used{opacity:.4;background:var(--card2);}
-.tr.res-won{background:var(--gbg);}
-.tr.res-won .tr-name{color:var(--green);}
-.tr.res-lost{background:var(--rbg);opacity:.45;}
-.tr.res-lost .tr-name{text-decoration:line-through;color:var(--muted);}
-.tr-seed{width:28px;height:28px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
-.tr-info{flex:1;min-width:0;}
-.tr-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tr-meta{font-size:10px;color:var(--muted);margin-top:1px;}
-.tr-icons{display:flex;gap:3px;flex-shrink:0;}
-.ti{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.ti:active{transform:scale(.88);}
-.ti.on-pick{background:var(--green);border-color:var(--green);}
-.ti.on-cand{background:var(--blue);border-color:var(--blue);}
-.ti.on-save{background:var(--purple);border-color:var(--purple);}
-.ti.on-maybe{background:var(--amber);border-color:var(--amber);}
-.ti.on-never{background:var(--red);border-color:var(--red);}
-.tr-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em;}
-.tag-elim{background:var(--rbg);color:var(--red);border:1px solid #7f1d1d;}
-.tag-used{background:var(--dim);color:var(--muted);}
-.res-ico{font-size:14px;flex-shrink:0;}
-.sec-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:12px 0 8px;display:flex;align-items:center;gap:8px;}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
-.hist-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 13px;margin-bottom:7px;}
-.hist-row.won{border-color:var(--gdim);background:var(--gbg);}
-.hist-row.lost{border-color:#4a1515;background:var(--rbg);opacity:.7;}
-.hr-seed{width:30px;height:30px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
-.hr-info{flex:1;}
-.hr-team{font-size:14px;font-weight:700;}
-.hr-sub{font-size:11px;color:var(--muted);margin-top:1px;}
-.hr-result{font-size:12px;font-weight:700;flex-shrink:0;}
-.r-win{color:var(--green);}.r-loss{color:var(--red);}.r-pend{color:var(--amber);}
-.game-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px;overflow:hidden;}
-.game-hdr{font-size:9px;color:var(--muted);padding:5px 12px;background:var(--card2);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.07em;}
-.gtr{display:flex;align-items:center;gap:9px;padding:12px 12px;border-bottom:1px solid var(--border);cursor:pointer;}
-.gtr:last-of-type{border-bottom:none;}
-.gtr:active{opacity:.75;}
-.gtr.won{background:var(--gbg);}
-.gtr.lost{background:var(--rbg);opacity:.5;}
-.gtr.won .gtr-name{color:var(--green);font-weight:700;}
-.gtr.lost .gtr-name{text-decoration:line-through;color:var(--muted);}
-.gtr-seed{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
-.gtr-name{flex:1;font-size:13px;font-weight:600;}
-.gtr-ico{font-size:14px;}
-.undo-row{padding:6px 12px;display:flex;justify-content:flex-end;background:var(--card2);border-top:1px solid var(--border);}
-.undo-btn{font-size:11px;color:var(--muted);background:none;border:1px solid var(--dim);border-radius:6px;padding:3px 9px;cursor:pointer;font-family:inherit;}
-.strat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
-.strat-card h3{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);}
-.strat-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid;margin:2px;white-space:nowrap;}
-.tag-save{background:var(--pbg);color:var(--purple);border-color:#6b21a8;}
-.tag-burn{background:var(--abg);color:var(--amber);border-color:#92400e;}
-.tag-avoid{background:var(--rbg);color:var(--red);border-color:#7f1d1d;}
-.tag-watch{background:var(--bbg);color:var(--blue);border-color:#1e40af;}
-.strat-tip{font-size:12px;color:var(--muted);line-height:1.65;padding:10px 12px;background:var(--card2);border-radius:var(--rsm);margin-bottom:6px;}
-.strat-tip b{color:var(--text);}
-.sd1{background:#ffd700;color:#000;}.sd2{background:#c0c0c0;color:#000;}.sd3{background:#cd7f32;color:#fff;}
-.sd4{background:var(--blue);color:#fff;}.sd567{background:var(--card2);color:var(--text);}.sdlo{background:var(--card2);color:var(--muted);}
-.rdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.rE{background:#3b82f6;}.rW{background:#22c55e;}.rS{background:#ef4444;}.rM{background:#a855f7;}
-.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hdr{padding:14px 16px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:100;}
+.hdr h1{font-size:16px;font-weight:800;}
+.hdr p{font-size:11px;color:var(--muted);margin-top:2px;}
+.scenario-bar{padding:10px 16px;border-bottom:1px solid var(--border);background:var(--card2);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.scenario-bar label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.scenario-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.stab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;}
+.stab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.sbtn{padding:5px 12px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;}
+.sbtn.save{color:var(--green);border-color:var(--gbg);}
+.sbtn.clear{color:var(--red);border-color:var(--rbg);}
+.sbtn.new{color:var(--amber);border-color:var(--abg);}
+.used-bar{padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.used-bar label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;}
+.used-chip{padding:3px 8px;border-radius:20px;background:var(--rbg);color:var(--red);border:1px solid #4a1515;font-size:11px;font-weight:700;}
+.saving-bar{padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.saving-bar label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;}
+.saving-select{background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--amber);font-size:12px;font-weight:700;font-family:inherit;padding:5px 10px;outline:none;cursor:pointer;}
+.saving-note{font-size:11px;color:var(--dim);font-style:italic;}
+.main{padding:16px;display:flex;gap:12px;overflow-x:auto;padding-bottom:24px;}
+.day-col{flex-shrink:0;width:200px;cursor:grab;}
+.day-col.dragging{opacity:.4;cursor:grabbing;}
+.day-col.drag-over{outline:2px dashed var(--blue);border-radius:var(--r);}
+.day-hdr{background:var(--card2);border-radius:var(--r) var(--r) 0 0;padding:10px 12px;border:1px solid var(--border);border-bottom:none;display:flex;align-items:flex-start;gap:6px;}
+.drag-handle{color:var(--dim);font-size:14px;cursor:grab;padding-top:2px;flex-shrink:0;user-select:none;}
+.day-hdr-text{flex:1;}
+.day-hdr .round{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.day-hdr .date{font-size:14px;font-weight:800;margin-top:2px;}
+.day-pick{font-size:10px;color:var(--amber);font-weight:700;margin-top:4px;min-height:14px;}
+.matchups{border:1px solid var(--border);border-radius:0 0 var(--r) var(--r);overflow:hidden;}
+.matchup{border-bottom:1px solid var(--border);}
+.matchup:last-child{border-bottom:none;}
+.team-btn{width:100%;padding:10px 12px;background:var(--card);border:none;color:var(--text);cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;text-align:left;display:flex;align-items:center;gap:8px;}
+.team-btn:hover:not(.used):not(.saving):not(.ph){background:var(--card2);}
+.team-btn.picked{background:var(--gbg);color:var(--green);}
+.team-btn.picked::after{content:"✓";margin-left:auto;color:var(--green);}
+.team-btn.used{background:var(--rbg);color:var(--red);opacity:.6;cursor:not-allowed;text-decoration:line-through;}
+.team-btn.used::after{content:"USED";margin-left:auto;font-size:9px;color:var(--red);}
+.team-btn.saving{background:var(--abg);color:var(--amber);cursor:not-allowed;}
+.team-btn.saving::after{content:"SAVING";margin-left:auto;font-size:9px;color:var(--amber);}
+.team-btn.ph{color:var(--dim);cursor:default;font-style:italic;font-size:11px;}
+.vs-div{padding:3px 12px;background:var(--bg);display:flex;align-items:center;gap:6px;}
+.vs-div::before,.vs-div::after{content:'';flex:1;height:1px;background:var(--border);}
+.vs-div span{font-size:8px;color:var(--dim);font-weight:800;letter-spacing:.1em;}
+.seed{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;}
+.s1{background:#ffd700;color:#000;}.s2{background:#c0c0c0;color:#000;}.s3{background:#cd7f32;color:#fff;}
+.s4{background:var(--blue);color:#fff;}.s567{background:var(--card2);color:var(--text);}.slo{background:var(--card2);color:var(--muted);}
+.kp{font-size:9px;color:var(--dim);margin-left:auto;flex-shrink:0;}
+.saved-section{padding:16px;}
+.saved-section h2{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.saved-section h2::after{content:'';flex:1;height:1px;background:var(--border);}
+.saved-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.saved-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;min-width:180px;}
+.saved-card h3{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--amber);}
+.saved-pick{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;}
+.saved-pick .day{color:var(--muted);font-size:10px;width:60px;flex-shrink:0;}
+.saved-pick .team{font-weight:700;color:var(--green);}
+.saved-pick .team.champ{color:var(--gold);}
+.del-btn{margin-top:10px;padding:4px 10px;border-radius:var(--rsm);border:1px solid #4a1515;background:var(--rbg);color:var(--red);cursor:pointer;font-size:11px;font-family:inherit;}
+.empty-saved{color:var(--dim);font-size:13px;font-style:italic;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;}
-.empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;}
-.empty .emo{font-size:32px;margin-bottom:8px;}
 </style>
 </head>
 <body>
+
 <div class="hdr">
-  <div class="hdr-l">
-    <h1>🏀 NCAA Survivor</h1>
-    <p id="sync-status" style="font-size:11px;color:var(--muted);margin-top:1px;">2026 · 1 pick per day</p>
-  </div>
-  <div class="hdr-r">
-    <button class="icobtn" onclick="manualSync()" title="Sync now">☁️</button>
-    <button class="icobtn" onclick="showSyncSetup()" title="Cloud settings">⚙️</button>
-    <button class="icobtn" onclick="expJSON()" title="Export">📤</button>
-    <button class="icobtn" onclick="document.getElementById('fimp').click()" title="Import">📥</button>
-    <input type="file" id="fimp" accept=".json" style="display:none" onchange="impJSON(event)">
+  <div>
+    <h1>🏀 2026 NCAA Survivor — Scenario Planner</h1>
+    <p>Click a team to pick them · Drag columns to reorder · Can't reuse a team</p>
   </div>
 </div>
-<div id="sync-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:flex-end;justify-content:center;">
-  <div style="background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:20px 16px 40px;width:100%;max-width:520px;border:1px solid var(--border);">
-    <div style="width:36px;height:4px;background:var(--dim);border-radius:2px;margin:0 auto 16px;"></div>
-    <div style="font-size:17px;font-weight:800;margin-bottom:6px;">☁️ Cloud sync setup</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Paste your Google Apps Script Web App URL to sync picks across devices.</div>
-    <input id="script-url-input" type="url" placeholder="https://script.google.com/macros/s/..." style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;">
-    <button onclick="saveScriptUrl()" style="width:100%;padding:14px;background:var(--blue);border:none;border-radius:var(--rsm);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;">Save &amp; sync now</button>
-    <button onclick="document.getElementById('sync-modal').style.display='none'" style="width:100%;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Cancel</button>
-  </div>
+
+<div class="scenario-bar">
+  <label>Scenario:</label>
+  <div class="scenario-tabs" id="scenario-tabs"></div>
+  <button class="sbtn new" onclick="newScenario()">+ New</button>
+  <button class="sbtn save" onclick="saveScenario()">💾 Save</button>
+  <button class="sbtn clear" onclick="clearScenario()">✕ Clear</button>
 </div>
-<div id="pg-today" class="pg active">
-  <div class="day-nav">
-    <button class="dnbtn" id="prev-btn" onclick="changeDay(-1)">‹</button>
-    <div class="day-center"><div class="day-name" id="day-name">—</div><div class="day-sub" id="day-sub">—</div></div>
-    <button class="dnbtn" id="next-btn" onclick="changeDay(1)">›</button>
-  </div>
-  <div class="buckets" id="buckets"></div>
-  <div class="sec-hdr" id="matchups-hdr">Matchups</div>
-  <div id="matchups"></div>
-  <div style="height:40px;"></div>
+
+<div class="used-bar">
+  <label>Already used:</label>
+  <span class="used-chip">Nebraska</span>
+  <span class="used-chip">Kansas</span>
+  <span class="used-chip">Purdue</span>
+  <span class="used-chip">Arkansas</span>
 </div>
-<div id="pg-history" class="pg">
-  <div id="history-list" style="padding-top:4px;"></div>
-  <div style="height:40px;"></div>
+
+<div class="saving-bar">
+  <label>Saving for champ:</label>
+  <select class="saving-select" id="saving-select" onchange="changeSaving()">
+    <option value="">— None —</option>
+  </select>
+  <span class="saving-note" id="saving-note"></span>
 </div>
-<div id="pg-results" class="pg">
-  <div id="results-list" style="padding-top:4px;"></div>
-  <div style="height:40px;"></div>
+
+<div class="main" id="main"></div>
+
+<div class="saved-section">
+  <h2>Saved Scenarios</h2>
+  <div class="saved-grid" id="saved-grid"></div>
 </div>
-<div id="pg-strategy" class="pg">
-  <div style="padding-top:14px;">
-  <div class="sec-lbl">Core rules</div>
-  <div class="strat-tip"><b>One pick per day.</b> Pick one team playing that day. They win — you survive. They lose — you're out. Each team can only be used once all tournament.</div>
-  <div class="strat-tip"><b>Save 1-seeds for later.</b> You need safe picks in the Elite Eight and Final Four. Don't waste Michigan or Duke in the Sweet 16 if a 2-seed can do the same job.</div>
-  <div class="strat-tip"><b>Never pick 8/9 matchups.</b> Both teams are roughly 50/50. Always better options on the same day.</div>
-  <div class="sec-lbl" style="margin-top:8px;">Still alive</div>
-  <div class="strat-card">
-    <h3>⭐ Save for Elite Eight+</h3>
-    <span class="strat-tag tag-save">Duke</span><span class="strat-tag tag-save">Michigan</span><span class="strat-tag tag-save">Arizona</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Three 1-seeds still alive. Florida is out. Save these for the final rounds.</div>
-  </div>
-  <div class="strat-card">
-    <h3>✅ Best Sweet 16 picks</h3>
-    <span class="strat-tag tag-burn">Houston</span><span class="strat-tag tag-burn">Illinois</span><span class="strat-tag tag-burn">Iowa State</span><span class="strat-tag tag-burn">Purdue</span><span class="strat-tag tag-burn">Nebraska</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Strong seeds, favorable matchups. Burn these now.</div>
-  </div>
-  <div class="strat-card">
-    <h3>🚫 Risky</h3>
-    <span class="strat-tag tag-avoid">Iowa</span><span class="strat-tag tag-avoid">Texas</span><span class="strat-tag tag-avoid">St. John's</span><span class="strat-tag tag-avoid">Tennessee</span>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Upset teams — dangerous to use in survivor.</div>
-  </div>
-  </div>
-</div>
-<nav class="bnav">
-  <button class="nbtn active" onclick="showPg('today',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    <span>Today</span>
-  </button>
-  <button class="nbtn" onclick="showPg('history',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    <span>My Picks</span>
-  </button>
-  <button class="nbtn" onclick="showPg('results',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    <span>Results</span>
-  </button>
-  <button class="nbtn" onclick="showPg('strategy',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <span>Strategy</span>
-  </button>
-</nav>
+
 <div class="toast" id="toast"></div>
+
 <script>
-const DAYS=[
-  {id:'tue-mar17',label:'Tue Mar 17',round:'First Four',games:[['Texas','NC State'],['UMBC','Howard']]},
-  {id:'wed-mar18',label:'Wed Mar 18',round:'First Four',games:[['SMU','Miami (OH)'],['Prairie View A&M','Lehigh']]},
-  {id:'thu-mar19',label:'Thu Mar 19',round:'Round of 64',games:[
-    ['Duke','Siena'],['Ohio State','TCU'],['Louisville','South Florida'],['Michigan State','North Dakota St.'],
-    ['Wisconsin','High Point'],['Arkansas','Hawaii'],['BYU','Texas'],['Gonzaga','Kennesaw State'],
-    ["Saint Mary's",'Texas A&M'],['Houston','Idaho'],['Michigan','Howard'],['Georgia','Saint Louis'],
-    ['Nebraska','Troy'],['North Carolina','VCU'],['Vanderbilt','McNeese'],['Illinois','Penn'],
-  ]},
-  {id:'fri-mar20',label:'Fri Mar 20',round:'Round of 64',games:[
-    ["St. John's",'Northern Iowa'],['Kansas','Cal Baptist'],['UCLA','UCF'],['UConn','Furman'],
-    ['Arizona','LIU'],['Villanova','Utah State'],['Purdue','Queens'],['Miami (FL)','Missouri'],
-    ['Florida','Prairie View A&M'],['Clemson','Iowa'],['Alabama','Hofstra'],['Tennessee','Miami (OH)'],
-    ['Texas Tech','Akron'],['Kentucky','Santa Clara'],['Virginia','Wright State'],['Iowa State','Tennessee State'],
-  ]},
-  {id:'sat-mar21',label:'Sat Mar 21',round:'Round of 32',games:[
-    ['Duke','TCU'],['Michigan State','Louisville'],['Arkansas','High Point'],['Vanderbilt','Nebraska'],
-    ['VCU','Illinois'],['Texas A&M','Houston'],['Texas','Gonzaga'],['Saint Louis','Michigan'],
-  ]},
-  {id:'sun-mar22',label:'Sun Mar 22',round:'Round of 32',games:[
-    ['Miami (FL)','Purdue'],['Kentucky','Iowa State'],["St. John's",'Kansas'],['UCLA','UConn'],
-    ['Florida','Iowa'],['Texas Tech','Alabama'],['Virginia','Tennessee'],['Arizona','Utah State'],
-  ]},
-  {id:'thu-mar26',label:'Thu Mar 26',round:'Sweet 16',games:[
-    ['Purdue','Texas'],['Arizona','Arkansas'],['Nebraska','Iowa'],['Houston','Illinois'],
-  ]},
-  {id:'fri-mar27',label:'Fri Mar 27',round:'Sweet 16',games:[
-    ['Duke',"St. John's"],['UConn','Michigan State'],['Michigan','Alabama'],['Iowa State','Tennessee'],
-  ]},
-  {id:'sat-mar28',label:'Sat Mar 28',round:'Elite Eight',games:[]},
-  {id:'sun-mar29',label:'Sun Mar 29',round:'Elite Eight',games:[]},
-  {id:'sat-apr4', label:'Sat Apr 4', round:'Final Four',games:[]},
-  {id:'mon-apr6', label:'Mon Apr 6', round:'Championship',games:[]},
+const PREUSED = new Set(["Nebraska","Kansas","Purdue","Arkansas"]);
+let savingTeam = "Michigan";
+
+const KP = {Duke:1,Arizona:2,Michigan:3,"Iowa State":5,Houston:4,Illinois:6,UConn:7,"Michigan State":9,Nebraska:14,"St. John's":11,Alabama:13,Tennessee:16,Arkansas:10,Iowa:22,Texas:25,Purdue:2};
+const SEEDS = {Duke:1,Michigan:1,Arizona:1,Florida:1,Houston:2,UConn:2,Purdue:2,"Iowa State":2,"Michigan State":3,Illinois:3,Kansas:4,Nebraska:4,Arkansas:4,Alabama:4,"St. John's":5,"Texas Tech":5,Texas:11,Iowa:9,"Utah State":9,"Saint Louis":9,Tennessee:6,Kentucky:7,UCLA:7,"Miami (FL)":7};
+const ALL_TEAMS = ["Duke","Michigan","Arizona","Iowa State","Houston","Illinois","UConn","Michigan State","Nebraska","St. John's","Alabama","Tennessee","Arkansas","Iowa","Texas","Purdue","Kansas","Virginia","Kentucky","UCLA","Vanderbilt","Texas Tech","Miami (FL)","Utah State","Saint Louis"];
+
+const BASE_DAYS = [
+  {id:"thu-mar26",label:"Thu Mar 26",round:"Sweet 16",matchups:[["Texas","Purdue"],["Iowa","Nebraska"],["Arizona","Arkansas"],["Illinois","Houston"]]},
+  {id:"fri-mar27",label:"Fri Mar 27",round:"Sweet 16",matchups:[["St. John's","Duke"],["Alabama","Michigan"],["Michigan State","UConn"],["Tennessee","Iowa State"]]},
+  {id:"sat-mar28",label:"Sat Mar 28",round:"Elite Eight",matchups:[["Thu G1 winner","Thu G2 winner"],["Thu G3 winner","Thu G4 winner"]]},
+  {id:"sun-mar29",label:"Sun Mar 29",round:"Elite Eight",matchups:[["Fri G1 winner","Fri G2 winner"],["Fri G3 winner","Fri G4 winner"]]},
+  {id:"sat-apr4", label:"Sat Apr 4", round:"Final Four", matchups:[["Sat E8 G1 winner","Sat E8 G2 winner"],["Sun E8 G1 winner","Sun E8 G2 winner"]]},
+  {id:"mon-apr6", label:"Mon Apr 6", round:"Championship",matchups:[["FF G1 winner","FF G2 winner"]]},
 ];
 
-// Pre-loaded results through Round of 32
-const PRESET_RESULTS={
-  'thu-mar19':{
-    0:{w:'Duke',l:'Siena'},1:{w:'TCU',l:'Ohio State'},2:{w:'Louisville',l:'South Florida'},
-    3:{w:'Michigan State',l:'North Dakota St.'},4:{w:'High Point',l:'Wisconsin'},5:{w:'Arkansas',l:'Hawaii'},
-    6:{w:'Texas',l:'BYU'},7:{w:'Gonzaga',l:'Kennesaw State'},8:{w:'Texas A&M',l:"Saint Mary's"},
-    9:{w:'Houston',l:'Idaho'},10:{w:'Michigan',l:'Howard'},11:{w:'Saint Louis',l:'Georgia'},
-    12:{w:'Nebraska',l:'Troy'},13:{w:'VCU',l:'North Carolina'},14:{w:'Vanderbilt',l:'McNeese'},
-    15:{w:'Illinois',l:'Penn'},
-  },
-  'fri-mar20':{
-    0:{w:"St. John's",l:'Northern Iowa'},1:{w:'Kansas',l:'Cal Baptist'},2:{w:'UCLA',l:'UCF'},
-    3:{w:'UConn',l:'Furman'},4:{w:'Arizona',l:'LIU'},5:{w:'Utah State',l:'Villanova'},
-    6:{w:'Purdue',l:'Queens'},7:{w:'Miami (FL)',l:'Missouri'},8:{w:'Florida',l:'Prairie View A&M'},
-    9:{w:'Iowa',l:'Clemson'},10:{w:'Alabama',l:'Hofstra'},11:{w:'Tennessee',l:'Miami (OH)'},
-    12:{w:'Texas Tech',l:'Akron'},13:{w:'Kentucky',l:'Santa Clara'},14:{w:'Virginia',l:'Wright State'},
-    15:{w:'Iowa State',l:'Tennessee State'},
-  },
-  'sat-mar21':{
-    0:{w:'Duke',l:'TCU'},1:{w:'Michigan State',l:'Louisville'},2:{w:'Arkansas',l:'High Point'},
-    3:{w:'Nebraska',l:'Vanderbilt'},4:{w:'Illinois',l:'VCU'},5:{w:'Houston',l:'Texas A&M'},
-    6:{w:'Texas',l:'Gonzaga'},7:{w:'Michigan',l:'Saint Louis'},
-  },
-  'sun-mar22':{
-    0:{w:'Purdue',l:'Miami (FL)'},1:{w:'Iowa State',l:'Kentucky'},2:{w:"St. John's",l:'Kansas'},
-    3:{w:'UConn',l:'UCLA'},4:{w:'Iowa',l:'Florida'},5:{w:'Alabama',l:'Texas Tech'},
-    6:{w:'Tennessee',l:'Virginia'},7:{w:'Arizona',l:'Utah State'},
-  },
-};
+// Column order (indices into BASE_DAYS) — drag reorders this
+let colOrder = [0,1,2,3,4,5];
 
-const TEAMS=[
-  {seed:1,team:'Duke',region:'East'},{seed:2,team:'UConn',region:'East'},{seed:3,team:'Michigan State',region:'East'},{seed:4,team:'Kansas',region:'East'},
-  {seed:5,team:"St. John's",region:'East'},{seed:6,team:'Louisville',region:'East'},{seed:7,team:'UCLA',region:'East'},{seed:8,team:'Ohio State',region:'East'},
-  {seed:9,team:'TCU',region:'East'},{seed:10,team:'UCF',region:'East'},{seed:11,team:'South Florida',region:'East'},{seed:12,team:'Northern Iowa',region:'East'},
-  {seed:13,team:'Cal Baptist',region:'East'},{seed:14,team:'North Dakota St.',region:'East'},{seed:15,team:'Furman',region:'East'},{seed:16,team:'Siena',region:'East'},
-  {seed:1,team:'Arizona',region:'West'},{seed:2,team:'Purdue',region:'West'},{seed:3,team:'Gonzaga',region:'West'},{seed:4,team:'Arkansas',region:'West'},
-  {seed:5,team:'Wisconsin',region:'West'},{seed:6,team:'BYU',region:'West'},{seed:7,team:'Miami (FL)',region:'West'},{seed:8,team:'Villanova',region:'West'},
-  {seed:9,team:'Utah State',region:'West'},{seed:10,team:'Missouri',region:'West'},{seed:11,team:'Texas',region:'West'},{seed:12,team:'High Point',region:'West'},
-  {seed:13,team:'Hawaii',region:'West'},{seed:14,team:'Kennesaw State',region:'West'},{seed:15,team:'Queens',region:'West'},{seed:16,team:'LIU',region:'West'},
-  {seed:1,team:'Florida',region:'South'},{seed:2,team:'Houston',region:'South'},{seed:3,team:'Illinois',region:'South'},{seed:4,team:'Nebraska',region:'South'},
-  {seed:5,team:'Vanderbilt',region:'South'},{seed:6,team:'North Carolina',region:'South'},{seed:7,team:"Saint Mary's",region:'South'},{seed:8,team:'Clemson',region:'South'},
-  {seed:9,team:'Iowa',region:'South'},{seed:10,team:'Texas A&M',region:'South'},{seed:11,team:'VCU',region:'South'},{seed:12,team:'McNeese',region:'South'},
-  {seed:13,team:'Troy',region:'South'},{seed:14,team:'Penn',region:'South'},{seed:15,team:'Idaho',region:'South'},{seed:16,team:'Prairie View A&M',region:'South'},
-  {seed:1,team:'Michigan',region:'Midwest'},{seed:2,team:'Iowa State',region:'Midwest'},{seed:3,team:'Virginia',region:'Midwest'},{seed:4,team:'Alabama',region:'Midwest'},
-  {seed:5,team:'Texas Tech',region:'Midwest'},{seed:6,team:'Tennessee',region:'Midwest'},{seed:7,team:'Kentucky',region:'Midwest'},{seed:8,team:'Georgia',region:'Midwest'},
-  {seed:9,team:'Saint Louis',region:'Midwest'},{seed:10,team:'Santa Clara',region:'Midwest'},{seed:11,team:'Miami (OH)',region:'Midwest'},{seed:12,team:'Akron',region:'Midwest'},
-  {seed:13,team:'Hofstra',region:'Midwest'},{seed:14,team:'Wright State',region:'Midwest'},{seed:15,team:'Tennessee State',region:'Midwest'},{seed:16,team:'Howard',region:'Midwest'},
-  {seed:11,team:'NC State',region:'West'},{seed:16,team:'UMBC',region:'Midwest'},{seed:11,team:'SMU',region:'Midwest'},{seed:16,team:'Lehigh',region:'South'},
-];
+let scenarios = [{}];
+let currentIdx = 0;
+let savedScenarios = JSON.parse(localStorage.getItem('ncaa_scenarios3') || '[]');
 
-let dayDesig={},picks={},results={},plan={};
-DAYS.forEach(d=>{dayDesig[d.id]={};results[d.id]={};});
-TEAMS.forEach(t=>{plan[t.team]={status:'none'};});
-let curDay=6,syncTimer=null;
+// Drag state
+let dragSrcIdx = null; // index in colOrder
 
-function tm(name){return TEAMS.find(t=>t.team===name);}
-function sdCls(s){if(!s)return 'sdlo';return s===1?'sd1':s===2?'sd2':s===3?'sd3':s===4?'sd4':s<=7?'sd567':'sdlo';}
-function rdCls(r){return {East:'rE',West:'rW',South:'rS',Midwest:'rM'}[r]||'';}
-function getElim(){const e=new Set();Object.values(results).forEach(dr=>Object.values(dr).forEach(g=>{if(g&&g.l)e.add(g.l);}));return e;}
-function getUsed(){return new Set(Object.values(picks).filter(Boolean));}
-
-function getResolvedGames(di){
-  const day=DAYS[di];
-  if(day.games.length>0)return day.games;
-  // For Elite Eight+ derive from Sweet 16 winners
-  const srcMap={
-    'sat-mar28':['thu-mar26'],'sun-mar29':['fri-mar27'],
-    'sat-apr4':['sat-mar28','sun-mar29'],'mon-apr6':['sat-apr4']
-  };
-  const srcIds=srcMap[day.id];if(!srcIds)return[];
-  let winners=[];
-  srcIds.forEach(sid=>{
-    const sdi=DAYS.findIndex(d=>d.id===sid);
-    const sg=getResolvedGames(sdi);
-    sg.forEach((g,gi)=>{
-      const r=results[sid]&&results[sid][gi];
-      winners.push(r?r.w:`??(G${gi+1}@${sid})`);
-    });
-  });
-  const pairs=[];
-  for(let i=0;i<winners.length;i+=2){if(winners[i+1]!==undefined)pairs.push([winners[i],winners[i+1]]);}
-  return pairs;
-}
-
-function getScriptUrl(){return localStorage.getItem('s26_scriptUrl')||'';}
-function setSyncStatus(msg,color){const el=document.getElementById('sync-status');if(el){el.textContent=msg;el.style.color=color||'var(--muted)';}}
-
-function save(){
-  try{localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));}catch(e){}
-  if(getScriptUrl()){clearTimeout(syncTimer);setSyncStatus('Saving...','var(--amber)');syncTimer=setTimeout(()=>pushToCloud(),1500);}
-}
-
-function load(){
-  try{
-    const dd=localStorage.getItem('s26_dd'),pk=localStorage.getItem('s26_picks'),rs=localStorage.getItem('s26_res'),pl=localStorage.getItem('s26_plan');
-    if(dd){const v=JSON.parse(dd);DAYS.forEach(d=>{if(v[d.id])dayDesig[d.id]=v[d.id];});}
-    if(pk)picks=JSON.parse(pk);
-    if(rs){const v=JSON.parse(rs);DAYS.forEach(d=>{if(v[d.id])results[d.id]=v[d.id];});}
-    if(pl){const v=JSON.parse(pl);Object.keys(v).forEach(k=>{if(plan[k])plan[k]=v[k];});}
-  }catch(e){}
-  // Apply preset results for any day not yet in saved results
-  Object.entries(PRESET_RESULTS).forEach(([dayId,dayRes])=>{
-    if(!results[dayId])results[dayId]={};
-    Object.entries(dayRes).forEach(([gi,res])=>{
-      if(!results[dayId][gi])results[dayId][gi]=res;
-    });
-  });
-}
-
-function buildPayload(){return{dayDesig,picks,results,plan,savedAt:new Date().toISOString()};}
-
-function applyPayload(d){
-  if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});
-  if(d.picks)picks=d.picks;
-  if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});
-  if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});
-  // Re-apply presets for any missing
-  Object.entries(PRESET_RESULTS).forEach(([dayId,dayRes])=>{
-    if(!results[dayId])results[dayId]={};
-    Object.entries(dayRes).forEach(([gi,res])=>{
-      if(!results[dayId][gi])results[dayId][gi]=res;
-    });
-  });
-  localStorage.setItem('s26_dd',JSON.stringify(dayDesig));localStorage.setItem('s26_picks',JSON.stringify(picks));localStorage.setItem('s26_res',JSON.stringify(results));localStorage.setItem('s26_plan',JSON.stringify(plan));
-}
-
-async function pushToCloud(){
-  const url=getScriptUrl();if(!url)return;
-  try{
-    const p=buildPayload();
-    for(const key of ['dayDesig','picks','results','plan']){
-      const chunk={};chunk[key]=p[key];
-      await fetch(url+'?action=save&data='+encodeURIComponent(JSON.stringify(chunk)),{mode:'no-cors'});
+function initSavingSelect(){
+  const sel = document.getElementById('saving-select');
+  ALL_TEAMS.forEach(t => {
+    if(!PREUSED.has(t)){
+      const o = document.createElement('option');
+      o.value = t; o.textContent = t;
+      if(t === savingTeam) o.selected = true;
+      sel.appendChild(o);
     }
-    setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');
-  }catch(e){setSyncStatus('Sync failed','var(--red)');}
+  });
+  updateSavingNote();
 }
 
-async function pullFromCloud(){
-  const url=getScriptUrl();if(!url){setSyncStatus('2026 · 1 pick per day','var(--muted)');return;}
-  setSyncStatus('Syncing...','var(--amber)');
-  try{
-    const res=await fetch(url+'?action=load',{cache:'no-store'});
-    const text=await res.text();
-    const jsonStr=text.includes('{"ok"')?text.substring(text.indexOf('{"ok"')):text;
-    const json=JSON.parse(jsonStr);
-    if(json.ok&&json.data&&Object.keys(json.data).length>0){applyPayload(json.data);refreshAll();}
-    setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');
-  }catch(e){setSyncStatus('Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'var(--green)');}
+function changeSaving(){
+  savingTeam = document.getElementById('saving-select').value;
+  updateSavingNote();
+  render();
 }
 
-function manualSync(){pullFromCloud();}
-function showSyncSetup(){document.getElementById('script-url-input').value=getScriptUrl();document.getElementById('sync-modal').style.display='flex';}
-function saveScriptUrl(){const val=document.getElementById('script-url-input').value.trim();if(!val){alert('Please paste your Web App URL first.');return;}localStorage.setItem('s26_scriptUrl',val);document.getElementById('sync-modal').style.display='none';toast('URL saved — syncing...');pullFromCloud();}
-function expJSON(){const d={v:4,t:new Date().toISOString(),dayDesig,picks,results,plan};const b=new Blob([JSON.stringify(d)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='survivor26.json';a.click();}
-function impJSON(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.dayDesig)DAYS.forEach(dy=>{if(d.dayDesig[dy.id])dayDesig[dy.id]=d.dayDesig[dy.id];});if(d.picks)picks=d.picks;if(d.results)DAYS.forEach(dy=>{if(d.results[dy.id])results[dy.id]=d.results[dy.id];});if(d.plan)Object.keys(d.plan).forEach(k=>{if(plan[k])plan[k]=d.plan[k];});save();refreshAll();toast('Loaded ✓');}catch(e){alert('Could not read file');}};rd.readAsText(f);ev.target.value='';}
-
-function showPg(id,btn){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));document.getElementById('pg-'+id).classList.add('active');btn.classList.add('active');if(id==='today')renderToday();if(id==='history')renderHistory();if(id==='results')renderResults();}
-function changeDay(d){const n=curDay+d;if(n<0||n>=DAYS.length)return;curDay=n;renderToday();}
-function refreshAll(){renderToday();renderHistory();renderResults();}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
-
-function setDesig(dayId,teamName,desig){
-  const cur=dayDesig[dayId][teamName];
-  if(cur===desig){delete dayDesig[dayId][teamName];if(desig==='pick'&&picks[dayId]===teamName)delete picks[dayId];}
-  else{if(desig==='pick'){const oldPick=picks[dayId];if(oldPick&&oldPick!==teamName)delete dayDesig[dayId][oldPick];picks[dayId]=teamName;}if(cur==='pick')delete picks[dayId];dayDesig[dayId][teamName]=desig;}
-  save();renderToday();renderHistory();
+function updateSavingNote(){
+  document.getElementById('saving-note').textContent = savingTeam ? `${savingTeam} locked — shown as SAVING` : '';
 }
 
-function renderToday(){
-  const day=DAYS[curDay],elim=getElim(),used=getUsed(),games=getResolvedGames(curDay),desigs=dayDesig[day.id]||{};
-  document.getElementById('day-name').textContent=day.label;
-  document.getElementById('day-sub').textContent=day.round+' · '+games.length+' games';
-  document.getElementById('prev-btn').disabled=curDay===0;
-  document.getElementById('next-btn').disabled=curDay===DAYS.length-1;
-  const BKTS=[{key:'pick',ico:'🎯',lbl:'My Pick',cls:'bc-pick'},{key:'cand',ico:'✅',lbl:'Candidate',cls:'bc-cand'},{key:'save',ico:'⭐',lbl:'Save',cls:'bc-save'},{key:'maybe',ico:'🤔',lbl:'Maybe',cls:'bc-maybe'},{key:'never',ico:'🚫',lbl:'Never',cls:'bc-never'}];
-  const bktEl=document.getElementById('buckets');bktEl.innerHTML='';
-  BKTS.forEach(b=>{const members=Object.entries(desigs).filter(([,v])=>v===b.key).map(([k])=>k);const div=document.createElement('div');div.className='bucket';div.innerHTML=`<span class="bkt-ico">${b.ico}</span><span class="bkt-lbl">${b.lbl}</span>`;const items=document.createElement('div');items.className='bkt-items';if(members.length===0){const empty=document.createElement('div');empty.style.cssText='font-size:9px;color:var(--dim);text-align:center;padding:2px 0;';empty.textContent='—';items.appendChild(empty);}else{members.forEach(name=>{const chip=document.createElement('div');chip.className='bkt-chip '+b.cls;const t=tm(name);chip.textContent=(t?t.seed+' ':'')+name;chip.title=name;chip.onclick=()=>{setDesig(day.id,name,b.key);};items.appendChild(chip);});}div.appendChild(items);bktEl.appendChild(div);});
-  document.getElementById('matchups-hdr').textContent=`${day.label} matchups (${games.length})`;
-  const cont=document.getElementById('matchups');cont.innerHTML='';
-  if(games.length===0){cont.innerHTML='<div class="empty"><div class="emo">⏳</div>Enter Sweet 16 results to unlock these matchups.</div>';return;}
-  games.forEach(([ta,tb],gi)=>{
-    const res=results[day.id]?results[day.id][gi]:null,hasPick=desigs[ta]==='pick'||desigs[tb]==='pick';
-    const card=document.createElement('div');card.className='matchup'+(hasPick?' has-pick':'');
-    [ta,tb].forEach((name,ni)=>{
-      const t=tm(name),isElim=elim.has(name),isUsed=used.has(name)&&desigs[name]!=='pick',isPh=name.startsWith('??'),d=desigs[name]||'none',resWon=res&&res.w===name,resLost=res&&res.l===name,opp=name===ta?tb:ta;
-      let rowCls='tr';if(isPh)rowCls+=' used';else if(resWon)rowCls+=' res-won';else if(resLost)rowCls+=' res-lost';else if(isElim)rowCls+=' elim';else if(isUsed)rowCls+=' used';
-      const row=document.createElement('div');row.className=rowCls;
-      let rightHtml='';
-      if(isPh)rightHtml='<span style="font-size:10px;color:var(--dim)">TBD</span>';
-      else if(resWon)rightHtml='<span class="res-ico">✅</span>';
-      else if(resLost)rightHtml='<span class="res-ico">❌</span>';
-      else if(isElim)rightHtml='<span class="tr-tag tag-elim">Out</span>';
-      else if(isUsed){const ud=Object.entries(picks).find(([,n])=>n===name);const udl=ud?DAYS.find(dx=>dx.id===ud[0])?.label.replace(/\w+ /,''):'';rightHtml=`<span class="tr-tag tag-used">Used${udl?' '+udl:''}</span>`;}
-      else rightHtml=`<div class="tr-icons"><button class="ti${d==='pick'?' on-pick':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','pick')">🎯</button><button class="ti${d==='cand'?' on-cand':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','cand')">✅</button><button class="ti${d==='save'?' on-save':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','save')">⭐</button><button class="ti${d==='maybe'?' on-maybe':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','maybe')">🤔</button><button class="ti${d==='never'?' on-never':''}" onclick="setDesig('${day.id}','${name.replace(/'/g,"\\'")}','never')">🚫</button></div>`;
-      row.innerHTML=`<span class="tr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="rdot ${rdCls(t?t.region:'')}" style="margin-right:1px;"></span><div class="tr-info"><div class="tr-name">${name}</div><div class="tr-meta">${t?t.region:''} · vs ${isPh?'TBD':opp.replace('??','TBD')}</div></div>${rightHtml}`;
-      card.appendChild(row);
-      if(ni===0){const vs=document.createElement('div');vs.className='vs-row';vs.innerHTML='<div class="vs-line"></div><span class="vs-txt">VS</span><div class="vs-line"></div>';card.appendChild(vs);}
+function currentPicks(){ return scenarios[currentIdx]; }
+
+function getUsed(){
+  const used = new Set(PREUSED);
+  Object.values(currentPicks()).forEach(t => { if(t) used.add(t); });
+  return used;
+}
+
+function pickTeam(dayId, team){
+  if(PREUSED.has(team)) return;
+  if(savingTeam && team === savingTeam) return;
+  const used = getUsed();
+  const existing = currentPicks()[dayId];
+  if(used.has(team) && team !== existing) return;
+  if(existing === team) delete currentPicks()[dayId];
+  else currentPicks()[dayId] = team;
+  render();
+}
+
+function sdClass(s){
+  if(!s) return 'slo';
+  if(s===1) return 's1'; if(s===2) return 's2'; if(s===3) return 's3';
+  if(s===4) return 's4'; if(s<=7) return 's567'; return 'slo';
+}
+
+function render(){
+  const picks = currentPicks();
+  const used = getUsed();
+
+  // Tabs
+  const tabs = document.getElementById('scenario-tabs');
+  tabs.innerHTML = '';
+  scenarios.forEach((_,i) => {
+    const b = document.createElement('button');
+    b.className = 'stab'+(i===currentIdx?' active':'');
+    b.textContent = `Scenario ${i+1}`;
+    b.onclick = () => { currentIdx=i; render(); };
+    tabs.appendChild(b);
+  });
+
+  // Main grid
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  colOrder.forEach((dayIdx, orderPos) => {
+    const day = BASE_DAYS[dayIdx];
+    const col = document.createElement('div');
+    col.className = 'day-col';
+    col.draggable = true;
+    col.dataset.orderPos = orderPos;
+
+    // Drag events
+    col.addEventListener('dragstart', e => {
+      dragSrcIdx = orderPos;
+      col.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
     });
-    cont.appendChild(card);
-  });
-}
+    col.addEventListener('dragend', () => {
+      col.classList.remove('dragging');
+      document.querySelectorAll('.day-col').forEach(c => c.classList.remove('drag-over'));
+    });
+    col.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.day-col').forEach(c => c.classList.remove('drag-over'));
+      col.classList.add('drag-over');
+    });
+    col.addEventListener('drop', e => {
+      e.preventDefault();
+      col.classList.remove('drag-over');
+      const destPos = parseInt(col.dataset.orderPos);
+      if(dragSrcIdx === null || dragSrcIdx === destPos) return;
+      // Swap
+      const tmp = colOrder[dragSrcIdx];
+      colOrder[dragSrcIdx] = colOrder[destPos];
+      colOrder[destPos] = tmp;
+      dragSrcIdx = null;
+      render();
+    });
 
-function renderHistory(){
-  const cont=document.getElementById('history-list');cont.innerHTML='';
-  const pickDays=DAYS.filter(d=>picks[d.id]);
-  if(pickDays.length===0){cont.innerHTML='<div class="empty"><div class="emo">📋</div>No picks yet.<br>Head to Today and tap 🎯 on a team.</div>';return;}
-  [...pickDays].reverse().forEach(day=>{
-    const name=picks[day.id],t=tm(name),games=getResolvedGames(DAYS.indexOf(day));
-    const gi=games.findIndex(([a,b])=>a===name||b===name);
-    const res=gi>=0&&results[day.id]?results[day.id][gi]:null;
-    const opp=gi>=0?games[gi].find(n=>n!==name):'?';
-    let cls='hist-row',rHtml='<span class="hr-result r-pend">Pending</span>';
-    if(res){if(res.w===name){cls='hist-row won';rHtml='<span class="hr-result r-win">WIN ✓</span>';}else{cls='hist-row lost';rHtml='<span class="hr-result r-loss">LOSS ✗</span>';}}
-    const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=day.label+' · '+day.round;cont.appendChild(lbl);
-    const row=document.createElement('div');row.className=cls;
-    row.innerHTML=`<span class="hr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><div class="hr-info"><div class="hr-team">${name}</div><div class="hr-sub">${t?t.region+' · Seed '+t.seed:''} · vs ${opp&&!opp.startsWith('??')?opp:'TBD'}</div></div>${rHtml}`;
-    cont.appendChild(row);
-  });
-}
+    const pick = picks[day.id];
 
-function renderResults(){
-  const cont=document.getElementById('results-list');cont.innerHTML='';
-  DAYS.forEach((day,di)=>{
-    const games=getResolvedGames(di);if(games.length===0)return;
-    const entered=Object.keys(results[day.id]||{}).length;
-    const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent=`${day.label} · ${day.round} · ${entered}/${games.length}`;cont.appendChild(lbl);
-    games.forEach(([ta,tb],gi)=>{
-      const res=results[day.id]?results[day.id][gi]:null;
-      const phA=ta.startsWith('??'),phB=tb.startsWith('??'),tA=tm(ta),tB=tm(tb);
-      const gc=document.createElement('div');gc.className='game-card';gc.innerHTML=`<div class="game-hdr">Game ${gi+1}</div>`;
-      [{name:ta,t:tA,won:res&&res.w===ta,lost:res&&res.l===ta,ph:phA,opp:tb},{name:tb,t:tB,won:res&&res.w===tb,lost:res&&res.l===tb,ph:phB,opp:ta}].forEach(({name,t,won,lost,ph,opp})=>{
-        const row=document.createElement('div');row.className='gtr'+(won?' won':lost?' lost':'');
-        row.innerHTML=`<span class="gtr-seed ${sdCls(t?t.seed:0)}">${t?t.seed:'?'}</span><span class="gtr-name">${name}</span><span class="gtr-ico">${won?'✅':lost?'❌':ph?'⏳':'<span style="font-size:10px;color:var(--muted)">tap to pick winner</span>'}</span>`;
-        if(!res&&!ph)row.onclick=()=>recordResult(day.id,gi,name,opp);
-        gc.appendChild(row);
+    const hdr = document.createElement('div');
+    hdr.className = 'day-hdr';
+    hdr.innerHTML = `<span class="drag-handle" title="Drag to reorder">⠿</span><div class="day-hdr-text"><div class="round">${day.round}</div><div class="date">${day.label}</div><div class="day-pick">${pick ? '✓ '+pick : ''}</div></div>`;
+    col.appendChild(hdr);
+
+    const mDiv = document.createElement('div');
+    mDiv.className = 'matchups';
+
+    day.matchups.forEach((matchup, mi) => {
+      const mWrap = document.createElement('div');
+      mWrap.className = 'matchup';
+
+      matchup.forEach((team, ti) => {
+        const isPlaceholder = team.includes('winner');
+        const isPicked = pick === team;
+        const isSaving = savingTeam && team === savingTeam;
+        const isUsed = !isPicked && (used.has(team) || PREUSED.has(team));
+
+        const btn = document.createElement('button');
+        let cls = 'team-btn';
+        if(isPlaceholder) cls += ' ph';
+        else if(isPicked) cls += ' picked';
+        else if(isSaving) cls += ' saving';
+        else if(isUsed) cls += ' used';
+        btn.className = cls;
+
+        const s = SEEDS[team];
+        const kp = KP[team];
+        const seedHtml = s && !isPlaceholder ? `<span class="seed ${sdClass(s)}">${s}</span>` : '';
+        const kpHtml = kp && !isPlaceholder ? `<span class="kp">#${kp}</span>` : '';
+        btn.innerHTML = `${seedHtml}<span>${team}</span>${kpHtml}`;
+
+        if(!isPlaceholder && !isSaving){
+          btn.onclick = () => pickTeam(day.id, team);
+        }
+        mWrap.appendChild(btn);
+
+        if(ti === 0){
+          const vs = document.createElement('div');
+          vs.className = 'vs-div';
+          vs.innerHTML = '<span>VS</span>';
+          mWrap.appendChild(vs);
+        }
       });
-      if(res){const ur=document.createElement('div');ur.className='undo-row';ur.innerHTML=`<button class="undo-btn" onclick="undoResult('${day.id}',${gi})">↩ Undo</button>`;gc.appendChild(ur);}
-      cont.appendChild(gc);
+
+      mDiv.appendChild(mWrap);
     });
+
+    col.appendChild(mDiv);
+    main.appendChild(col);
+  });
+
+  renderSaved();
+}
+
+function renderSaved(){
+  const grid = document.getElementById('saved-grid');
+  grid.innerHTML = '';
+  if(!savedScenarios.length){
+    grid.innerHTML = '<div class="empty-saved">No saved scenarios yet.</div>';
+    return;
+  }
+  savedScenarios.forEach((s,i) => {
+    const card = document.createElement('div');
+    card.className = 'saved-card';
+    let html = `<h3>${s.name}</h3>`;
+    if(s.saving) html += `<div style="font-size:10px;color:var(--amber);margin-bottom:6px;">🏆 Saving: ${s.saving}</div>`;
+    BASE_DAYS.forEach(day => {
+      const pick = s.picks[day.id];
+      if(pick){
+        const isChamp = day.id==='mon-apr6';
+        html += `<div class="saved-pick"><span class="day">${day.label.replace(/\w+ /,'')}</span><span class="team${isChamp?' champ':''}">${pick}</span></div>`;
+      }
+    });
+    card.innerHTML = html;
+    const del = document.createElement('button');
+    del.className = 'del-btn'; del.textContent = 'Delete';
+    del.onclick = () => { savedScenarios.splice(i,1); localStorage.setItem('ncaa_scenarios3',JSON.stringify(savedScenarios)); renderSaved(); };
+    card.appendChild(del);
+    grid.appendChild(card);
   });
 }
 
-function recordResult(dayId,gi,w,l){
-  results[dayId][gi]={w,l};
-  save();refreshAll();toast(`${w} wins ✓`);
-}
-function undoResult(dayId,gi){
-  delete results[dayId][gi];
-  save();refreshAll();
+function saveScenario(){
+  const picks = currentPicks();
+  if(!Object.keys(picks).length){ toast('No picks to save!'); return; }
+  savedScenarios.push({name:`Scenario ${savedScenarios.length+1}`, picks:{...picks}, saving: savingTeam});
+  localStorage.setItem('ncaa_scenarios3', JSON.stringify(savedScenarios));
+  toast('Saved ✓');
+  renderSaved();
 }
 
-load();
-curDay=6;
-renderToday();
-pullFromCloud();
+function clearScenario(){ scenarios[currentIdx]={}; render(); toast('Cleared'); }
+function newScenario(){ scenarios.push({}); currentIdx=scenarios.length-1; render(); }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+
+initSavingSelect();
+render();
 </script>
 </body>
 </html>
