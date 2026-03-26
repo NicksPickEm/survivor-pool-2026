@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 NCAA Survivor — All Valid Paths</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090c;--surface:#0f1118;--card:#151820;--card2:#1c2030;
+  --border:#252a3a;--text:#e8ecf8;--muted:#5a6280;--dim:#2e3550;
+  --green:#22c55e;--gbg:#001a0f;--gborder:#003d1f;
+  --amber:#f59e0b;--red:#ef4444;--blue:#4d7cff;--gold:#ffd700;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hdr{padding:12px 20px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.hdr-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;}
+.hdr-title span{color:var(--green);}
+.hdr-sub{font-size:10px;color:var(--muted);margin-top:1px;font-family:'DM Mono',monospace;}
+.results-section{padding:12px 20px;border-bottom:1px solid var(--border);background:var(--card);}
+.results-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px;}
+.games-grid{display:flex;gap:8px;flex-wrap:wrap;}
+.game-card{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;min-width:155px;}
+.game-card.settled{border-color:var(--gborder);}
+.game-label{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.team-btns{display:flex;flex-direction:column;gap:4px;}
+.team-pick{width:100%;padding:5px 8px;border-radius:5px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:6px;transition:all .12s;}
+.team-pick:hover:not(:disabled){border-color:var(--green);color:var(--green);}
+.team-pick.winner{background:var(--gbg);border-color:var(--green);color:var(--green);}
+.team-pick.loser{background:#0d0005;border-color:#1a0010;color:#2a1020;text-decoration:line-through;opacity:.4;cursor:default;}
+.team-pick .ml{font-size:9px;font-family:'DM Mono',monospace;opacity:.6;}
+.reset-btn{margin-top:5px;width:100%;padding:3px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:9px;font-family:'Inter',sans-serif;}
+.reset-btn:hover{color:var(--amber);border-color:var(--amber);}
+.filter-bar{padding:8px 20px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.filter-bar label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.filter-bar select{background:var(--card2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-size:11px;font-family:'Inter',sans-serif;padding:4px 8px;outline:none;}
+.filter-bar .chk{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;}
+.showing{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;padding:5px 20px;border-bottom:1px solid var(--border);}
+.wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:860px;}
+thead th{background:var(--card2);padding:7px 10px;text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;font-family:'DM Mono',monospace;}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:hover:not(.eliminated){background:var(--card);}
+tbody tr.eliminated{opacity:.25;}
+td{padding:6px 10px;vertical-align:middle;}
+td.rank{color:var(--dim);font-family:'DM Mono',monospace;font-size:10px;width:36px;}
+.tn{display:block;font-weight:600;}
+.ml-tag{display:block;font-size:9px;font-family:'DM Mono',monospace;margin-top:1px;}
+td.e8cell{color:var(--muted);font-size:10px;font-style:italic;}
+td.ffcell{font-weight:600;color:var(--blue);}
+td.champcell{font-weight:700;color:var(--gold);}
+td.prob{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);white-space:nowrap;}
+.elim-badge{display:inline-block;padding:1px 5px;border-radius:3px;background:#1a0008;border:1px solid #3d0015;color:var(--red);font-size:8px;font-family:'DM Mono',monospace;margin-left:4px;}
+.note{font-size:9px;color:var(--dim);font-family:'DM Mono',monospace;padding:10px 20px 30px;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <div class="hdr-title">🏀 NCAA <span>Survivor</span> — All Valid Paths</div>
+    <div class="hdr-sub">Used: Nebraska · Kansas · Purdue · Arkansas · Click a winner below to eliminate dead paths</div>
+  </div>
+  <span id="hdr-stats" style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;"></span>
+</div>
+
+<div class="results-section">
+  <div class="results-title">📋 Actual game results — click the winning team</div>
+  <div class="games-grid" id="games-grid"></div>
+</div>
+
+<div class="filter-bar">
+  <label>Thu:</label>
+  <select id="f-thu" onchange="renderTable()">
+    <option value="">All</option>
+    <option>Arizona</option><option>Houston</option><option>Illinois</option>
+    <option>Iowa</option><option>Texas</option><option>Purdue</option><option>Nebraska</option><option>Arkansas</option>
+  </select>
+  <label>Fri:</label>
+  <select id="f-fri" onchange="renderTable()">
+    <option value="">All</option>
+    <option>Duke</option><option>Michigan</option><option>UConn</option><option>Iowa State</option>
+    <option>St. John's</option><option>Alabama</option><option>Michigan State</option><option>Tennessee</option>
+  </select>
+  <label>Champ:</label>
+  <select id="f-champ" onchange="renderTable()">
+    <option value="">All</option>
+    <option>Arizona</option><option>Michigan</option><option>Duke</option><option>Houston</option>
+    <option>Iowa State</option><option>UConn</option><option>Illinois</option><option>Iowa</option>
+    <option>St. John's</option><option>Texas</option><option>Tennessee</option><option>Michigan State</option><option>Alabama</option>
+  </select>
+  <label>Show:</label>
+  <select id="f-limit" onchange="renderTable()">
+    <option value="100">Top 100</option>
+    <option value="250">Top 250</option>
+    <option value="500">Top 500</option>
+    <option value="0">All</option>
+  </select>
+  <label class="chk"><input type="checkbox" id="f-hide-elim" onchange="renderTable()"> Hide eliminated</label>
+</div>
+<div class="showing" id="showing">Loading...</div>
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Thu Mar 26</th><th>Fri Mar 27</th>
+        <th>Sat Mar 28 E8</th><th>Sun Mar 29 E8</th>
+        <th>Sat Apr 4 FF</th><th>Mon Apr 6 Champ</th><th>Probability</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+<div class="note">Probability = likelihood this exact bracket outcome occurs. S16 odds: BetMGM. E8/FF/Champ estimated from relative S16 win probabilities.</div>
+
+<script src="paths_data.js"></script>
+<script>
+const GAMES = [
+  {id:'thu0', label:'Texas vs Purdue',        teams:['Texas','Purdue']},
+  {id:'thu1', label:'Iowa vs Nebraska',        teams:['Iowa','Nebraska']},
+  {id:'thu2', label:'Arizona vs Arkansas',     teams:['Arizona','Arkansas']},
+  {id:'thu3', label:'Illinois vs Houston',     teams:['Illinois','Houston']},
+  {id:'fri0', label:"St. John's vs Duke",      teams:["St. John's",'Duke']},
+  {id:'fri1', label:'Alabama vs Michigan',     teams:['Alabama','Michigan']},
+  {id:'fri2', label:'Michigan State vs UConn', teams:['Michigan State','UConn']},
+  {id:'fri3', label:'Tennessee vs Iowa State', teams:['Tennessee','Iowa State']},
+];
+
+let results = JSON.parse(localStorage.getItem('ncaa_results2') || '{}');
+function saveResults(){ localStorage.setItem('ncaa_results2', JSON.stringify(results)); }
+
+function buildGamesGrid(){
+  const grid = document.getElementById('games-grid');
+  grid.innerHTML = '';
+  GAMES.forEach(g => {
+    const winner = results[g.id] || null;
+    const card = document.createElement('div');
+    card.className = 'game-card' + (winner ? ' settled' : '');
+    const lbl = document.createElement('div');
+    lbl.className = 'game-label';
+    lbl.textContent = g.label;
+    card.appendChild(lbl);
+    const btns = document.createElement('div');
+    btns.className = 'team-btns';
+    g.teams.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'team-pick' + (winner===t?' winner':winner&&winner!==t?' loser':'');
+      btn.innerHTML = `<span>${t}</span><span class="ml">${MLS[t]||''}</span>`;
+      if(winner===t){
+        btn.onclick = () => { delete results[g.id]; saveResults(); buildGamesGrid(); renderTable(); };
+      } else if(!winner){
+        btn.onclick = () => { results[g.id]=t; saveResults(); buildGamesGrid(); renderTable(); };
+      } else {
+        btn.disabled = true;
+      }
+      btns.appendChild(btn);
+    });
+    card.appendChild(btns);
+    if(winner){
+      const rb = document.createElement('button');
+      rb.className = 'reset-btn';
+      rb.textContent = '↩ Reset';
+      rb.onclick = () => { delete results[g.id]; saveResults(); buildGamesGrid(); renderTable(); };
+      card.appendChild(rb);
+    }
+    grid.appendChild(card);
+  });
+}
+
+function isEliminated(path){
+  for(const g of GAMES){
+    const winner = results[g.id];
+    if(!winner) continue;
+    const loser = g.teams.find(t => t !== winner);
+    const b = path.bracket;
+    const allWinners = [...b.thu,...b.fri,...b.satE8,...b.sunE8,...b.ff,b.champ];
+    if(allWinners.includes(loser)) return true;
+    if(path.picks.includes(loser)) return true;
+  }
+  return false;
+}
+
+function renderTable(){
+  const fThu   = document.getElementById('f-thu').value;
+  const fFri   = document.getElementById('f-fri').value;
+  const fChamp = document.getElementById('f-champ').value;
+  const limit  = parseInt(document.getElementById('f-limit').value) || 999999;
+  const hideElim = document.getElementById('f-hide-elim').checked;
+
+  const alive = [], elim = [];
+  PATHS.forEach(p => {
+    if(fThu   && p.picks[0] !== fThu)   return;
+    if(fFri   && p.picks[1] !== fFri)   return;
+    if(fChamp && p.picks[5] !== fChamp) return;
+    if(isEliminated(p)) elim.push(p);
+    else alive.push(p);
+  });
+
+  const toShow = hideElim ? alive.slice(0,limit) : [...alive.slice(0,limit), ...elim.slice(0, Math.max(0,limit-alive.length))];
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  let rank = 0;
+  toShow.forEach(p => {
+    const dead = isEliminated(p);
+    if(!dead) rank++;
+    const [tp,fp,sp,sup,ffp,cp] = p.picks;
+    const tr = document.createElement('tr');
+    if(dead) tr.classList.add('eliminated');
+
+    function s16cell(t){
+      const pr = PROBS[t]||0.5;
+      const color = pr>=0.6?'var(--green)':pr>=0.45?'var(--amber)':'var(--red)';
+      return `<td><span class="tn">${t}</span><span class="ml-tag" style="color:${color}">${MLS[t]||''} (${Math.round(pr*100)}%)</span></td>`;
+    }
+
+    tr.innerHTML = `
+      <td class="rank">${dead?'—':rank}</td>
+      ${s16cell(tp)}${s16cell(fp)}
+      <td class="e8cell">${sp}</td>
+      <td class="e8cell">${sup}</td>
+      <td class="ffcell">${ffp}</td>
+      <td class="champcell">${cp}</td>
+      <td class="prob">${(p.prob*100).toFixed(4)}%${dead?'<span class="elim-badge">OUT</span>':''}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('showing').textContent =
+    `Showing ${toShow.length.toLocaleString()} · ${alive.length.toLocaleString()} alive · ${elim.length.toLocaleString()} eliminated`;
+  document.getElementById('hdr-stats').textContent = `${PATHS.length.toLocaleString()} total paths`;
+}
+
+buildGamesGrid();
+renderTable();
+</script>
+</body>
+</html>
